@@ -1,0 +1,215 @@
+﻿@model FoxReport.Models.InitShow
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Fox Report</title>
+    <link href="~/css/SpryTabbedPanels.css" rel="stylesheet" />
+    <link href="~/js/kindeditor/themes/default/default.css" rel="stylesheet" />
+    <link href="~/css/fox.css" rel="stylesheet" />
+
+    <script src="~/js/jquery1.7.2.js"></script>
+    <script src="~/js/SpryTabbedPanels.js"></script>
+    <script src="~/js/kindeditor/kindeditor-all.js"></script>
+    <script src="~/js/kindeditor/lang/zh-CN.js"></script>
+    <script src="~/js/fox.js"></script>
+</head>
+<body>
+    <div>
+@*        <div>
+            <table>
+            @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Target)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Strategy)
+            </td>
+            
+        </tr>
+    }</table>
+        </div>*@
+
+        <div>
+            <table>
+                <tr>
+                    <td><div class="topTitle">业务范围：</div></td>
+                    <td><input type="radio" id="countryIn" name="radioCountry" /><label for="countryIn">国内</label>
+                        <input type="radio" id="countryOut" name="radioCountry" /><label for="countryOut">国外</label>
+                    </td>
+                    <td><div class="topTitle">时间段：</div></td>
+                    <td>
+                        <select id="ddlQ">
+                            <option>2016Q1</option>
+                            <option>2016Q2</option>
+                            <option>2016Q3</option>
+                            <option>2016Q4</option>
+                        </select>
+
+                    </td>
+                    <td><div class="topTitle">周次：</div></td>
+                    <td>
+                        <select id="ddlWeek">
+                            <option>2016Q1</option>
+                            <option>2016Q2</option>
+                            <option>2016Q3</option>
+                            <option>2016Q4</option>
+                        </select>
+                    </td>
+                    <td><div class="topTitle">项目：</div></td>
+                    <td>
+                        <select id="ddlProject">
+                            <option>2016Q1</option>
+                            <option>2016Q2</option>
+                            <option>2016Q3</option>
+                            <option>2016Q4</option>
+                        </select>
+                    </td>
+                    <td><div class="topTitle">负责人：</div></td>
+                    <td>
+                        <select id="ddlManager">
+                            <option>2016Q1</option>
+                            <option>2016Q2</option>
+                            <option>2016Q3</option>
+                            <option>2016Q4</option>
+                        </select>
+                    </td>
+                    <td><div class="topTitle">状态：</div></td>
+                    <td>
+                        <table>
+                            <tr><td>范围</td><td>进度</td><td>反馈</td></tr>
+                            <tr><td><span id="range" class="">●</span></td><td><span id="progress" class="">●</span></td><td><span id="feedback" class="">●</span></td></tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="editLayer">
+            <input type="hidden" id="editId" value="" />
+            <textarea id="keText"></textarea>
+            <button id="btnSubmit" onclick="saveText();">保存</button>
+            <button id="btnCancel" onclick="cancelText();">取消</button>
+        </div>
+
+        <div class="projectTitle"><h1><span id="countryText">国内</span>:项目名称</h1></div>
+        <div class="panelTitle">整体概况</div>
+        <div class="TabbedPanels" id="Summary">
+            <ul class="TabbedPanelsTabGroup">
+                <li id="TargetStrategy" class="TabbedPanelsTab">目标与策略</li>
+                <li id="Version" class="TabbedPanelsTab">版本概况</li>                
+                <li id="Feedback" class="TabbedPanelsTab">用户反馈</li>                
+            </ul>
+            <div class="TabbedPanelsContentGroup">
+                <div id="Summary_TargetStrategy" class="TabbedPanelsContent">
+                    <table id="tbTargetStrategy">
+                        <tr><th>项目名称</th><th>目标(现状)</th><th>策略与措施</th></tr>
+                    @foreach (var item in Model.SummaryTargetStrategyList)
+                    {
+                        <tr id="trTargetStrategy@(item.Id)">
+                            <td>
+                                <div id="Summary_TargetStrategy_ProjectName_@(item.Id)">@Html.Raw(item.ProjectName)</div>
+                                <button onclick="editText(this);">编辑</button>
+                            </td>                            
+                            <td><div id="Summary_TargetStrategy_Target_@(item.Id)">@Html.Raw(item.Target)</div><button onclick="editText(this);">编辑</button></td>
+                            <td><div id="Summary_TargetStrategy_Strategy_@(item.Id)">@Html.Raw(item.Strategy)</div><button onclick="editText(this);">编辑</button></td>
+                        </tr>
+                    }
+                        <tr id="trNewTargetStrategy">
+                            <td>
+                                <div id="Summary_TargetStrategy_ProjectName_0"></div>
+                                <button onclick="editText(this);">编辑</button>
+                            </td>                            
+                            <td><div id="Summary_TargetStrategy_Target_0"></div><button onclick="editText(this);">编辑</button></td>
+                            <td><div id="Summary_TargetStrategy_Strategy_0"></div><button onclick="editText(this);">编辑</button></td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="Summary_Version" class="TabbedPanelsContent"></div>
+                <div id="Summary_Feedback" class="TabbedPanelsContent"></div>
+            </div>
+        </div>
+       
+        <div class="panelTitle">项目详情</div>
+        <div class="TabbedPanels" id="Detail">
+            <ul class="TabbedPanelsTabGroup">
+                <li class="TabbedPanelsTab">业务目标</li>
+                <li class="TabbedPanelsTab">目标分解</li>
+                <li class="TabbedPanelsTab">近期重点</li>
+                <li class="TabbedPanelsTab">最新进展</li>
+                <li class="TabbedPanelsTab">主要问题</li>
+                <li class="TabbedPanelsTab">关联团队</li>
+            </ul>
+            <div class="TabbedPanelsContentGroup">
+                <div id="Detail_BizTarget" class="TabbedPanelsContent">
+                    <table id="tbBizTarget">
+                        <tr><th>项目名称</th><th>问题分解</th><th>近期目标</th><th>重点工作</th></tr>
+                    @foreach (var item in Model.DetailBizTargetList)
+                    {
+                        <tr id="trBizTarget@(item.Id)">
+                            <td>
+                                <div id="Detail_BizTarget_ProjectName_@(item.Id)">@Html.Raw(item.ProjectName)</div>
+                                <button onclick="editText(this);">编辑</button>
+                            </td>                            
+                            <td><div id="Detail_BizTarget_ProblemAnalyze_@(item.Id)">@Html.Raw(item.ProblemAnalyze)</div><button onclick="editText(this);">编辑</button></td>
+                            <td><div id="Detail_BizTarget_RecentTarget_@(item.Id)">@Html.Raw(item.RecentTarget)</div><button onclick="editText(this);">编辑</button></td>
+                            <td><div id="Detail_BizTarget_KeyWork_@(item.Id)">@Html.Raw(item.KeyWork)</div><button onclick="editText(this);">编辑</button></td>
+                        </tr>
+                    }
+                        <tr id="trNewBizTarget">
+                            <td>
+                                <div id="Detail_BizTarget_ProjectName_0"></div>
+                                <button onclick="editText(this);">编辑</button>
+                            </td>                            
+                            <td><div id="Detail_BizTarget_ProblemAnalyze_0"></div><button onclick="editText(this);">编辑</button></td>
+                            <td><div id="Detail_BizTarget_RecentTarget_0"></div><button onclick="editText(this);">编辑</button></td>
+                            <td><div id="Detail_BizTarget_KeyWork_0"></div><button onclick="editText(this);">编辑</button></td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="Detail_TargetSplit" class="TabbedPanelsContent"></div>
+                <div id="Detail_RecentKey" class="TabbedPanelsContent"></div>
+                <div id="Detail_Progress" class="TabbedPanelsContent"></div>
+                <div id="Detail_Mainproblem" class="TabbedPanelsContent"></div>
+                <div id="Detail_Relationship" class="TabbedPanelsContent"></div>
+            </div>
+        </div>
+
+        <div class="panelTitle">问题与求助</div>
+        <div class="TabbedPanels" id="Problem">
+            <ul class="TabbedPanelsTabGroup">
+                <li class="TabbedPanelsTab">重点事务</li>
+                <li class="TabbedPanelsTab">求助项</li>
+                <li class="TabbedPanelsTab">改进项</li>
+            </ul>
+            <div class="TabbedPanelsContentGroup">
+                <div id="PanelProblemContent0" class="TabbedPanelsContent">
+                    <table id="tbProblem">
+                        <tr><th>分类</th><th>优先级</th><th>负责人</th><th>工作计划</th><th>进展情况</th></tr>
+                        <tr id="trNewProblem"><td></td><td></td><td></td><td></td><td></td></tr>
+                    </table>
+                </div>
+                <div id="PanelProblemContent1" class="TabbedPanelsContent"></div>
+                <div id="PanelProblemContent2" class="TabbedPanelsContent"></div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

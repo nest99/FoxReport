@@ -1,0 +1,19 @@
+﻿@model IEnumerable<FoxReport.Models.SummaryVersion>
+
+<table id="tbVersion">
+    <tr><th>项目名称</th><th>目标(现状)</th><th>策略与措施</th></tr>
+@foreach (var item in Model)
+{
+    <tr>
+        <td><</td>
+    </tr>
+}
+    <tr id="trNewVersion">
+        <td>
+            <div id="Summary_Version_ProjectName_0"></div>
+            <button onclick="editText(this);">编辑</button>
+        </td>                            
+        <td><div id="Summary_TargetStrategy_Target_0"></div><button onclick="editText(this);">编辑</button></td>
+        <td><div id="Summary_TargetStrategy_Strategy_0"></div><button onclick="editText(this);">编辑</button></td>
+    </tr>
+</table>

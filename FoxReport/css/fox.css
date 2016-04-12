@@ -1,0 +1,26 @@
+﻿body {
+    background-color: white;
+}
+.projectTitle {
+    text-align:center;
+}
+.panelTitle {
+    font-size:18px;
+    margin:10px 0 5px 0;
+}
+table{border-collapse:collapse;border:none; width:100%; margin:0;}
+td {
+    border:solid 1px #ccc; padding:0;
+}
+th {
+    border:solid 1px #eee; background-color:#c1c1c1;
+}
+.topTitle {
+    background-color:#ccc;
+}
+
+#editLayer {
+    display:none;
+    position:fixed; z-index:999; margin-top:-225px; margin-left:-330px; left:50%; top:50%;
+    width:660px; height:450px; padding:3px; background-color:black;
+}
