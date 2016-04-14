@@ -367,7 +367,7 @@
     <Content Include="js\kindeditor\themes\qq\qq.css" />
     <Content Include="js\kindeditor\themes\simple\simple.css" />
     <Content Include="js\SpryTabbedPanels.js" />
-    <Content Include="SqlScript\fox_db_sql.txt" />
+    <Content Include="SqlScript\fox_db.sql" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

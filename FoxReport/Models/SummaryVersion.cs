@@ -10,22 +10,22 @@ namespace FoxReport.Models
         /// <summary>
         /// 项目Id
         /// </summary>
-        public int ProjectId { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// 项目名称
         /// </summary>
         public string ProjectName { get; set; }
         /// <summary>
-        /// 现状
+        /// 核心需求
         /// </summary>
-        public string Status { get; set; }
+        public string Request { get; set; }
         /// <summary>
-        /// 目标
+        /// 计划发布
         /// </summary>
-        public string Target { get; set; }
+        public string Publish { get; set; }
         /// <summary>
-        /// 策略与措施
+        /// 进展与风险
         /// </summary>
-        public string Strategy { get; set; }
+        public string Risk { get; set; }
     }
 }

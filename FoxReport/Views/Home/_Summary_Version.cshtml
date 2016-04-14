@@ -1,11 +1,14 @@
 ﻿@model IEnumerable<FoxReport.Models.SummaryVersion>
 
 <table id="tbVersion">
-    <tr><th>项目名称</th><th>目标(现状)</th><th>策略与措施</th></tr>
+    <tr><th>项目名称</th><th>核心需求</th><th>计划发布</th><th>进展与风险</th></tr>
 @foreach (var item in Model)
 {
     <tr>
-        <td><</td>
+        <td><div id="Summary_Version_ProjectName_@(item.Id)">@Html.Raw(item.ProjectName)</div><button onclick="editText(this);">编辑</button></td>
+        <td><div id="Summary_Version_Request_@(item.Id)">@Html.Raw(item.Request)</div><button onclick="editText(this);">编辑</button></td>
+        <td><div id="Summary_Version_Publish_@(item.Id)">@Html.Raw(item.Publish)</div><button onclick="editText(this);">编辑</button></td>
+        <td><div id="Summary_Version_Risk_@(item.Id)">@Html.Raw(item.Risk)</div><button onclick="editText(this);">编辑</button></td>
     </tr>
 }
     <tr id="trNewVersion">
@@ -13,7 +16,8 @@
             <div id="Summary_Version_ProjectName_0"></div>
             <button onclick="editText(this);">编辑</button>
         </td>                            
-        <td><div id="Summary_TargetStrategy_Target_0"></div><button onclick="editText(this);">编辑</button></td>
-        <td><div id="Summary_TargetStrategy_Strategy_0"></div><button onclick="editText(this);">编辑</button></td>
+        <td><div id="Summary_Version_Request_0"></div><button onclick="editText(this);">编辑</button></td>
+        <td><div id="Summary_Version_Publish_0"></div><button onclick="editText(this);">编辑</button></td>
+        <td><div id="Summary_Version_Risk_0"></div><button onclick="editText(this);">编辑</button></td>
     </tr>
 </table>

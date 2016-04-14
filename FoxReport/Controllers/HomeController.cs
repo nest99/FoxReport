@@ -44,13 +44,24 @@ namespace FoxReport.Controllers
 
         public PartialViewResult Summary(string id)
         {
-            SummaryTargetStrategy t = new SummaryTargetStrategy();
-            t.Id = 0;
-            t.ProjectName = "ProjectName  id=" + id.ToString();
-            t.Status = "Status";
-            t.Strategy = "Strategy 0";
-            t.Target = "Target";
-            return PartialView("_Summary_" + id, t);
+            int userId = 0;
+            int isForeign = 0;
+            int week = 0;
+            if(id == "Version")
+            {
+                List<SummaryVersion> versionList = SqlDbHelper.GetSummaryVersion(userId, week, isForeign);
+                return PartialView("_Summary_" + id, versionList);
+            }
+            else if (id == "Feedback")
+            {
+                List<SummaryFeedback> feedbackList = SqlDbHelper.GetSummaryFeedback(userId, week, isForeign);
+                return PartialView("_Summary_" + id, feedbackList);
+            }
+            else// "TargetStrategy"
+            {
+                List<SummaryTargetStrategy> targetList = SqlDbHelper.GetSummaryTargetStrategy(userId, week, isForeign);
+                return PartialView("_Summary_" + id, targetList);
+            }
         }
         public PartialViewResult Detail(string id)
         {

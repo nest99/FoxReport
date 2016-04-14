@@ -1,8 +1,24 @@
-﻿@model FoxReport.Models.SummaryTarget
+﻿@model IEnumerable<FoxReport.Models.SummaryTargetStrategy>
 
-<h1>Panel 0 title</h1>
-
-@Model.ProjectId, @Model.ProjectName, @Model.Status, @Model.Strategy, @Model.Target
-
-<br />
-end panel 0
+<table id="tbTargetStrategy">
+    <tr><th>项目名称</th><th>目标(现状)</th><th>策略与措施</th></tr>
+@foreach (var item in Model)
+{
+    <tr id="trTargetStrategy@(item.Id)">
+        <td>
+            <div id="Summary_TargetStrategy_ProjectName_@(item.Id)">@Html.Raw(item.ProjectName)</div>
+            <button onclick="editText(this);">编辑</button>
+        </td>                            
+        <td><div id="Summary_TargetStrategy_Target_@(item.Id)">@Html.Raw(item.Target)</div><button onclick="editText(this);">编辑</button></td>
+        <td><div id="Summary_TargetStrategy_Strategy_@(item.Id)">@Html.Raw(item.Strategy)</div><button onclick="editText(this);">编辑</button></td>
+    </tr>
+}
+    <tr id="trNewTargetStrategy">
+        <td>
+            <div id="Summary_TargetStrategy_ProjectName_0"></div>
+            <button onclick="editText(this);">编辑</button>
+        </td>                            
+        <td><div id="Summary_TargetStrategy_Target_0"></div><button onclick="editText(this);">编辑</button></td>
+        <td><div id="Summary_TargetStrategy_Strategy_0"></div><button onclick="editText(this);">编辑</button></td>
+    </tr>
+</table>

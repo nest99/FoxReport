@@ -1,8 +1,24 @@
-﻿@model FoxReport.Models.SummaryTarget
+﻿@model IEnumerable<FoxReport.Models.SummaryFeedback>
 
-<h1>Panel 1 title</h1>
-
-@Model.ProjectId, @Model.ProjectName, @Model.Status, @Model.Strategy, @Model.Target
-
-<br />
-end panel 1
+<table id="tbFeedback">
+    <tr><th>序号</th><th>平台</th><th>问题概要</th><th>跟进人</th><th>状态</th><th>跟进情况</th></tr>
+@foreach (var item in Model)
+{
+    <tr>
+        <td><div id="Summary_Feedback_Seq_@(item.Id)">@Html.Raw(item.Seq)</div><button onclick="editText(this);">编辑</button></td>
+        <td><div id="Summary_Feedback_Platform_@(item.Id)">@Html.Raw(item.Platform)</div><button onclick="editText(this);">编辑</button></td>
+        <td><div id="Summary_Feedback_Issue_@(item.Id)">@Html.Raw(item.Issue)</div><button onclick="editText(this);">编辑</button></td>
+        <td><div id="Summary_Feedback_Tracker_@(item.Id)">@Html.Raw(item.Tracker)</div><button onclick="editText(this);">编辑</button></td>
+        <td><div id="Summary_Feedback_Status_@(item.Id)">@Html.Raw(item.Status)</div><button onclick="editText(this);">编辑</button></td>
+        <td><div id="Summary_Feedback_TrackInfo_@(item.Id)">@Html.Raw(item.TrackInfo)</div><button onclick="editText(this);">编辑</button></td>
+    </tr>
+}
+    <tr id="trNewFeedback">
+        <td><div id="Summary_Feedback_Seq_0"></div><button onclick="editText(this);">编辑</button></td>                            
+        <td><div id="Summary_Feedback_Platform_0"></div><button onclick="editText(this);">编辑</button></td>
+        <td><div id="Summary_Feedback_Issue_0"></div><button onclick="editText(this);">编辑</button></td>
+        <td><div id="Summary_Feedback_Tracker_0"></div><button onclick="editText(this);">编辑</button></td>
+        <td><div id="Summary_Feedback_Status_0"></div><button onclick="editText(this);">编辑</button></td>
+        <td><div id="Summary_Feedback_TrackInfo_0"></div><button onclick="editText(this);">编辑</button></td>
+    </tr>
+</table>

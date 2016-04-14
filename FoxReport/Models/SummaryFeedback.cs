@@ -8,24 +8,44 @@ namespace FoxReport.Models
     public class SummaryFeedback : BaseInfo
     {
         /// <summary>
-        /// 项目Id
+        /// Id
         /// </summary>
-        public int ProjectId { get; set; }
+        public int Id { get; set; }
         /// <summary>
-        /// 项目名称
+        /// 序号
         /// </summary>
-        public string ProjectName { get; set; }
+        public string Seq { get; set; }
         /// <summary>
-        /// 现状
+        /// 平台
+        /// </summary>
+        public string Platform
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 问题概要
+        /// </summary>
+        public string Issue
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 跟进人
+        /// </summary>
+        public string Tracker
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 状态
         /// </summary>
         public string Status { get; set; }
         /// <summary>
-        /// 目标
+        /// 跟进情况
         /// </summary>
-        public string Target { get; set; }
-        /// <summary>
-        /// 策略与措施
-        /// </summary>
-        public string Strategy { get; set; }
+        public string TrackInfo { get; set; }
     }
 }
