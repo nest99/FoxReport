@@ -62,13 +62,13 @@ function TabPanelClicked(panelId, tabId) {
 $(document).ready(function () {
     var Summary = new Spry.Widget.TabbedPanels("Summary", { defaultTab: 0 });
     var Detail = new Spry.Widget.TabbedPanels("Detail", { defaultTab: 0 });
-    var Problem = new Spry.Widget.TabbedPanels("Problem", { defaultTab: 0 });
+    var Problem = new Spry.Widget.TabbedPanels("Problem", { defaultTab: 0 });    
 });
 
 var keditor;
 KindEditor.ready(function (K) {
     keditor = K.create("#keText", {
-        width: "30%", height: "200", resizeType:2,
+        width: "100%", height: "100%", resizeType:2,
         items: ["source", "preview", "redo", "undo"]
     });
 });

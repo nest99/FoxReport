@@ -15,6 +15,12 @@ td {
 th {
     border:solid 1px #eee; background-color:#c1c1c1;
 }
+button {
+    background:url(/images/edit.png);
+    border:0; cursor: pointer;
+    width:20px; height:20px;float:right;
+    color:white;
+}
 .topTitle {
     background-color:#ccc;
 }

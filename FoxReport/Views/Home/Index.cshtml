@@ -22,30 +22,6 @@
 </head>
 <body>
     <div>
-@*        <div>
-            <table>
-            @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjectName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Target)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Strategy)
-            </td>
-            
-        </tr>
-    }</table>
-        </div>*@
-
         <div>
             <table>
                 <tr>
@@ -125,19 +101,19 @@
                         <tr id="trTargetStrategy@(item.Id)">
                             <td>
                                 <div id="Summary_TargetStrategy_ProjectName_@(item.Id)">@Html.Raw(item.ProjectName)</div>
-                                <button onclick="editText(this);">编辑</button>
+                                <button onclick="editText(this);"></button>
                             </td>                            
-                            <td><div id="Summary_TargetStrategy_Target_@(item.Id)">@Html.Raw(item.Target)</div><button onclick="editText(this);">编辑</button></td>
-                            <td><div id="Summary_TargetStrategy_Strategy_@(item.Id)">@Html.Raw(item.Strategy)</div><button onclick="editText(this);">编辑</button></td>
+                            <td><div id="Summary_TargetStrategy_Target_@(item.Id)">@Html.Raw(item.Target)</div><button onclick="editText(this);"></button></td>
+                            <td><div id="Summary_TargetStrategy_Strategy_@(item.Id)">@Html.Raw(item.Strategy)</div><button onclick="editText(this);"></button></td>
                         </tr>
                     }
                         <tr id="trNewTargetStrategy">
                             <td>
                                 <div id="Summary_TargetStrategy_ProjectName_0"></div>
-                                <button onclick="editText(this);">编辑</button>
+                                <button onclick="editText(this);"></button>
                             </td>                            
-                            <td><div id="Summary_TargetStrategy_Target_0"></div><button onclick="editText(this);">编辑</button></td>
-                            <td><div id="Summary_TargetStrategy_Strategy_0"></div><button onclick="editText(this);">编辑</button></td>
+                            <td><div id="Summary_TargetStrategy_Target_0"></div><button onclick="editText(this);"></button></td>
+                            <td><div id="Summary_TargetStrategy_Strategy_0"></div><button onclick="editText(this);"></button></td>
                         </tr>
                     </table>
                 </div>
@@ -165,21 +141,21 @@
                         <tr id="trBizTarget@(item.Id)">
                             <td>
                                 <div id="Detail_BizTarget_ProjectName_@(item.Id)">@Html.Raw(item.ProjectName)</div>
-                                <button onclick="editText(this);">编辑</button>
+                                <button onclick="editText(this);"></button>
                             </td>                            
-                            <td><div id="Detail_BizTarget_ProblemAnalyze_@(item.Id)">@Html.Raw(item.ProblemAnalyze)</div><button onclick="editText(this);">编辑</button></td>
-                            <td><div id="Detail_BizTarget_RecentTarget_@(item.Id)">@Html.Raw(item.RecentTarget)</div><button onclick="editText(this);">编辑</button></td>
-                            <td><div id="Detail_BizTarget_KeyWork_@(item.Id)">@Html.Raw(item.KeyWork)</div><button onclick="editText(this);">编辑</button></td>
+                            <td><div id="Detail_BizTarget_ProblemAnalyze_@(item.Id)">@Html.Raw(item.ProblemAnalyze)</div><button onclick="editText(this);"></button></td>
+                            <td><div id="Detail_BizTarget_RecentTarget_@(item.Id)">@Html.Raw(item.RecentTarget)</div><button onclick="editText(this);"></button></td>
+                            <td><div id="Detail_BizTarget_KeyWork_@(item.Id)">@Html.Raw(item.KeyWork)</div><button onclick="editText(this);"></button></td>
                         </tr>
                     }
                         <tr id="trNewBizTarget">
                             <td>
                                 <div id="Detail_BizTarget_ProjectName_0"></div>
-                                <button onclick="editText(this);">编辑</button>
+                                <button onclick="editText(this);"></button>
                             </td>                            
-                            <td><div id="Detail_BizTarget_ProblemAnalyze_0"></div><button onclick="editText(this);">编辑</button></td>
-                            <td><div id="Detail_BizTarget_RecentTarget_0"></div><button onclick="editText(this);">编辑</button></td>
-                            <td><div id="Detail_BizTarget_KeyWork_0"></div><button onclick="editText(this);">编辑</button></td>
+                            <td><div id="Detail_BizTarget_ProblemAnalyze_0"></div><button onclick="editText(this);"></button></td>
+                            <td><div id="Detail_BizTarget_RecentTarget_0"></div><button onclick="editText(this);"></button></td>
+                            <td><div id="Detail_BizTarget_KeyWork_0"></div><button onclick="editText(this);"></button></td>
                         </tr>
                     </table>
                 </div>
