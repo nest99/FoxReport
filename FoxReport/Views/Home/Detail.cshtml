@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FoxReport.Models.SummaryTarget>
+﻿@model IEnumerable<FoxReport.Models.SummaryTargetStrategy>
 
 @{
     Layout = null;
@@ -18,7 +18,7 @@
     <table>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ProjectId)
+                @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ProjectName)
@@ -38,7 +38,7 @@
     @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ProjectId)
+                @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProjectName)

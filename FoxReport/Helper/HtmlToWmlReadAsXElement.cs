@@ -41,7 +41,7 @@ namespace FoxReport.Helper
                 File.WriteAllText(normalizedFile, sb.ToString(), Encoding.UTF8);
                 html = XElement.Parse(sb.ToString());
             }
-
+            html = (XElement)ConvertToNoNamespace(html);
             return html;
         }
 

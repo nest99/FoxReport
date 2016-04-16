@@ -3,7 +3,9 @@ using FoxReport.Models;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -14,7 +16,6 @@ namespace FoxReport.Controllers
     {
         //
         // GET: /Home/
-
         public ActionResult Index()
         {
             int userId = 0;
@@ -22,6 +23,28 @@ namespace FoxReport.Controllers
             int week = 0;
             InitShow initShow = SqlDbHelper.GetInitShow(userId, week, isForeign);
             return View(initShow);
+        }
+
+        public FileResult Download(int id)
+        {
+            string tempFileName = string.Format("{0}.docx", Guid.NewGuid().ToString());
+            string absolutePath = Path.Combine(Path.GetTempPath(), tempFileName);
+            Uri uri = new Uri(Request.Url.GetLeftPart(UriPartial.Authority)).Append("Preview/Index/" + id.ToString());
+            string baseDirectory = Directory.GetParent(Request.PhysicalApplicationPath).ToString();
+            NameValueCollection headers = Request.Headers;
+            try
+            {
+                string file = DocumentModel.Load(uri.ToString(), baseDirectory, new Identity
+                {
+                    Headers = headers
+                }).SaveAs(absolutePath);
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return File(absolutePath, MimeMapping.GetMimeMapping(".docx"), "LoadFileName.docx");
         }
 
         [ValidateInput(false)]

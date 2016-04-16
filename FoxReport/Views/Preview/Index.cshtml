@@ -1,0 +1,75 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style type="text/css">
+        body {
+    background-color: white;
+}
+.projectTitle {
+    text-align:center;
+}
+.panelTitle {
+    font-size:18px;
+    margin:10px 0 5px 0;
+}
+        h1 {
+            color:blue; font-weight:bold;
+        }
+table{border-collapse:collapse;border:none; width:100%; margin:0;}
+td {
+    border:solid 1px #ccc; padding:0;
+}
+th {
+    border:solid 1px #eee; background-color:#c1c1c1;
+}
+button {
+    background:url(/images/edit.png);
+    border:0; cursor: pointer;
+    width:20px; height:20px;float:right;
+    color:white;
+}
+.topTitle {
+    background-color:#ccc;
+}
+
+#editLayer {
+    display:none;
+    position:fixed; z-index:999; margin-top:-225px; margin-left:-330px; left:50%; top:50%;
+    width:660px; height:450px; padding:3px; background-color:black;
+}
+
+    </style>
+</head>
+<body>
+    <div>
+        <h1>项目名称：测试下载项目，序号：@ViewBag.TestId</h1>
+        <table>
+            <tr><th>项目名称</th><th>详情</th><th>负责人</th></tr>
+            <tr><td>项目名称1</td><td>详情1</td><td>负责人1</td></tr>
+            <tr><td>项目名称2</td><td>详情2</td><td>负责人2</td></tr>
+            <tr><td>项目名称3</td><td>详情3</td><td>负责人3</td></tr>
+        </table>
+        <h1>项目详细信息：测试详细信息</h1>
+        <table>
+            <tr><th>项目详细信息名称</th><th>详细信息</th><th>详细信息负责人</th></tr>
+            <tr><td>项目详细信息名称1</td><td>详细信息1</td><td>详细信息负责人1</td></tr>
+            <tr><td>项目详细信息名称2</td><td>详细信息2</td><td>详细信息负责人2</td></tr>
+            <tr><td>项目详细信息名称3</td><td>详细信息3</td><td>详细信息负责人3</td></tr>
+        </table>
+        <h1>用户反馈：测试333</h1>
+        <table>
+            <tr><th>反馈名称</th><th>反馈详情</th><th>反馈负责人</th></tr>
+            <tr><td>反馈名称1</td><td>反馈详情1</td><td>反馈负责人1</td></tr>
+            <tr><td>反馈名称2</td><td>反馈详情2</td><td>反馈负责人2</td></tr>
+            <tr><td>反馈名称3</td><td>反馈详情3</td><td>反馈负责人3</td></tr>
+        </table>
+    </div>
+</body>
+</html>

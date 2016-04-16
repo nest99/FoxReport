@@ -127,6 +127,8 @@ namespace FoxReport.Helper
         {
             XElement xhtml = HtmlToWmlReadAsXElement.ReadAsXElement(new FileInfo(this.absolutePath));
             xhtml.Descendants().Where(i => i.Name.LocalName.ToLower() == "script").Remove();
+            //string linkCss = "";
+            //string headerCss = "";
             var linkStyleSheets = xhtml.Descendants().Where(d => d.Name.LocalName.ToLower() == "link"
                 && d.Attribute("rel").Value.ToLower() == "stylesheet").Select(d => File.ReadAllText(d.Attribute("href").Value));
             string linkCss = HtmlToWmlConverter.CleanUpCss(string.Join("\r\n", linkStyleSheets));
