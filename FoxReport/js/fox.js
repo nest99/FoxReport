@@ -1,10 +1,27 @@
 ﻿/// <reference path="jquery1.7.2.js" />
 
+var keditor;
+var keHeight = 400;
+KindEditor.ready(function (K) {
+    keditor = K.create("#keText", {
+        width: "100%", height: keHeight, resizeType: 0,
+        items: ['source', 'preview', 'code', 'undo', 'redo', '|', 'cut', 'copy', 'paste',
+		'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+		'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+		'superscript', 'clearhtml', 'quickformat', '|',
+		'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+		'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|',
+        'table', 'link', 'unlink']
+    });
+});
+
 function editText(obj) {
     var id = $(obj).siblings("div").attr("id");
     $("#editId").val(id);
     var content = $("#" + id).html();
     keditor.html(content);
+    var width = $(obj).parent().width() + 18;//KindEditor的p标签padding=5,两边就是10；editLayer的padding：3 5 3 3就是8
+    $("#editLayer").width(width).height(keHeight + 30);//加上“保存”按钮的高度
     $("#editLayer").show();
 }
 
@@ -65,10 +82,3 @@ $(document).ready(function () {
     var Problem = new Spry.Widget.TabbedPanels("Problem", { defaultTab: 0 });    
 });
 
-var keditor;
-KindEditor.ready(function (K) {
-    keditor = K.create("#keText", {
-        width: "100%", height: "100%", resizeType:2,
-        items: ["source", "preview", "redo", "undo"]
-    });
-});
