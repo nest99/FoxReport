@@ -256,10 +256,10 @@ K.options = {
 	indentChar : '\t',
 	cssPath : '',
 	cssData : '',
-	minWidth : 650,
-	minHeight : 100,
+	minWidth : 250,
+	minHeight : 200,
 	minChangeSize : 50,
-	zIndex : 811213,
+	zIndex : 800,
 	items : [
 		'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'code', 'cut', 'copy', 'paste',
 		'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',

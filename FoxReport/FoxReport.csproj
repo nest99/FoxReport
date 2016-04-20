@@ -175,6 +175,10 @@
     <Content Include="css\SpryTabbedPanels.css" />
     <Content Include="css\fox.css" />
     <Content Include="Global.asax" />
+    <Content Include="img\blue.png" />
+    <Content Include="img\gray.png" />
+    <Content Include="img\green.png" />
+    <Content Include="img\red.png" />
     <Content Include="InitWeek.aspx" />
     <Content Include="js\fox.js" />
     <Content Include="js\jquery1.7.2.js" />

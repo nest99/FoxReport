@@ -505,7 +505,7 @@
 .ke-statusbar {
 	position: relative;
 	background-color: #F0F0EE;
-	border-top: 1px solid #CCCCCC;
+	/*nst border-top: 1px solid #CCCCCC;*/
 	font-size: 0;
 	line-height: 0;
 	*height: 12px;
@@ -516,7 +516,7 @@
 .ke-statusbar-center-icon {
 	background-position: -0px -754px;
 	width: 15px;
-	height: 11px;
+	/*nst height: 11px;*/
 	background-image: url(default.png);
 }
 .ke-statusbar-right-icon {
@@ -526,7 +526,7 @@
 	cursor: se-resize;
 	background-position: -5px -741px;
 	width: 11px;
-	height: 11px;
+	/*nst height: 11px;*/
 	background-image: url(default.png);
 }
 /* menu */

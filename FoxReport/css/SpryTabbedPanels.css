@@ -1,62 +1,41 @@
 ﻿@charset "UTF-8";
 
 .TabbedPanels {
-	margin: 0px;
-	padding: 0px;
-	float: left;
-	clear: none;
+	margin: 0px; padding: 0px;
+	float: left; clear: none;
 	width: 100%; /* IE Hack to force proper layout when preceded by a paragraph. (hasLayout Bug)*/
 }
-
-.TabbedPanelsTabGroup {
-	margin: 0px;
-	padding: 0px;
-}
-
+.TabbedPanelsTabGroup { margin: 0px; padding: 0px; }
 .TabbedPanelsTab {
-	position: relative;
-	top: 1px;
-	float: left;
-	padding: 4px 10px;
-	margin: 0px 1px 0px 0px;
-	font: bold 0.7em sans-serif;
-	background-color: #DDD;
-	list-style: none;
-	border-left: solid 1px #CCC;
+	position: relative; top: 1px; float: left;
+	padding: 4px 10px; margin: 0px 1px 0px 0px;
+	font: bold 1em;	
+	list-style: none; -moz-user-select: none; -khtml-user-select: none;
+	cursor: pointer;
+
+    border-left: solid 1px #CCC;
 	border-bottom: solid 1px #999;
 	border-top: solid 1px #999;
 	border-right: solid 1px #999;
-	-moz-user-select: none;
-	-khtml-user-select: none;
-	cursor: pointer;
+    background: url(/img/gray.png) repeat-x #99c4dc;/*Tab的背景颜色#DDD*/
 }
-
 .TabbedPanelsTabHover {
-	background-color: #CCC;
+	background: url(/img/red.png) repeat-x  #f96706; /* 鼠标放到Tab上的颜色 #CCC;*/
 }
-
 .TabbedPanelsTabSelected {
-	background-color: #EEE;
-	border-bottom: 1px solid #EEE;
+	background: url(/img/blue.png) repeat-x  #0e97e6; /* 当前选择Tab的颜色#EEE;*/
+	/*border-bottom: 1px solid #006abf;*/ /*#EEE;*/
 }
-
-.TabbedPanelsTab a {
-	color: black;
-	/*text-decoration: none;*/
-}
-
+/*Panel的边框颜色*/
 .TabbedPanelsContentGroup {
 	clear: both;
-	border-left: solid 1px #CCC;
+	/*border-left: solid 1px #CCC;
 	border-bottom: solid 1px #CCC;
 	border-top: solid 1px #999;
-	border-right: solid 1px #999;
-	/*background-color: #EEE;*/
+	border-right: solid 1px #999;*/
 }
-
-.TabbedPanelsContent {
-	padding: 4px;
-}
+.TabbedPanelsTab a { color: black; }
+.TabbedPanelsContent { padding:0; /*padding: 4px;*/ }
 
 .TabbedPanelsContentVisible {
 }

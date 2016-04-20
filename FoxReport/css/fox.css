@@ -8,12 +8,20 @@
     font-size:18px;
     margin:10px 0 5px 0;
 }
+.projectDetailDiv {
+    display: none;
+}
+.projectArrow {
+    width:35px; height:35px; background:url(/img/arrowUp.png) no-repeat;
+}
 .tbContent{border-collapse:collapse;border:none; width:100%; margin:0;}
 .trContent>td {
     border:solid 1px #ccc; padding:5px;
 }
 .trContent>th {
-    border:solid 1px #eee; background-color:#c1c1c1;
+    border:solid 1px #ccc; background:url(/img/white.png) #bbb repeat-x;
+    /*color:white;*/
+    padding:6px;
 }
 .btnEdit {
     background:url(/images/edit.png);
@@ -24,9 +32,15 @@
 .topTitle {
     background-color:#ccc;
 }
-
+#btnBox {    
+    background-color:#ddd;
+    /*border-bottom:1px solid red;*/
+}
+.btnSave, .btnCancel {
+    background-color:#08c;
+}
 #editLayer {
     display:none;
-    position:fixed; z-index:999; margin-top:-225px; margin-left:-330px; left:50%; top:50%;
-    padding:3px 5px 3px 3px; background-color:black;
+    position:fixed; z-index:999; margin-top:-250px; margin-left:-330px; left:50%; top:50%;
+    padding:0px 2px 0px 0px;
 }

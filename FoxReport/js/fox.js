@@ -1,7 +1,7 @@
 ﻿/// <reference path="jquery1.7.2.js" />
 
 var keditor;
-var keHeight = 400;
+var keHeight = 350;
 KindEditor.ready(function (K) {
     keditor = K.create("#keText", {
         width: "100%", height: keHeight, resizeType: 0,
@@ -19,10 +19,11 @@ function editText(obj) {
     var id = $(obj).siblings("div").attr("id");
     $("#editId").val(id);
     var content = $("#" + id).html();
-    keditor.html(content);
-    var width = $(obj).parent().width() + 18;//KindEditor的p标签padding=5,两边就是10；editLayer的padding：3 5 3 3就是8
-    $("#editLayer").width(width).height(keHeight + 30);//加上“保存”按钮的高度
+    keditor.html(content);    
+    var width = $(obj).parent().width() + 12;//KindEditor的p标签padding=5,两边就是10；editLayer的padding：0 2 0 0就是2   
+    $("#editLayer").width(width).height(keHeight + 21);//加上“保存”按钮的高度
     $("#editLayer").show();
+    $("#btnBox").width(width + 2);
 }
 
 function saveText() {
@@ -79,6 +80,15 @@ function TabPanelClicked(panelId, tabId) {
 $(document).ready(function () {
     var Summary = new Spry.Widget.TabbedPanels("Summary", { defaultTab: 0 });
     var Detail = new Spry.Widget.TabbedPanels("Detail", { defaultTab: 0 });
-    var Problem = new Spry.Widget.TabbedPanels("Problem", { defaultTab: 0 });    
+    var Problem = new Spry.Widget.TabbedPanels("Problem", { defaultTab: 0 });
+    var ProjectDetail = new Spry.Widget.TabbedPanels("ProjectDetail", { defaultTab: 0 });
+    var Project2Detail = new Spry.Widget.TabbedPanels("Project2Detail", { defaultTab: 0 });
+    
+    $(".projectName").each(function(){
+        $(this).click(function () {
+            var id = "#" + $(this).attr("id") + "Detail";
+            $(id).toggle();
+        });
+    });
 });
 
