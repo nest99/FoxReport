@@ -21,7 +21,14 @@
     <script src="~/js/fox.js"></script>
 </head>
 <body>
-    <div>
+    <div id="leftMenu">
+        <ul class="nav">
+            <li><a href="#">项目</a></li>
+            <li><a href="#">管理</a></li>
+            <li><a href="#">设置</a></li>
+        </ul>
+    </div>
+    <div id="rightContent">
         <a href="Home/Download/2" target="_blank">下载测试</a>
         <div>
             <table>
@@ -66,14 +73,7 @@
                             <option>2016Q3</option>
                             <option>2016Q4</option>
                         </select>
-                    </td>
-                    <td><div class="topTitle">状态：</div></td>
-                    <td>
-                        <table>
-                            <tr><td>范围</td><td>进度</td><td>反馈</td></tr>
-                            <tr><td><span id="range" class="">●</span></td><td><span id="progress" class="">●</span></td><td><span id="feedback" class="">●</span></td></tr>
-                        </table>
-                    </td>
+                    </td>                    
                 </tr>
             </table>
         </div>
@@ -121,14 +121,14 @@
        
         <div>项目概况</div>
         <div>
-            <div id="Project" class="projectName"><i class="projectArrow"></i>项目名称1</div>
+            <div id="Project" class="projectName"><i class="projectArrow arrowDown"></i>项目名称1</div>
             <div class="TabbedPanels projectDetailDiv" id="ProjectDetail">
                 <ul class="TabbedPanelsTabGroup">
-                    <li id="ProjectBizTarget" class="TabbedPanelsTab">目标与近期重点</li>
-                    <li class="TabbedPanelsTab">项目进展</li>
-                    <li class="TabbedPanelsTab">团队工作方式优化</li>
-                    <li class="TabbedPanelsTab">版本详情</li>
-                    <li class="TabbedPanelsTab">版本质量分析</li>
+                    <li id="ProjectBizTarget" class="TabbedPanelsTab">111目标与近期重点</li>
+                    <li class="TabbedPanelsTab">111项目进展</li>
+                    <li class="TabbedPanelsTab">团队111工作方式优化</li>
+                    <li class="TabbedPanelsTab">版本11详情</li>
+                    <li class="TabbedPanelsTab">11版本质量分析</li>
                 </ul>
                 <div class="TabbedPanelsContentGroup">
                     <div id="ProjectDetail_BizTarget" class="TabbedPanelsContent">
@@ -157,7 +157,8 @@
                     <div id="ProjectDetail_Mainproblem" class="TabbedPanelsContent"></div>
                 </div>
             </div>
-            <div id="Project2" class="projectName">项目名称2 22</div>
+
+            <div id="Project2" class="projectName"><i class="projectArrow arrowDown"></i>项目名称2 22</div>
             <div class="TabbedPanels projectDetailDiv" id="Project2Detail">
                 <ul class="TabbedPanelsTabGroup">
                     <li id="Project2BizTarget" class="TabbedPanelsTab">业务目标2</li>

@@ -1,5 +1,5 @@
 ﻿/// <reference path="jquery1.7.2.js" />
-
+var arrowUp = "▲", arrowDown = "▼";
 var keditor;
 var keHeight = 350;
 KindEditor.ready(function (K) {
@@ -59,17 +59,18 @@ function cancelText() {
     $("#editLayer").hide();
 }
 
-function TabPanelClicked(panelId, tabId) {
+function TabPanelClicked(panelId, tabId, spry, tab) {
     var id = "#" + panelId + "_" + tabId;
-    if($(id).html().trim() != ""){
+    if ($(id).html().trim() != "") {
+        spry.showPanel(tab);
         return;//如果有内容，不从后台获取数据。
     }
     $.ajax({
         url: "Home/" + panelId + "/" + tabId,
         type: "get",
-        success: function (data) {
-            
+        success: function (data) {            
             $(id).html(data);
+            spry.showPanel(tab);
         },
         error: function (data) {
             alert("responseText=" + data.responseText + ", data=" + data);
@@ -87,7 +88,15 @@ $(document).ready(function () {
     $(".projectName").each(function(){
         $(this).click(function () {
             var id = "#" + $(this).attr("id") + "Detail";
-            $(id).toggle();
+            if ($(this).attr("arrow") != "up") {
+                $(this).attr("arrow", "up");
+                $(this).children(".projectArrow").removeClass("arrowDown").addClass("arrowUp");
+                $(id).show();
+            } else {
+                $(this).attr("arrow", "down");
+                $(this).children(".projectArrow").removeClass("arrowUp").addClass("arrowDown");
+                $(id).hide();
+            }
         });
     });
 });

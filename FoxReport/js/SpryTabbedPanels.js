@@ -78,14 +78,16 @@ element.attachEvent("on"+eventType,handler);}
 catch (e) { }
 };
 Spry.Widget.TabbedPanels.prototype.TabClicked = function(tab){
-    TabPanelClicked(this.element.attributes["id"].value, tab.id);//this.getTabIndex(tab)
+    TabPanelClicked(this.element.attributes["id"].value, tab.id, this, tab);//this.getTabIndex(tab)
 };
 Spry.Widget.TabbedPanels.prototype.onTabClick = function (e, tab)
 {
-    this.showPanel(tab);
+    //this.showPanel(tab);
     this.TabClicked(tab);
-    if (e.preventDefault) e.preventDefault(); else e.returnValue = false; if (e.stopPropagation) e.stopPropagation(); else e.cancelBubble = true; return false;
-}; Spry.Widget.TabbedPanels.prototype.onTabMouseOver = function (e, tab)
+    if (e.preventDefault) e.preventDefault(); else e.returnValue = false;
+    if (e.stopPropagation) e.stopPropagation(); else e.cancelBubble = true; return false;
+};
+Spry.Widget.TabbedPanels.prototype.onTabMouseOver = function (e, tab)
 {this.addClassName(tab,this.tabHoverClass);return false;};Spry.Widget.TabbedPanels.prototype.onTabMouseOut=function(e,tab)
 {this.removeClassName(tab,this.tabHoverClass);return false;};Spry.Widget.TabbedPanels.prototype.onTabFocus=function(e,tab)
 {this.hasFocus=true;this.addClassName(tab,this.tabFocusedClass);return false;};Spry.Widget.TabbedPanels.prototype.onTabBlur=function(e,tab)
@@ -106,7 +108,10 @@ tabAnchorEle=node;}
 return false;});if(tabIndexEle)
 this.focusElement=tabIndexEle;else if(tabAnchorEle)
 this.focusElement=tabAnchorEle;if(this.focusElement)
-{Spry.Widget.TabbedPanels.addEventListener(this.focusElement,"focus",function(e){return self.onTabFocus(e,tab);},false);Spry.Widget.TabbedPanels.addEventListener(this.focusElement,"blur",function(e){return self.onTabBlur(e,tab);},false);Spry.Widget.TabbedPanels.addEventListener(this.focusElement,"keydown",function(e){return self.onTabKeyDown(e,tab);},false);}}};Spry.Widget.TabbedPanels.prototype.showPanel=function(elementOrIndex)
+{ Spry.Widget.TabbedPanels.addEventListener(this.focusElement, "focus", function (e) { return self.onTabFocus(e, tab); }, false); Spry.Widget.TabbedPanels.addEventListener(this.focusElement, "blur", function (e) { return self.onTabBlur(e, tab); }, false); Spry.Widget.TabbedPanels.addEventListener(this.focusElement, "keydown", function (e) { return self.onTabKeyDown(e, tab); }, false); }
+}
+};
+Spry.Widget.TabbedPanels.prototype.showPanel = function (elementOrIndex)
 {var tpIndex=-1;if(typeof elementOrIndex=="number")
 tpIndex=elementOrIndex;else
 tpIndex=this.getTabIndex(elementOrIndex);if(!tpIndex<0||tpIndex>=this.getTabbedPanelCount())
