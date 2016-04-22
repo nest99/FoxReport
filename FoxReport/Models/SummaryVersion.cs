@@ -5,6 +5,9 @@ using System.Web;
 
 namespace FoxReport.Models
 {
+    /// <summary>
+    /// 一、概述：版本概况
+    /// </summary>
     public class SummaryVersion : BaseInfo
     {
         /// <summary>

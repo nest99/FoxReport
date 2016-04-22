@@ -86,6 +86,42 @@ namespace FoxReport.Controllers
                 return PartialView("_Summary_" + id, targetList);
             }
         }
+        public PartialViewResult ProjectInfo(string id, int recordId)
+        {
+            int userId = 0;
+            int isForeign = 0;
+            int week = 0;
+            ViewBag.Column = id;
+            ViewBag.Id = recordId;
+            string content = "";
+            List<ProjectInfo> projectInfoList = SqlDbHelper.GetProjectInfo(userId, week, isForeign);
+            foreach (ProjectInfo p in projectInfoList)
+            {
+                if (p.Id == recordId)
+                {
+                    switch (id)
+                    {
+                        case "Progress":
+                            content = p.Progress;
+                            break;
+                        case "Target":
+                            content = p.Target;
+                            break;
+                        case "Teamwork":
+                            content = p.Teamwork;
+                            break;
+                        case "VersionDetail":
+                            content = p.VersionDetail;
+                            break;
+                        case "VersionQuality":
+                            content = p.VersionQuality;
+                            break;
+                    }
+                }
+            }
+            ViewBag.Content = content;
+            return PartialView("_Project_Info", projectInfoList);
+        }
         public PartialViewResult Detail(string id)
         {
             SummaryTargetStrategy t = new SummaryTargetStrategy();

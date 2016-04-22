@@ -154,12 +154,14 @@
     </Compile>
     <Compile Include="Models\BaseInfo.cs" />
     <Compile Include="Models\DetailBizTarget.cs" />
-    <Compile Include="Models\DetailTargetSplit.cs" />
     <Compile Include="Models\InitShow.cs" />
+    <Compile Include="Models\ProjectInfo.cs" />
     <Compile Include="Models\SummaryTargetStrategy.cs" />
     <Compile Include="Models\SummaryFeedback.cs" />
     <Compile Include="Models\SummarySuggest.cs" />
     <Compile Include="Models\AffairProduct.cs" />
+    <Compile Include="Models\TeamworkInfo.cs" />
+    <Compile Include="Models\AssistInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource1.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -428,6 +430,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\_Summary_Suggest.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\_Project_Info.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -6,54 +6,66 @@ using System.Web;
 namespace FoxReport.Models
 {
     /// <summary>
-    /// 一、概述：用户反馈用户建议
+    /// 二、项目概况
     /// </summary>
-    public class SummarySuggest : BaseInfo
+    public class ProjectInfo : BaseInfo
     {
         /// <summary>
-        /// Id
+        /// 项目Id
         /// </summary>
-        public int Id { get; set; }
-        /// <summary>
-        /// 序号
-        /// </summary>
-        public string Seq { get; set; }
-        /// <summary>
-        /// 平台
-        /// </summary>
-        public string Platform
+        public int Id
         {
             get;
             set;
         }
         /// <summary>
-        /// 建议内容
+        /// 项目名称
         /// </summary>
-        public string SuggestContent
+        public string ProjectName
         {
             get;
             set;
         }
         /// <summary>
-        /// 反馈用户数
+        /// 工作进展
         /// </summary>
-        public string UserCount
+        public string Progress
         {
             get;
             set;
         }
         /// <summary>
-        /// 影响用户体验描述
+        /// 目标与重点
         /// </summary>
-        public string Issue
+        public string Target
         {
             get;
             set;
         }
+        /// <summary>
+        /// 团队工作方式优化
+        /// </summary>
+        public string Teamwork
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 版本详情
+        /// </summary>
+        public string VersionDetail
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 版本质量分析
+        /// </summary>
+        public string VersionQuality
+        {
+            get;
+            set;
+        }       
         
-        /// <summary>
-        /// 跟进情况
-        /// </summary>
-        public string TrackInfo { get; set; }
     }
 }

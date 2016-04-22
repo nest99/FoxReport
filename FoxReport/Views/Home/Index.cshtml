@@ -88,7 +88,7 @@
         </div>
 
         <div class="projectTitle"><h1><span id="countryText">国内</span>:项目名称</h1></div>
-        <div class="panelTitle">整体概况</div>
+        <div class="panelTitle">一、整体概况</div>
         <div class="TabbedPanels" id="Summary">
             <ul class="TabbedPanelsTabGroup">
                 <li id="TargetStrategy" class="TabbedPanelsTab">目标与策略</li>
@@ -119,122 +119,66 @@
             </div>
         </div>
        
-        <div>项目概况</div>
-        <div>
-            <div id="Project" class="projectName"><i class="projectArrow arrowDown"></i>项目名称1</div>
-            <div class="TabbedPanels projectDetailDiv" id="ProjectDetail">
+        <div>二、项目概况</div>
+    @foreach(var item in @Model.ProjectInfoList){
+        <div class="projectBox">
+            <div id="Project_@(item.Id)" class="projectName"><i class="projectArrow arrowDown"></i>项目名称：@(item.ProjectName)</div>
+            <div class="TabbedPanels Hide" id="ProjectInfo_@(item.Id)">
                 <ul class="TabbedPanelsTabGroup">
-                    <li id="ProjectBizTarget" class="TabbedPanelsTab">111目标与近期重点</li>
-                    <li class="TabbedPanelsTab">111项目进展</li>
-                    <li class="TabbedPanelsTab">团队111工作方式优化</li>
-                    <li class="TabbedPanelsTab">版本11详情</li>
-                    <li class="TabbedPanelsTab">11版本质量分析</li>
+                    <li id="Target_@(item.Id)" class="TabbedPanelsTab">目标与近期重点</li>
+                    <li id="Progress_@(item.Id)" class="TabbedPanelsTab">项目进展</li>
+                    <li id="Teamwork_@(item.Id)" class="TabbedPanelsTab">团队工作方式优化</li>
+                    <li id="VersionDetail_@(item.Id)" class="TabbedPanelsTab">版本详情</li>
+                    <li id="VersionQuality_@(item.Id)" class="TabbedPanelsTab">版本质量分析</li>
                 </ul>
                 <div class="TabbedPanelsContentGroup">
-                    <div id="ProjectDetail_BizTarget" class="TabbedPanelsContent">
-                        <table id="tbProjectBizTarget" class="tbContent">
-                            <tr class="trContent"><th>项目名称</th><th>问题分解</th><th>近期目标</th><th>重点工作</th></tr>
-                        @foreach (var item in Model.DetailBizTargetList)
-                        {
-                            <tr id="trProjectBizTarget@(item.Id)" class="trContent">
-                                <td><div id="ProjectDetail_BizTarget_ProjectName_@(item.Id)">@Html.Raw(item.ProjectName)</div><button onclick="editText(this);" class="btnEdit"></button></td>                            
-                                <td><div id="ProjectDetail_BizTarget_ProblemAnalyze_@(item.Id)">@Html.Raw(item.ProblemAnalyze)</div><button onclick="editText(this);" class="btnEdit"></button></td>
-                                <td><div id="ProjectDetail_BizTarget_RecentTarget_@(item.Id)">@Html.Raw(item.RecentTarget)</div><button onclick="editText(this);" class="btnEdit"></button></td>
-                                <td><div id="ProjectDetail_BizTarget_KeyWork_@(item.Id)">@Html.Raw(item.KeyWork)</div><button onclick="editText(this);" class="btnEdit"></button></td>
-                            </tr>
-                        }
-                            <tr id="trNewProjectBizTarget" class="trContent">
-                                <td><div id="ProjectDetail_BizTarget_ProjectName_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>                            
-                                <td><div id="ProjectDetail_BizTarget_ProblemAnalyze_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
-                                <td><div id="ProjectDetail_BizTarget_RecentTarget_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
-                                <td><div id="ProjectDetail_BizTarget_KeyWork_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+                    <div id="ProjectInfo_Target_@(item.Id)" class="TabbedPanelsContent">
+                        <table id="tbTarget_@(item.Id)" class="tbContent">
+                            <tr id="trTarget_@(item.Id)" class="trContent">
+                                <td><div id="Project_Info_Target_@(item.Id)">@Html.Raw(item.Target)</div><button onclick="editText(this);" class="btnEdit"></button></td>
                             </tr>
                         </table>
                     </div>
-                    <div id="ProjectDetail_TargetSplit" class="TabbedPanelsContent"></div>
-                    <div id="ProjectDetail_RecentKey" class="TabbedPanelsContent"></div>
-                    <div id="ProjectDetail_Progress" class="TabbedPanelsContent"></div>
-                    <div id="ProjectDetail_Mainproblem" class="TabbedPanelsContent"></div>
+                    <div id="ProjectInfo_Progress_@(item.Id)" class="TabbedPanelsContent"></div>
+                    <div id="ProjectInfo_Teamwork_@(item.Id)" class="TabbedPanelsContent"></div>
+                    <div id="ProjectInfo_VersionDetail_@(item.Id)" class="TabbedPanelsContent"></div>                    
+                    <div id="ProjectInfo_VersionQuality_@(item.Id)" class="TabbedPanelsContent"></div>
                 </div>
             </div>
-
-            <div id="Project2" class="projectName"><i class="projectArrow arrowDown"></i>项目名称2 22</div>
-            <div class="TabbedPanels projectDetailDiv" id="Project2Detail">
-                <ul class="TabbedPanelsTabGroup">
-                    <li id="Project2BizTarget" class="TabbedPanelsTab">业务目标2</li>
-                    <li class="TabbedPanelsTab">目标分解2</li>
-                    <li class="TabbedPanelsTab">近期重点2</li>
-                    <li class="TabbedPanelsTab">最新进展2</li>
-                    <li class="TabbedPanelsTab">主要问题2</li>
-                    <li class="TabbedPanelsTab">关联团队2</li>
-                </ul>
-                <div class="TabbedPanelsContentGroup">
-                    <div id="Project2Detail_BizTarget" class="TabbedPanelsContent">
-                        <table id="tbProject2BizTarget" class="tbContent">
-                            <tr class="trContent"><th>项目名称</th><th>问题分解</th><th>近期目标</th><th>重点工作</th></tr>
-                        @foreach (var item in Model.DetailBizTargetList)
-                        {
-                            <tr id="trProject2BizTarget@(item.Id)" class="trContent">
-                                <td><div id="Project2Detail_BizTarget_ProjectName_@(item.Id)">@Html.Raw(item.ProjectName)</div><button onclick="editText(this);" class="btnEdit"></button></td>                            
-                                <td><div id="Project2Detail_BizTarget_ProblemAnalyze_@(item.Id)">@Html.Raw(item.ProblemAnalyze)</div><button onclick="editText(this);" class="btnEdit"></button></td>
-                                <td><div id="Project2Detail_BizTarget_RecentTarget_@(item.Id)">@Html.Raw(item.RecentTarget)</div><button onclick="editText(this);" class="btnEdit"></button></td>
-                                <td><div id="Project2Detail_BizTarget_KeyWork_@(item.Id)">@Html.Raw(item.KeyWork)</div><button onclick="editText(this);" class="btnEdit"></button></td>
-                            </tr>
-                        }
-                            <tr id="trNewProject2BizTarget" class="trContent">
-                                <td><div id="Project2Detail_BizTarget_ProjectName_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>                            
-                                <td><div id="Project2Detail_BizTarget_ProblemAnalyze_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
-                                <td><div id="Project2Detail_BizTarget_RecentTarget_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
-                                <td><div id="Project2Detail_BizTarget_KeyWork_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div id="Project2Detail_TargetSplit" class="TabbedPanelsContent"></div>
-                    <div id="Project2Detail_RecentKey" class="TabbedPanelsContent"></div>
-                    <div id="Project2Detail_Progress" class="TabbedPanelsContent"></div>
-                    <div id="Project2Detail_Mainproblem" class="TabbedPanelsContent"></div>
-                    <div id="Project2Detail_Relationship" class="TabbedPanelsContent"></div>
-                </div>
-            </div>
+            <script type="text/javascript">
+                var ProjectInfo_@(item.Id) = new Spry.Widget.TabbedPanels("ProjectInfo_@(item.Id)", { defaultTab: 0 });
+            </script>
         </div>
+    }
 
-
-        <div class="panelTitle">项目详情</div>
-        <div class="TabbedPanels" id="Detail">
+        <div class="panelTitle">三、重点事务 产品事务</div>
+        <div class="TabbedPanels" id="Affair">
             <ul class="TabbedPanelsTabGroup">
-                <li id="BizTarget" class="TabbedPanelsTab">业务目标</li>
-                <li class="TabbedPanelsTab">目标分解</li>
-                <li class="TabbedPanelsTab">近期重点</li>
-                <li class="TabbedPanelsTab">最新进展</li>
-                <li class="TabbedPanelsTab">主要问题</li>
-                <li class="TabbedPanelsTab">关联团队</li>
+                <li id="Product" class="TabbedPanelsTab">产品事务</li>
             </ul>
             <div class="TabbedPanelsContentGroup">
-                <div id="Detail_BizTarget" class="TabbedPanelsContent">
-                    <table id="tbBizTarget" class="tbContent">
-                        <tr class="trContent"><th>项目名称</th><th>问题分解</th><th>近期目标</th><th>重点工作</th></tr>
-                    @foreach (var item in Model.DetailBizTargetList)
+                <div id="Affair_Product" class="TabbedPanelsContent">
+                    <table id="tbProduct" class="tbContent">
+                        <tr class="trContent"><th>分类</th><th>优先级</th><th>负责人</th><th>工作计划</th><th>进展情况</th></tr>
+                    @foreach (var item in Model.AffairProductList)
                     {
-                        <tr id="trBizTarget@(item.Id)" class="trContent">
-                            <td><div id="Detail_BizTarget_ProjectName_@(item.Id)">@Html.Raw(item.ProjectName)</div><button onclick="editText(this);" class="btnEdit"></button></td>                            
-                            <td><div id="Detail_BizTarget_ProblemAnalyze_@(item.Id)">@Html.Raw(item.ProblemAnalyze)</div><button onclick="editText(this);" class="btnEdit"></button></td>
-                            <td><div id="Detail_BizTarget_RecentTarget_@(item.Id)">@Html.Raw(item.RecentTarget)</div><button onclick="editText(this);" class="btnEdit"></button></td>
-                            <td><div id="Detail_BizTarget_KeyWork_@(item.Id)">@Html.Raw(item.KeyWork)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+                        <tr id="trProduct@(item.Id)" class="trContent">
+                            <td><div id="Affair_Product_Classify_@(item.Id)">@Html.Raw(item.Classify)</div><button onclick="editText(this);" class="btnEdit"></button></td>                            
+                            <td><div id="Affair_Product_Priority_@(item.Id)">@Html.Raw(item.Priority)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+                            <td><div id="Affair_Product_Tracker_@(item.Id)">@Html.Raw(item.Tracker)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+                            <td><div id="Affair_Product_Workplan_@(item.Id)">@Html.Raw(item.Workplan)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+                            <td><div id="Affair_Product_Progress_@(item.Id)">@Html.Raw(item.Progress)</div><button onclick="editText(this);" class="btnEdit"></button></td>
                         </tr>
                     }
-                        <tr id="trNewBizTarget" class="trContent">
-                            <td><div id="Detail_BizTarget_ProjectName_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>                            
-                            <td><div id="Detail_BizTarget_ProblemAnalyze_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
-                            <td><div id="Detail_BizTarget_RecentTarget_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
-                            <td><div id="Detail_BizTarget_KeyWork_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+                        <tr id="trNewProduct" class="trContent">
+                            <td><div id="Affair_Product_Classify_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>                            
+                            <td><div id="Affair_Product_Priority_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+                            <td><div id="Affair_Product_Tracker_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+                            <td><div id="Affair_Product_Workplan_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+                            <td><div id="Affair_Product_Progress_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
                         </tr>
                     </table>
                 </div>
-                <div id="Detail_TargetSplit" class="TabbedPanelsContent"></div>
-                <div id="Detail_RecentKey" class="TabbedPanelsContent"></div>
-                <div id="Detail_Progress" class="TabbedPanelsContent"></div>
-                <div id="Detail_Mainproblem" class="TabbedPanelsContent"></div>
-                <div id="Detail_Relationship" class="TabbedPanelsContent"></div>
             </div>
         </div>
 

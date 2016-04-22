@@ -1,7 +1,56 @@
-﻿
+﻿-- --------------------------------------------------------
+-- 主机:                           127.0.0.1
+-- 服务器版本:                        5.7.3-m13 - MySQL Community Server (GPL)
+-- 服务器操作系统:                      Win32
+-- HeidiSQL 版本:                  9.3.0.4984
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
 -- 导出 fox 的数据库结构
-CREATE DATABASE IF NOT EXISTS `fox`
+CREATE DATABASE IF NOT EXISTS `fox` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
 USE `fox`;
+
+
+-- 导出  表 fox.affair_product 结构
+CREATE TABLE IF NOT EXISTS `affair_product` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '三、重点事务：产品事务Id',
+  `Classify` varchar(50) COLLATE utf8_unicode_ci DEFAULT '' COMMENT '分类',
+  `Priority` varchar(50) COLLATE utf8_unicode_ci DEFAULT '' COMMENT '优先级',
+  `Tracker` varchar(50) COLLATE utf8_unicode_ci DEFAULT '' COMMENT '负责人',
+  `Workplan` varchar(4000) COLLATE utf8_unicode_ci DEFAULT '' COMMENT '工作计划',
+  `Progress` varchar(4000) COLLATE utf8_unicode_ci DEFAULT '' COMMENT '进展情况',
+  `UserId` varchar(50) COLLATE utf8_unicode_ci DEFAULT '',
+  `Week` int(11) DEFAULT '0',
+  `IsForeign` int(11) DEFAULT '0',
+  `OrderNum` int(11) DEFAULT '0',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- 正在导出表  fox.affair_product 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `affair_product` DISABLE KEYS */;
+INSERT INTO `affair_product` (`Id`, `Classify`, `Priority`, `Tracker`, `Workplan`, `Progress`, `UserId`, `Week`, `IsForeign`, `OrderNum`) VALUES
+	(1, '分类', '优先级', '负责人', '工作计划', '进展', '0', 0, 0, 0);
+/*!40000 ALTER TABLE `affair_product` ENABLE KEYS */;
+
+
+-- 导出  表 fox.assist_info 结构
+CREATE TABLE IF NOT EXISTS `assist_info` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '五、协助和支持Id',
+  `Content` varchar(4000) COLLATE utf8_unicode_ci DEFAULT '' COMMENT '内容',
+  `UserId` varchar(50) COLLATE utf8_unicode_ci DEFAULT '',
+  `Week` int(11) DEFAULT '0',
+  `IsForeign` int(11) DEFAULT '0',
+  `OrderNum` int(11) DEFAULT '0',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- 正在导出表  fox.assist_info 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `assist_info` DISABLE KEYS */;
+/*!40000 ALTER TABLE `assist_info` ENABLE KEYS */;
 
 
 -- 导出  表 fox.detail_biztarget 结构
@@ -15,36 +64,153 @@ CREATE TABLE IF NOT EXISTS `detail_biztarget` (
   `Week` int(11) DEFAULT '0',
   `IsForeign` int(11) DEFAULT '0',
   PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- 正在导出表  fox.detail_biztarget 的数据：~2 rows (大约)
+/*!40000 ALTER TABLE `detail_biztarget` DISABLE KEYS */;
+INSERT INTO `detail_biztarget` (`Id`, `ProjectName`, `ProblemAnalyze`, `RecentTarget`, `KeyWork`, `UserId`, `Week`, `IsForeign`) VALUES
+	(1, '详细业务项目名称', '问题分析', '近期\n<div style="color:green;">\n	的重\n</div>\n<p>\n	点工作\n</p>\n<p>\n	<table style="width:100%;background-color:#DFC5A4;" cellpadding="2" cellspacing="0" border="1" bordercolor="#E53333">\n		<tbody>\n			<tr>\n				<td>\n					阿斯蒂芬\n				</td>\n				<td>\n					阿斯蒂芬\n				</td>\n			</tr>\n			<tr>\n				<td>\n					阿斯蒂芬\n				</td>\n				<td>\n					阿萨德发\n				</td>\n			</tr>\n			<tr>\n				<td>\n					阿斯蒂芬\n				</td>\n				<td>\n					功夫大使馆\n				</td>\n			</tr>\n		</tbody>\n	</table>\n<br />\n</p>', '重点工作内容', 0, 0, 0),
+	(2, '项目的名称', '问<div style="color:green">题</div>分<div style="color:green">析</div>内容', '重点工作', '重点内容', 0, 0, 0),
+	(3, '项目名称顶顶顶顶', '阿萨德法师打发斯蒂芬', '阿萨德法师打发斯蒂芬是的发生发的发', '', 0, 0, 0);
+/*!40000 ALTER TABLE `detail_biztarget` ENABLE KEYS */;
+
+
+-- 导出  表 fox.project_info 结构
+CREATE TABLE IF NOT EXISTS `project_info` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `ProjectName` varchar(50) COLLATE utf8_unicode_ci DEFAULT '',
+  `Target` varchar(4000) COLLATE utf8_unicode_ci DEFAULT '',
+  `Progress` varchar(4000) COLLATE utf8_unicode_ci DEFAULT '',
+  `Teamwork` varchar(4000) COLLATE utf8_unicode_ci DEFAULT '',
+  `VersionDetail` varchar(4000) COLLATE utf8_unicode_ci DEFAULT '',
+  `VersionQuality` varchar(4000) COLLATE utf8_unicode_ci DEFAULT '',
+  `UserId` varchar(50) COLLATE utf8_unicode_ci DEFAULT '',
+  `Week` int(11) DEFAULT '0',
+  `IsForeign` int(11) DEFAULT '0',
+  `OrderNum` int(11) DEFAULT '0',
+  PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- 正在导出表  fox.project_info 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `project_info` DISABLE KEYS */;
+INSERT INTO `project_info` (`Id`, `ProjectName`, `Target`, `Progress`, `Teamwork`, `VersionDetail`, `VersionQuality`, `UserId`, `Week`, `IsForeign`, `OrderNum`) VALUES
+	(1, 'ProjectInfo项目详细信息', '目标业务目标项目概况', '进展111项目进展情况', '团队11团队工作方式', '进展阿达的方式', '版本质量111分析', '0', 0, 0, 0),
+	(2, 'pi 222', 'target pjinfo 222asdf', '项目222进展说明', '团队222方式优化', '版本222情况说明', '版本质量222', '', 0, 0, 0);
+/*!40000 ALTER TABLE `project_info` ENABLE KEYS */;
 
-INSERT INTO `detail_biztarget` (`Id`, `ProjectName`, `ProblemAnalyze`, `RecentTarget`, `KeyWork`, `UserId`, `Week`, `IsForeign`) VALUES
-	(1, '详细业务项目名称', '问题分析', '近期<div style="color:green">的重</div>点工作', '重点工作内容', 0, 0, 0),
-	(2, '项目的名称', '问<div style="color:green">题</div>分<div style="color:green">析</div>内容', '重点工作', '重点内容', 0, 0, 0);
+
+-- 导出  表 fox.summary_feedback 结构
+CREATE TABLE IF NOT EXISTS `summary_feedback` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户反馈TOP问题Id',
+  `Seq` int(11) NOT NULL DEFAULT '0',
+  `Platform` varchar(50) COLLATE utf8_unicode_ci DEFAULT '',
+  `Issue` varchar(4000) COLLATE utf8_unicode_ci DEFAULT '',
+  `Tracker` varchar(50) COLLATE utf8_unicode_ci DEFAULT '',
+  `Status` varchar(50) COLLATE utf8_unicode_ci DEFAULT '',
+  `TrackInfo` varchar(4000) COLLATE utf8_unicode_ci DEFAULT '',
+  `UserId` varchar(50) COLLATE utf8_unicode_ci DEFAULT '',
+  `Week` int(11) DEFAULT '0',
+  `IsForeign` int(11) DEFAULT '0',
+  `OrderNum` int(11) DEFAULT '0',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- 正在导出表  fox.summary_feedback 的数据：~3 rows (大约)
+/*!40000 ALTER TABLE `summary_feedback` DISABLE KEYS */;
+INSERT INTO `summary_feedback` (`Id`, `Seq`, `Platform`, `Issue`, `Tracker`, `Status`, `TrackInfo`, `UserId`, `Week`, `IsForeign`, `OrderNum`) VALUES
+	(1, 0, 'plat1', 'issue1', 'tracker', 'status', 'track info', '0', 0, 0, 0),
+	(2, 1, 'plat2', 'issue 2', 'tracker2', 'status', '情况', '0', 0, 0, 0),
+	(3, 2, '大事发生地方', '阿斯蒂芬', '玩儿', '环境概况', '办理非得', '0', 0, 0, 0);
+/*!40000 ALTER TABLE `summary_feedback` ENABLE KEYS */;
+
+
+-- 导出  表 fox.summary_suggest 结构
+CREATE TABLE IF NOT EXISTS `summary_suggest` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Seq` int(11) DEFAULT NULL,
+  `Platform` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `SuggestContent` varchar(4000) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `UserCount` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Issue` varchar(4000) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TrackInfo` varchar(4000) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `UserId` varchar(50) COLLATE utf8_unicode_ci DEFAULT '0',
+  `Week` int(11) DEFAULT '0',
+  `IsForeign` int(11) DEFAULT '0',
+  `OrderNum` int(11) DEFAULT '0',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- 正在导出表  fox.summary_suggest 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `summary_suggest` DISABLE KEYS */;
+/*!40000 ALTER TABLE `summary_suggest` ENABLE KEYS */;
 
 
 -- 导出  表 fox.summary_targetstrategy 结构
 CREATE TABLE IF NOT EXISTS `summary_targetstrategy` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `ProjectName` varchar(50) COLLATE utf8_unicode_ci DEFAULT '',
-  `Status` varchar(5000) COLLATE utf8_unicode_ci DEFAULT '',
-  `Target` varchar(5000) COLLATE utf8_unicode_ci DEFAULT '',
-  `Strategy` varchar(5000) COLLATE utf8_unicode_ci DEFAULT '',
-  `UserId` int(11) DEFAULT '0',
+  `Status` varchar(4000) COLLATE utf8_unicode_ci DEFAULT '',
+  `Target` varchar(4000) COLLATE utf8_unicode_ci DEFAULT '',
+  `Strategy` varchar(4000) COLLATE utf8_unicode_ci DEFAULT '',
+  `UserId` varchar(50) COLLATE utf8_unicode_ci DEFAULT '',
   `Week` int(11) DEFAULT '0',
   `IsForeign` int(11) DEFAULT '0',
+  `OrderNum` int(11) DEFAULT '0',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `summary_targetstrategy` (`Id`, `ProjectName`, `Status`, `Target`, `Strategy`, `UserId`, `Week`, `IsForeign`) VALUES
-	(1, 'project name', 'status', 'target', 'strategy', 0, 0, 0),
-	(2, 'nnname', '', '目标2', '策略2', 0, 0, 0),
-	(3, 'nnname', '', '目标3', '策略3', 0, 0, 0),
-	(4, 'nnname', '', '目标4', '策略4', 0, 0, 0),
-	(5, 'nnname', '', '目标5', '策略5', 0, 0, 0),
-	(6, '66nnname', '', '目标6', '策略6', 0, 0, 0),
-	(7, '阿斯蒂芬', '', '山东<div style="color:blue">分公司</div>的', '大公会', 0, 0, 0),
-	(8, '阿斯顿发股份和', '', '沙发垫<div style="color:red">沙发上</div>对方沙发上的', 'asdfasdfasdf', 0, 0, 0);
+-- 正在导出表  fox.summary_targetstrategy 的数据：~9 rows (大约)
+/*!40000 ALTER TABLE `summary_targetstrategy` DISABLE KEYS */;
+INSERT INTO `summary_targetstrategy` (`Id`, `ProjectName`, `Status`, `Target`, `Strategy`, `UserId`, `Week`, `IsForeign`, `OrderNum`) VALUES
+	(1, 'project name', 'status', '<p>\n	targetffffffffffffffffffffffff345题55\n</p>\n<p>\n	dasfascfaZdf\n</p>', '<p>\n	strategy\n</p>\n<p>\n	asdf\n</p>', '0', 0, 0, 0),
+	(2, '<p>\n	nnnameasda\n</p>\n<p>\n	asdfa sd fasf&nbsp;\n</p>', '', '目标2', '策略2', '0', 0, 0, 0),
+	(3, 'nnname', '', '目标3', '策略3', '0', 0, 0, 0),
+	(4, 'nnname', '', '目标4', '策略4', '0', 0, 0, 0),
+	(5, 'nnname', '', '目标5', '策略5', '0', 0, 0, 0),
+	(6, '66nnname', '', '目标6', '策略6', '0', 0, 0, 0),
+	(7, '阿斯蒂芬', '', '山东<div style="color:blue">分公司</div>的', '大公会', '0', 0, 0, 0),
+	(8, '阿斯顿发股份和', '', '沙发垫<div style="color:red">沙发上</div>对方沙发上的', 'asdfasdfasdf', '0', 0, 0, 0),
+	(9, 'sadfsdf', '', 'asdfsdsadfasdf', 'asdfasfasfdsadf', '0', 0, 0, 0);
+/*!40000 ALTER TABLE `summary_targetstrategy` ENABLE KEYS */;
+
+
+-- 导出  表 fox.summary_version 结构
+CREATE TABLE IF NOT EXISTS `summary_version` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `ProjectName` varchar(50) COLLATE utf8_unicode_ci DEFAULT '',
+  `Request` varchar(4000) COLLATE utf8_unicode_ci DEFAULT '',
+  `Publish` varchar(4000) COLLATE utf8_unicode_ci DEFAULT '',
+  `Risk` varchar(4000) COLLATE utf8_unicode_ci DEFAULT '',
+  `UserId` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `Week` int(11) NOT NULL DEFAULT '0',
+  `IsForeign` int(11) NOT NULL DEFAULT '0',
+  `OrderNum` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- 正在导出表  fox.summary_version 的数据：~2 rows (大约)
+/*!40000 ALTER TABLE `summary_version` DISABLE KEYS */;
+INSERT INTO `summary_version` (`Id`, `ProjectName`, `Request`, `Publish`, `Risk`, `UserId`, `Week`, `IsForeign`, `OrderNum`) VALUES
+	(1, 'prj name版本', '<p>\n	request1核心\n</p>\n<p>\n	详情\n</p>', 'publish 1', 'risk 1', '0', 0, 0, 0),
+	(2, '版本version name', 'r2', 'p2', 'risk 2', '0', 0, 0, 0);
+/*!40000 ALTER TABLE `summary_version` ENABLE KEYS */;
+
+
+-- 导出  表 fox.teamwork_info 结构
+CREATE TABLE IF NOT EXISTS `teamwork_info` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '四、团队工作方式优化Id',
+  `Content` varchar(4000) COLLATE utf8_unicode_ci DEFAULT '' COMMENT '内容',
+  `UserId` varchar(50) COLLATE utf8_unicode_ci DEFAULT '',
+  `Week` int(11) DEFAULT '0',
+  `IsForeign` int(11) DEFAULT '0',
+  `OrderNum` int(11) DEFAULT '0',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- 正在导出表  fox.teamwork_info 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `teamwork_info` DISABLE KEYS */;
+/*!40000 ALTER TABLE `teamwork_info` ENABLE KEYS */;
+
 
 -- 导出  表 fox.userinfo 结构
 CREATE TABLE IF NOT EXISTS `userinfo` (
@@ -54,36 +220,10 @@ CREATE TABLE IF NOT EXISTS `userinfo` (
   PRIMARY KEY (`UserId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- 正在导出表  fox.userinfo 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `userinfo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `userinfo` ENABLE KEYS */;
 
--- 导出  表 fox.affair_product 结构
-CREATE TABLE IF NOT EXISTS `affair_product` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Classify` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `Priority` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `Tracker` varchar(50) COLLATE utf8_unicode_ci DEFAULT '',
-  `Workplan` varchar(5000) COLLATE utf8_unicode_ci DEFAULT '',
-  `Progress` varchar(5000) COLLATE utf8_unicode_ci DEFAULT '',
-  `UserId` int(11) DEFAULT '0',
-  `Week` int(11) DEFAULT '0',
-  `IsForeign` int(11) DEFAULT '0',
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
--- 导出  表 fox.summary_suggest 结构
-CREATE TABLE IF NOT EXISTS `summary_suggest` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Seq` int(11) DEFAULT NULL,
-  `Platform` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `SuggestContent` varchar(5000) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `UserCount` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `Issue` varchar(5000) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `TrackInfo` varchar(5000) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `UserId` int(11) DEFAULT '0',
-  `Week` int(11) DEFAULT '0',
-  `IsForeign` int(11) DEFAULT '0',
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 导出  表 fox.weekstartendday 结构
 CREATE TABLE IF NOT EXISTS `weekstartendday` (
@@ -95,6 +235,8 @@ CREATE TABLE IF NOT EXISTS `weekstartendday` (
   PRIMARY KEY (`YearWeek`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- 正在导出表  fox.weekstartendday 的数据：~793 rows (大约)
+/*!40000 ALTER TABLE `weekstartendday` DISABLE KEYS */;
 INSERT INTO `weekstartendday` (`YearWeek`, `YearNum`, `WeekNum`, `WeekStart`, `WeekEnd`) VALUES
 	(201601, 2016, 1, '2016-01-01 00:00:00', '2016-01-03 00:00:00'),
 	(201602, 2016, 2, '2016-01-04 00:00:00', '2016-01-10 00:00:00'),
@@ -889,3 +1031,7 @@ INSERT INTO `weekstartendday` (`YearWeek`, `YearNum`, `WeekNum`, `WeekStart`, `W
 	(203051, 2030, 51, '2030-12-16 00:00:00', '2030-12-22 00:00:00'),
 	(203052, 2030, 52, '2030-12-23 00:00:00', '2030-12-29 00:00:00'),
 	(203053, 2030, 53, '2030-12-30 00:00:00', '2030-12-31 00:00:00');
+/*!40000 ALTER TABLE `weekstartendday` ENABLE KEYS */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

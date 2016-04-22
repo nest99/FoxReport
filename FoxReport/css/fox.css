@@ -60,7 +60,7 @@ ul {
     font-size:18px;
     margin:10px 0 5px 0;
 }
-.projectDetailDiv {
+.Hide {
     display: none;
 }
 .projectArrow {
@@ -68,10 +68,19 @@ ul {
     display:inline-block;*/
 }
 .projectName {
-    background-color:#eee; border:1px solid #ccc; border-radius:6px;
-    line-height:1.4; margin:3px 0 0 0; padding:5px; cursor:pointer;
+    background-color:#ccc; /*border:1px solid #ccc; border-radius:6px;*/
+    line-height:1.4; margin:0; padding:5px; cursor:pointer;
     clear:both;
 }
+.projectBox {
+    background-color:#eee; border:1px solid #ccc; border-radius:6px;
+    line-height:1.4; margin:3px 0 0 0; padding:0; 
+    height:auto; overflow:hidden;
+    clear:both;
+}
+    .projectBox .trContent > td {
+        border: none;
+    }
 .arrowUp {
     width:18px; height:20px; background:url(/img/up.png) no-repeat;
     display:inline-block; cursor:pointer; margin:0px 13px 0 13px;
@@ -108,6 +117,12 @@ ul {
 }
 #editLayer {
     display:none;
-    position:fixed; z-index:999; margin-top:-250px; margin-left:-330px; left:50%; top:50%;
+    position:fixed; z-index:999; 
     padding:0px 2px 0px 0px;
 }
+    #editLayer.centerBox {
+        margin-top: -250px;
+        margin-left: -330px;
+        left: 50%;
+        top: 50%;
+    }

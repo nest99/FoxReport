@@ -6,8 +6,8 @@ using System.Web;
 namespace FoxReport.Models
 {
     /// <summary>
-    /// 整体目标
-    /// </summary>
+    /// 一、概述：目标与策略
+    /// </summary>   
     public class SummaryTargetStrategy : BaseInfo
     {
         /// <summary>

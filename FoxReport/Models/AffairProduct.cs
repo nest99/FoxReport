@@ -5,6 +5,9 @@ using System.Web;
 
 namespace FoxReport.Models
 {
+    /// <summary>
+    /// 三、重点事务：产品事务
+    /// </summary>
     public class AffairProduct : BaseInfo
     {
         /// <summary>

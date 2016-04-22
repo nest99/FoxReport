@@ -24,6 +24,11 @@ function editText(obj) {
     $("#editLayer").width(width).height(keHeight + 21);//加上“保存”按钮的高度
     $("#editLayer").show();
     $("#btnBox").width(width + 2);
+    if (id.indexOf("Project_Info") != -1) {
+        $("#editLayer").removeClass("centerBox");
+    } else {
+        $("#editLayer").addClass("centerBox");
+    }
 }
 
 function saveText() {
@@ -60,13 +65,22 @@ function cancelText() {
 }
 
 function TabPanelClicked(panelId, tabId, spry, tab) {
-    var id = "#" + panelId + "_" + tabId;
+    var id;
+    var recordId = 0;
+    if (panelId.indexOf("ProjectInfo") != -1) {
+        id = "#ProjectInfo_" + tabId;
+        recordId = tabId.substr(1 + tabId.indexOf("_"));
+        panelId = "ProjectInfo";
+        tabId = tabId.substr(0, tabId.indexOf("_"));        
+    } else {
+        id = "#" + panelId + "_" + tabId;
+    }
     if ($(id).html().trim() != "") {
         spry.showPanel(tab);
         return;//如果有内容，不从后台获取数据。
     }
     $.ajax({
-        url: "Home/" + panelId + "/" + tabId,
+        url: "Home/" + panelId + "/" + tabId + "?recordId=" + recordId,
         type: "get",
         success: function (data) {            
             $(id).html(data);
@@ -80,22 +94,24 @@ function TabPanelClicked(panelId, tabId, spry, tab) {
 
 $(document).ready(function () {
     var Summary = new Spry.Widget.TabbedPanels("Summary", { defaultTab: 0 });
-    var Detail = new Spry.Widget.TabbedPanels("Detail", { defaultTab: 0 });
-    var Problem = new Spry.Widget.TabbedPanels("Problem", { defaultTab: 0 });
-    var ProjectDetail = new Spry.Widget.TabbedPanels("ProjectDetail", { defaultTab: 0 });
-    var Project2Detail = new Spry.Widget.TabbedPanels("Project2Detail", { defaultTab: 0 });
+    //var Detail = new Spry.Widget.TabbedPanels("Detail", { defaultTab: 0 });
+    //var Problem = new Spry.Widget.TabbedPanels("Problem", { defaultTab: 0 });
+    //var ProjectDetail = new Spry.Widget.TabbedPanels("ProjectDetail", { defaultTab: 0 });
+    //var Project2Detail = new Spry.Widget.TabbedPanels("Project2Detail", { defaultTab: 0 });
     
     $(".projectName").each(function(){
         $(this).click(function () {
-            var id = "#" + $(this).attr("id") + "Detail";
+            var id = "#" + $(this).attr("id").replace("_", "Info_");
             if ($(this).attr("arrow") != "up") {
                 $(this).attr("arrow", "up");
                 $(this).children(".projectArrow").removeClass("arrowDown").addClass("arrowUp");
-                $(id).show();
+                //$(id).show();
+                $(id).slideDown();
             } else {
                 $(this).attr("arrow", "down");
                 $(this).children(".projectArrow").removeClass("arrowUp").addClass("arrowDown");
-                $(id).hide();
+                //$(id).hide();
+                $(id).slideUp();
             }
         });
     });

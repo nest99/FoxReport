@@ -10,6 +10,7 @@ namespace FoxReport.Helper
 {
     public class SqlDbHelper : Loggable<SqlDbHelper>
     {
+        private static string ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
         /// <summary>
         /// 获取初始加载时显示的Model数据
         /// </summary>        
@@ -20,8 +21,8 @@ namespace FoxReport.Helper
         public static InitShow GetInitShow(int userId, int week, int isForeign)
         {
             InitShow initShow = new InitShow();
-            
-            MySqlConnection con = new MySqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+
+            MySqlConnection con = new MySqlConnection(ConnectionString);
             string condition = " where UserId=" + userId.ToString() + " and Week=" + week.ToString() + " and IsForeign=" + isForeign.ToString();
             try
             {
@@ -35,26 +36,73 @@ namespace FoxReport.Helper
                     t.Status = reader["Status"].ToString();
                     t.Strategy = reader["Strategy"].ToString();
                     t.Target = reader["Target"].ToString();
-                    t.UserId = int.Parse(reader["UserId"].ToString());
+                    t.UserId = reader["UserId"].ToString();
                     t.Week = int.Parse(reader["Week"].ToString());
                     t.IsForeign = int.Parse(reader["IsForeign"].ToString());
+                    t.OrderNum = int.Parse(reader["OrderNum"].ToString());
                     initShow.SummaryTargetStrategyList.Add(t);
                 }
                 reader.Close();
 
-                reader = MySqlHelper.ExecuteReader(con, "select * from Detail_BizTarget " + condition);
+                reader = MySqlHelper.ExecuteReader(con, "select * from Project_Info " + condition);
                 while (reader.Read())
                 {
-                    DetailBizTarget b = new DetailBizTarget();
-                    b.Id = int.Parse(reader["Id"].ToString());
-                    b.KeyWork = reader["KeyWork"].ToString();
-                    b.ProblemAnalyze = reader["ProblemAnalyze"].ToString();
-                    b.ProjectName = reader["ProjectName"].ToString();
-                    b.RecentTarget = reader["RecentTarget"].ToString();
-                    b.UserId = int.Parse(reader["UserId"].ToString());
-                    b.Week = int.Parse(reader["Week"].ToString());
-                    b.IsForeign = int.Parse(reader["IsForeign"].ToString());
-                    initShow.DetailBizTargetList.Add(b);
+                    ProjectInfo p = new ProjectInfo();
+                    p.Id = int.Parse(reader["Id"].ToString());
+                    p.ProjectName = reader["ProjectName"].ToString();
+                    p.Target = reader["Target"].ToString();
+                    p.Progress = reader["Progress"].ToString();
+                    p.Teamwork = reader["Teamwork"].ToString();
+                    p.VersionDetail = reader["VersionDetail"].ToString();
+                    p.VersionQuality = reader["VersionQuality"].ToString();
+                    p.UserId = reader["UserId"].ToString();
+                    p.Week = int.Parse(reader["Week"].ToString());
+                    p.IsForeign = int.Parse(reader["IsForeign"].ToString());
+                    p.OrderNum = int.Parse(reader["OrderNum"].ToString());                    
+                    initShow.ProjectInfoList.Add(p);
+                }
+                reader.Close();
+
+                reader = MySqlHelper.ExecuteReader(con, "select * from Affair_Product " + condition);
+                while (reader.Read())
+                {
+                    AffairProduct p = new AffairProduct();
+                    p.Id = int.Parse(reader["Id"].ToString());
+                    p.Classify = reader["Classify"].ToString();
+                    p.Priority = reader["Priority"].ToString();
+                    p.Progress = reader["Progress"].ToString();
+                    p.Tracker = reader["Tracker"].ToString();
+                    p.Workplan = reader["Workplan"].ToString();
+                    p.UserId = reader["UserId"].ToString();
+                    p.Week = int.Parse(reader["Week"].ToString());
+                    p.IsForeign = int.Parse(reader["IsForeign"].ToString());
+                    p.OrderNum = int.Parse(reader["OrderNum"].ToString());
+                    initShow.AffairProductList.Add(p);
+                }
+                reader.Close();
+
+                reader = MySqlHelper.ExecuteReader(con, "select * from Teamwork_Info " + condition);
+                while (reader.Read())
+                {
+                    initShow.teamworkInfo.Id = int.Parse(reader["Id"].ToString());
+                    initShow.teamworkInfo.Content = reader["Content"].ToString();
+                    initShow.teamworkInfo.UserId = reader["UserId"].ToString();
+                    initShow.teamworkInfo.Week = int.Parse(reader["Week"].ToString());
+                    initShow.teamworkInfo.IsForeign = int.Parse(reader["IsForeign"].ToString());
+                    initShow.teamworkInfo.OrderNum = int.Parse(reader["OrderNum"].ToString());
+                }
+                reader.Close();
+
+                reader = MySqlHelper.ExecuteReader(con, "select * from Assist_Info " + condition);
+                while (reader.Read())
+                {
+                    AssistInfo p = new AssistInfo();
+                    initShow.assistInfo.Id = int.Parse(reader["Id"].ToString());
+                    initShow.assistInfo.Content = reader["Content"].ToString();
+                    initShow.assistInfo.UserId = reader["UserId"].ToString();
+                    initShow.assistInfo.Week = int.Parse(reader["Week"].ToString());
+                    initShow.assistInfo.IsForeign = int.Parse(reader["IsForeign"].ToString());
+                    initShow.assistInfo.OrderNum = int.Parse(reader["OrderNum"].ToString());
                 }
                 reader.Close();
             }
@@ -81,7 +129,7 @@ namespace FoxReport.Helper
                 sql = "update " + tableName + " set " + columnName + "=@value" + " where id=@id ";
             }
 
-            MySqlConnection con = new MySqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+            MySqlConnection con = new MySqlConnection(ConnectionString);
             MySqlCommand cmd = new MySqlCommand(sql, con);
             cmd.Parameters.Add("@value", MySqlDbType.VarString).Value = columnValue;
             cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
@@ -110,7 +158,7 @@ namespace FoxReport.Helper
         public static List<SummaryTargetStrategy> GetSummaryTargetStrategy(int userId, int week, int isForeign)
         {
             List<SummaryTargetStrategy> targetList = new List<SummaryTargetStrategy>();
-            MySqlConnection con = new MySqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+            MySqlConnection con = new MySqlConnection(ConnectionString);
             string condition = " where UserId=" + userId.ToString() + " and Week=" + week.ToString() + " and IsForeign=" + isForeign.ToString();
             try
             {
@@ -124,9 +172,10 @@ namespace FoxReport.Helper
                     t.Status = reader["Status"].ToString();
                     t.Strategy = reader["Strategy"].ToString();
                     t.Target = reader["Target"].ToString();
-                    t.UserId = int.Parse(reader["UserId"].ToString());
+                    t.UserId = reader["UserId"].ToString();
                     t.Week = int.Parse(reader["Week"].ToString());
                     t.IsForeign = int.Parse(reader["IsForeign"].ToString());
+                    t.OrderNum = int.Parse(reader["OrderNum"].ToString());
                     targetList.Add(t);
                 }
                 reader.Close();
@@ -146,7 +195,7 @@ namespace FoxReport.Helper
         public static List<SummaryVersion> GetSummaryVersion(int userId, int week, int isForeign)
         {
             List<SummaryVersion> versionList = new List<SummaryVersion>();
-            MySqlConnection con = new MySqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+            MySqlConnection con = new MySqlConnection(ConnectionString);
             string condition = " where UserId=" + userId.ToString() + " and Week=" + week.ToString() + " and IsForeign=" + isForeign.ToString();
             try
             {
@@ -160,9 +209,10 @@ namespace FoxReport.Helper
                     v.Request = reader["Request"].ToString();
                     v.Publish = reader["Publish"].ToString();
                     v.Risk = reader["Risk"].ToString();
-                    v.UserId = int.Parse(reader["UserId"].ToString());
+                    v.UserId = reader["UserId"].ToString();
                     v.Week = int.Parse(reader["Week"].ToString());
                     v.IsForeign = int.Parse(reader["IsForeign"].ToString());
+                    v.OrderNum = int.Parse(reader["OrderNum"].ToString());
                     versionList.Add(v);
                 }
                 reader.Close();
@@ -182,7 +232,7 @@ namespace FoxReport.Helper
         public static List<SummaryFeedback> GetSummaryFeedback(int userId, int week, int isForeign)
         {
             List<SummaryFeedback> feedbackList = new List<SummaryFeedback>();
-            MySqlConnection con = new MySqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+            MySqlConnection con = new MySqlConnection(ConnectionString);
             string condition = " where UserId=" + userId.ToString() + " and Week=" + week.ToString() + " and IsForeign=" + isForeign.ToString();
             try
             {
@@ -198,9 +248,10 @@ namespace FoxReport.Helper
                     f.Tracker = reader["Tracker"].ToString();
                     f.TrackInfo = reader["TrackInfo"].ToString();
                     f.Status = reader["Status"].ToString();
-                    f.UserId = int.Parse(reader["UserId"].ToString());
+                    f.UserId = reader["UserId"].ToString();
                     f.Week = int.Parse(reader["Week"].ToString());
                     f.IsForeign = int.Parse(reader["IsForeign"].ToString());
+                    f.OrderNum = int.Parse(reader["OrderNum"].ToString());
                     feedbackList.Add(f);
                 }
                 reader.Close();
@@ -215,6 +266,45 @@ namespace FoxReport.Helper
             }
 
             return feedbackList;
+        }
+
+        public static List<ProjectInfo> GetProjectInfo(int userId, int week, int isForeign)
+        {
+            List<ProjectInfo> projectInfoList = new List<ProjectInfo>();
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            string condition = " where UserId=" + userId.ToString() + " and Week=" + week.ToString() + " and IsForeign=" + isForeign.ToString();
+            try
+            {
+                con.Open();
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Project_Info " + condition);
+                while (reader.Read())
+                {
+                    ProjectInfo p = new ProjectInfo();
+                    p.Id = int.Parse(reader["Id"].ToString());
+                    p.ProjectName = reader["ProjectName"].ToString();
+                    p.Target = reader["Target"].ToString();
+                    p.Progress = reader["Progress"].ToString();
+                    p.Teamwork = reader["Teamwork"].ToString();
+                    p.VersionDetail = reader["VersionDetail"].ToString();
+                    p.VersionQuality = reader["VersionQuality"].ToString();
+                    p.UserId = reader["UserId"].ToString();
+                    p.Week = int.Parse(reader["Week"].ToString());
+                    p.IsForeign = int.Parse(reader["IsForeign"].ToString());
+                    p.OrderNum = int.Parse(reader["OrderNum"].ToString());
+                    projectInfoList.Add(p);
+                }
+                reader.Close();
+            }
+            catch (MySqlException e)
+            {
+                Logger.Error("查询InitShow出错。", e);
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return projectInfoList;
         }
     }
 }

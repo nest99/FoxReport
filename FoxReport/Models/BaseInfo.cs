@@ -10,7 +10,7 @@ namespace FoxReport.Models
         /// <summary>
         /// 用户Id
         /// </summary>
-        public int UserId
+        public string UserId
         {
             get;
             set;
@@ -27,6 +27,14 @@ namespace FoxReport.Models
         /// 国内=0， 国外=1
         /// </summary>
         public int IsForeign
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 序号
+        /// </summary>
+        public int OrderNum
         {
             get;
             set;

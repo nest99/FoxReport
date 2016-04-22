@@ -5,6 +5,9 @@ using System.Web;
 
 namespace FoxReport.Models
 {
+    /// <summary>
+    /// 一、概述：用户反馈TOP问题
+    /// </summary>
     public class SummaryFeedback : BaseInfo
     {
         /// <summary>
