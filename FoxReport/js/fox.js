@@ -21,8 +21,10 @@ function editText(obj) {
     var content = $("#" + id).html();
     keditor.html(content);    
     var width = $(obj).parent().width() + 12;//KindEditor的p标签padding=5,两边就是10；editLayer的padding：0 2 0 0就是2   
+    if (width < 170) { width = 170;}
     $("#editLayer").width(width).height(keHeight + 21);//加上“保存”按钮的高度
     $("#editLayer").show();
+    $("#editBack").show();
     $("#btnBox").width(width + 2);
     if (id.indexOf("Project_Info") != -1
         || id.indexOf("Teamwork_Info") != -1
@@ -109,6 +111,7 @@ function cancelText() {
     $("#editId").val("");
     keditor.html("");
     $("#editLayer").hide();
+    $("#editBack").hide();
 }
 function deleteData(tableName, id){
     var cfm = confirm("你确定要删除此数据吗？");
