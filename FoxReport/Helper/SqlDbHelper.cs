@@ -117,6 +117,28 @@ namespace FoxReport.Helper
 
             return initShow;
         }
+        public static int DeleteData(string tableName, string id)
+        {
+            string sql = "delete from " + tableName + " where Id=" + id.ToString();
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            MySqlCommand cmd = new MySqlCommand(sql, con);        
+
+            int deleteCount = 0;
+            try
+            {
+                con.Open();
+                deleteCount = cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException e)
+            {
+                Logger.Error("删除数据出错，sql=" + sql, e);
+            }
+            finally
+            {
+                con.Close();
+            }
+            return deleteCount;
+        }
         public static int SaveText(string tableName, string columnName, string columnValue, string id)
         {
             string sql = "";
@@ -182,7 +204,7 @@ namespace FoxReport.Helper
             }
             catch (MySqlException e)
             {
-                Logger.Error("查询InitShow出错。", e);
+                Logger.Error("查询SummaryTargetStrategy出错。", e);
             }
             finally
             {
@@ -219,7 +241,7 @@ namespace FoxReport.Helper
             }
             catch (MySqlException e)
             {
-                Logger.Error("查询InitShow出错。", e);
+                Logger.Error("查询SummaryVersion出错。", e);
             }
             finally
             {
@@ -258,7 +280,7 @@ namespace FoxReport.Helper
             }
             catch (MySqlException e)
             {
-                Logger.Error("查询InitShow出错。", e);
+                Logger.Error("查询SummaryFeedback出错。", e);
             }
             finally
             {
@@ -297,7 +319,7 @@ namespace FoxReport.Helper
             }
             catch (MySqlException e)
             {
-                Logger.Error("查询InitShow出错。", e);
+                Logger.Error("查询ProjectInfo出错。", e);
             }
             finally
             {
@@ -306,5 +328,76 @@ namespace FoxReport.Helper
 
             return projectInfoList;
         }
+        /// <summary>
+        /// 获取所有用户的信息
+        /// </summary>
+        /// <returns></returns>
+        public static List<UserInfo> GetUsersInfo()
+        {
+            List<UserInfo> userInfoList = new List<UserInfo>();
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            try
+            {
+                con.Open();
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from UserInfo ");
+                while (reader.Read())
+                {
+                    UserInfo u = new UserInfo();                   
+                    u.UserName = reader["UserName"].ToString();
+                    u.UserRole = int.Parse(reader["UserRole"].ToString());                   
+                    u.UserId = reader["UserId"].ToString();
+
+                    userInfoList.Add(u);
+                }
+                reader.Close();
+            }
+            catch (MySqlException e)
+            {
+                Logger.Error("查询UserInfo出错。", e);
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return userInfoList;
+        }
+        /// <summary>
+        /// 获取所有周的信息
+        /// </summary>
+        /// <returns></returns>
+        public static List<WeekInfo> GetWeekInfo()
+        {
+            List<WeekInfo> weekInfoList = new List<WeekInfo>();
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            
+            try
+            {
+                con.Open();
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from WeekStartEndDay ");
+                while (reader.Read())
+                {
+                    WeekInfo w = new WeekInfo();
+                    w.Year = int.Parse(reader["YearNum"].ToString());
+                    w.Week = int.Parse(reader["WeekNum"].ToString());
+                    w.YearWeek = int.Parse(reader["YearWeek"].ToString());
+                    w.WeekEnd = DateTime.Parse(reader["WeekEnd"].ToString());
+                    w.WeekStart = DateTime.Parse(reader["WeekStart"].ToString());
+                    weekInfoList.Add(w);
+                }
+                reader.Close();
+            }
+            catch (MySqlException e)
+            {
+                Logger.Error("查询WeekInfo出错。", e);
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return weekInfoList;
+        }
+
     }
 }

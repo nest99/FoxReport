@@ -137,6 +137,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\CacheFoxData.cs" />
     <Compile Include="Helper\DocumentModel.cs" />
     <Compile Include="Helper\HtmlToWmlReadAsXElement.cs" />
     <Compile Include="Helper\HttpSteamQuerier.cs" />
@@ -162,6 +163,9 @@
     <Compile Include="Models\AffairProduct.cs" />
     <Compile Include="Models\TeamworkInfo.cs" />
     <Compile Include="Models\AssistInfo.cs" />
+    <Compile Include="Models\SearchInfo.cs" />
+    <Compile Include="Models\UserInfo.cs" />
+    <Compile Include="Models\WeekInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource1.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -384,6 +388,39 @@
     <Content Include="js\kindeditor\themes\qq\editor.gif" />
     <Content Include="js\kindeditor\themes\qq\qq.css" />
     <Content Include="js\kindeditor\themes\simple\simple.css" />
+    <Content Include="js\My97DatePicker\calendar.js" />
+    <Content Include="js\My97DatePicker\lang\en.js" />
+    <Content Include="js\My97DatePicker\lang\zh-cn.js" />
+    <Content Include="js\My97DatePicker\lang\zh-tw.js" />
+    <Content Include="js\My97DatePicker\skin\blue\bg.jpg" />
+    <Content Include="js\My97DatePicker\skin\blue\btnbg.jpg" />
+    <Content Include="js\My97DatePicker\skin\blue\datepicker.css" />
+    <Content Include="js\My97DatePicker\skin\blue\down.jpg" />
+    <Content Include="js\My97DatePicker\skin\blue\left.gif" />
+    <Content Include="js\My97DatePicker\skin\blue\navLeft.gif" />
+    <Content Include="js\My97DatePicker\skin\blue\navRight.gif" />
+    <Content Include="js\My97DatePicker\skin\blue\qs.jpg" />
+    <Content Include="js\My97DatePicker\skin\blue\right.gif" />
+    <Content Include="js\My97DatePicker\skin\blue\up.jpg" />
+    <Content Include="js\My97DatePicker\skin\datePicker.gif" />
+    <Content Include="js\My97DatePicker\skin\default\datepicker.css" />
+    <Content Include="js\My97DatePicker\skin\default\img.gif" />
+    <Content Include="js\My97DatePicker\skin\WdatePicker.css" />
+    <Content Include="js\My97DatePicker\skin\whyGreen\bg.jpg" />
+    <Content Include="js\My97DatePicker\skin\whyGreen\datepicker.css" />
+    <Content Include="js\My97DatePicker\skin\whyGreen\img.gif" />
+    <Content Include="js\My97DatePicker\WdatePicker.js" />
+    <Content Include="js\My97DatePicker\开发包\lang\en.js" />
+    <Content Include="js\My97DatePicker\开发包\lang\zh-cn.js" />
+    <Content Include="js\My97DatePicker\开发包\lang\zh-tw.js" />
+    <Content Include="js\My97DatePicker\开发包\readme.txt" />
+    <Content Include="js\My97DatePicker\开发包\skin\datePicker.gif" />
+    <Content Include="js\My97DatePicker\开发包\skin\default\datepicker.css" />
+    <Content Include="js\My97DatePicker\开发包\skin\default\img.gif" />
+    <Content Include="js\My97DatePicker\开发包\skin\WdatePicker.css" />
+    <Content Include="js\My97DatePicker\开发包\skin\whyGreen\bg.jpg" />
+    <Content Include="js\My97DatePicker\开发包\skin\whyGreen\datepicker.css" />
+    <Content Include="js\My97DatePicker\开发包\skin\whyGreen\img.gif" />
     <Content Include="js\SpryTabbedPanels.js" />
     <Content Include="SqlScript\fox_db.sql" />
     <Content Include="Web.config" />

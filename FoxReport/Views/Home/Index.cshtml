@@ -14,7 +14,8 @@
     <link href="~/js/kindeditor/themes/simple/simple.css" rel="stylesheet" />
     <link href="~/css/fox.css" rel="stylesheet" />
 
-    <script src="~/js/jquery1.7.2.js"></script>
+    <script src="~/js/jquery1.7.2.js"></script>    
+    <script src="~/js/My97DatePicker/WdatePicker.js"></script>
     <script src="~/js/SpryTabbedPanels.js"></script>
     <script src="~/js/kindeditor/kindeditor-all.js"></script>
     <script src="~/js/kindeditor/lang/zh-CN.js"></script>
@@ -29,49 +30,45 @@
         </ul>
     </div>
     <div id="rightContent">
-        <a href="Home/Download/2" target="_blank">下载测试</a>
-        <div>
+        @*<a href="Home/Download/2" target="_blank">下载测试</a>*@
+        <div id="searchBox">
+            查询周报
             <table>
                 <tr>
                     <td><div class="topTitle">业务范围：</div></td>
-                    <td><input type="radio" id="countryIn" name="radioCountry" /><label for="countryIn">国内</label>
-                        <input type="radio" id="countryOut" name="radioCountry" /><label for="countryOut">国外</label>
+                    <td><input type="radio" id="countryInSearch" name="radioCountrySearch" checked="checked" /><label for="countryInSearch">国内</label>
+                        <input type="radio" id="countryOutSearch" name="radioCountrySearch" /><label for="countryOutSearch">国外</label>
+                    </td>                    
+                    <td><div class="topTitle">周次：</div></td>
+                    <td>
+                        <select id="ddlWeekSearch">
+                            <option value=""></option>
+                        @foreach (var item in Model.WeekInfoList)
+                        {
+                            <option value="@item.YearWeek">@(item.YearWeek) (@(item.WeekStart.ToString("MM-dd"))至@(item.WeekEnd.ToString("MM-dd")))</option>
+                        }
+                        </select>
                     </td>
                     <td><div class="topTitle">时间段：</div></td>
                     <td>
-                        <select id="ddlQ">
-                            <option>2016Q1</option>
-                            <option>2016Q2</option>
-                            <option>2016Q3</option>
-                            <option>2016Q4</option>
-                        </select>
+                        <input id="startDate" class="Wdate" type="text" 
+                            onFocus="var endDate=$dp.$('endDate');WdatePicker({onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})"/>
+                        至
+                        <input id="endDate" class="Wdate" type="text" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startDate\')}'})"/>
 
-                    </td>
-                    <td><div class="topTitle">周次：</div></td>
-                    <td>
-                        <select id="ddlWeek">
-                            <option>2016Q1</option>
-                            <option>2016Q2</option>
-                            <option>2016Q3</option>
-                            <option>2016Q4</option>
-                        </select>
+
                     </td>
                     <td><div class="topTitle">项目：</div></td>
                     <td>
-                        <select id="ddlProject">
-                            <option>2016Q1</option>
-                            <option>2016Q2</option>
-                            <option>2016Q3</option>
-                            <option>2016Q4</option>
-                        </select>
+                        <input id="searchProjectName" type="text" />
                     </td>
                     <td><div class="topTitle">负责人：</div></td>
                     <td>
                         <select id="ddlManager">
-                            <option>2016Q1</option>
-                            <option>2016Q2</option>
-                            <option>2016Q3</option>
-                            <option>2016Q4</option>
+                            <option value=""></option>
+                        @foreach(var item in Model.UserInfoList){
+                            <option value="@item.UserId">@item.UserName</option>
+                        }
                         </select>
                     </td>                    
                 </tr>
@@ -86,8 +83,33 @@
                 <button id="btnCancel" onclick="cancelText();" class="btnCancel">取消</button>
             </div>            
         </div>
+        <div id="resultMsg"></div>
 
-        <div class="projectTitle"><h1><span id="countryText">国内</span>:项目名称</h1></div>
+        <div id="editTitle">
+            填写周报
+            <table>
+                <tr>
+                    <td><div class="topTitle">业务范围：</div></td>
+                    <td><input type="radio" id="countryInEdit" name="radioCountryEdit" checked="checked" /><label for="countryInEdit">国内</label>
+                        <input type="radio" id="countryOutEdit" name="radioCountryEdit" /><label for="countryOutEdit">国外</label>
+                    </td>                    
+                    <td><div class="topTitle">周次：</div></td>
+                    <td>
+                        <select id="ddlWeekEdit">
+                            <option value=""></option>
+                        @foreach (var item in Model.WeekInfoList)
+                        {
+                            <option value="@item.YearWeek">@(item.YearWeek) (@(item.WeekStart.ToString("MM-dd"))至@(item.WeekEnd.ToString("MM-dd")))</option>
+                        }
+                        </select>
+                    </td> 
+                    <td>
+                        <div class="projectTitle"><span id="countryText">国内</span>:项目名称</div>
+                    </td>                                   
+                </tr>
+            </table>
+        </div>
+
         <div class="panelTitle">一、整体概况</div>
         <div class="TabbedPanels" id="Summary">
             <ul class="TabbedPanelsTabGroup">
@@ -98,19 +120,21 @@
             <div class="TabbedPanelsContentGroup">
                 <div id="Summary_TargetStrategy" class="TabbedPanelsContent">
                     <table id="tbTargetStrategy" class="tbContent">
-                        <tr class="trContent"><th>项目名称</th><th>目标(现状)</th><th>策略与措施</th></tr>
+                        <tr class="trContent"><th>项目名称</th><th>目标(现状)</th><th>策略与措施</th><th class="deleteTH">删除</th></tr>
                     @foreach (var item in Model.SummaryTargetStrategyList)
                     {
                         <tr id="trTargetStrategy@(item.Id)" class="trContent">
                             <td><div id="Summary_TargetStrategy_ProjectName_@(item.Id)">@Html.Raw(item.ProjectName)</div><button onclick="editText(this);" class="btnEdit"></button></td>                            
                             <td><div id="Summary_TargetStrategy_Target_@(item.Id)">@Html.Raw(item.Target)</div><button onclick="editText(this);" class="btnEdit"></button></td>
                             <td><div id="Summary_TargetStrategy_Strategy_@(item.Id)">@Html.Raw(item.Strategy)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+                            <td><button onclick="deleteData('Summary_TargetStrategy', @(item.Id));" class="btnDeleteData"></button></td>
                         </tr>
                     }
-                        <tr id="trNewTargetStrategy" class="trContent">
+                        <tr id="trNewTargetStrategy" class="trContent trNewRow">
                             <td><div id="Summary_TargetStrategy_ProjectName_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>                            
                             <td><div id="Summary_TargetStrategy_Target_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
                             <td><div id="Summary_TargetStrategy_Strategy_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+                            <td><button onclick="deleteData('', 0);" class="btnDeleteData"></button></td>
                         </tr>
                     </table>
                 </div>
@@ -121,28 +145,33 @@
        
         <div>二、项目概况</div>
     @foreach(var item in @Model.ProjectInfoList){
-        <div class="projectBox">
-            <div id="Project_@(item.Id)" class="projectName"><i class="projectArrow arrowDown"></i>项目名称：@(item.ProjectName)</div>
+        <div class="projectBox" id="Project_Info_Box@(item.Id)">
+            <div class="projectHeader">
+                <div class="projectName" id="Project_@(item.Id)"><i class="projectArrow arrowDown"></i>项目名称：</div>
+                <input id="Project_Info_ProjectName_@(item.Id)" type="text" maxlength="50" value="@(item.ProjectName)" />
+                <button onclick="saveProjectName(this)" id="saveProjectName_@(item.Id)">保存</button>
+                <button onclick="deleteData('Project_Info', @(item.Id));" class="btnDeleteData"></button>
+            </div>
             <div class="TabbedPanels Hide" id="ProjectInfo_@(item.Id)">
                 <ul class="TabbedPanelsTabGroup">
-                    <li id="Target_@(item.Id)" class="TabbedPanelsTab">目标与近期重点</li>
-                    <li id="Progress_@(item.Id)" class="TabbedPanelsTab">项目进展</li>
-                    <li id="Teamwork_@(item.Id)" class="TabbedPanelsTab">团队工作方式优化</li>
-                    <li id="VersionDetail_@(item.Id)" class="TabbedPanelsTab">版本详情</li>
-                    <li id="VersionQuality_@(item.Id)" class="TabbedPanelsTab">版本质量分析</li>
+                    <li class="TabbedPanelsTab" id="Target_@(item.Id)">目标与近期重点</li>
+                    <li class="TabbedPanelsTab" id="Progress_@(item.Id)">项目进展</li>
+                    <li class="TabbedPanelsTab" id="Teamwork_@(item.Id)">团队工作方式优化</li>
+                    <li class="TabbedPanelsTab" id="VersionDetail_@(item.Id)">版本详情</li>
+                    <li class="TabbedPanelsTab" id="VersionQuality_@(item.Id)">版本质量分析</li>
                 </ul>
                 <div class="TabbedPanelsContentGroup">
-                    <div id="ProjectInfo_Target_@(item.Id)" class="TabbedPanelsContent">
-                        <table id="tbTarget_@(item.Id)" class="tbContent">
-                            <tr id="trTarget_@(item.Id)" class="trContent">
-                                <td><div id="Project_Info_Target_@(item.Id)">@Html.Raw(item.Target)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+                    <div class="TabbedPanelsContent" id="ProjectInfo_Target_@(item.Id)">
+                        <table class="tbContent" id="tbTarget_@(item.Id)">
+                            <tr class="trContent" id="trTarget_@(item.Id)">
+                                <td id="tdContentTrarget_@(item.Id)"><div id="Project_Info_Target_@(item.Id)">@Html.Raw(item.Target)</div><button onclick="editText(this);" class="btnEdit"></button></td>
                             </tr>
                         </table>
                     </div>
-                    <div id="ProjectInfo_Progress_@(item.Id)" class="TabbedPanelsContent"></div>
-                    <div id="ProjectInfo_Teamwork_@(item.Id)" class="TabbedPanelsContent"></div>
-                    <div id="ProjectInfo_VersionDetail_@(item.Id)" class="TabbedPanelsContent"></div>                    
-                    <div id="ProjectInfo_VersionQuality_@(item.Id)" class="TabbedPanelsContent"></div>
+                    <div class="TabbedPanelsContent" id="ProjectInfo_Progress_@(item.Id)"></div>
+                    <div class="TabbedPanelsContent" id="ProjectInfo_Teamwork_@(item.Id)"></div>
+                    <div class="TabbedPanelsContent" id="ProjectInfo_VersionDetail_@(item.Id)"></div>                    
+                    <div class="TabbedPanelsContent" id="ProjectInfo_VersionQuality_@(item.Id)"></div>
                 </div>
             </div>
             <script type="text/javascript">
@@ -150,6 +179,40 @@
             </script>
         </div>
     }
+        @*新增项目概况*@
+        <div id="newProjectInfo" class="projectBox">
+            <div class="projectHeader">
+                <div id="Project_0" class="projectName"><i class="projectArrow arrowDown"></i>项目名称：</div>
+                <input id="Project_Info_ProjectName_0" type="text" maxlength="50" />
+                <button onclick="saveProjectName(this);" id="saveProjectName_0">保存</button>
+            </div>
+            <div class="TabbedPanels Hide" id="ProjectInfo_0">
+                <ul class="TabbedPanelsTabGroup">
+                    <li class="TabbedPanelsTab" id="Target_0">目标与近期重点</li>
+                    <li class="TabbedPanelsTab" id="Progress_0">项目进展</li>
+                    <li class="TabbedPanelsTab" id="Teamwork_0">团队工作方式优化</li>
+                    <li class="TabbedPanelsTab" id="VersionDetail_0">版本详情</li>
+                    <li class="TabbedPanelsTab" id="VersionQuality_0">版本质量分析</li>
+                </ul>
+                <div class="TabbedPanelsContentGroup">
+                    <div class="TabbedPanelsContent" id="ProjectInfo_Target_0">
+                        <table class="tbContent" id="tbTarget_0">
+                            <tr class="trContent" id="trTarget_0">
+                                <td id="tdContentTrarget_0"><div id="Project_Info_Target_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="TabbedPanelsContent" id="ProjectInfo_Progress_0"></div>
+                    <div class="TabbedPanelsContent" id="ProjectInfo_Teamwork_0"></div>
+                    <div class="TabbedPanelsContent" id="ProjectInfo_VersionDetail_0"></div>                    
+                    <div class="TabbedPanelsContent" id="ProjectInfo_VersionQuality_0"></div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                var ProjectInfo_0 = new Spry.Widget.TabbedPanels("ProjectInfo_0", { defaultTab: 0 });
+            </script>
+        </div>
+
 
         <div class="panelTitle">三、重点事务 产品事务</div>
         <div class="TabbedPanels" id="Affair">
@@ -159,7 +222,7 @@
             <div class="TabbedPanelsContentGroup">
                 <div id="Affair_Product" class="TabbedPanelsContent">
                     <table id="tbProduct" class="tbContent">
-                        <tr class="trContent"><th>分类</th><th>优先级</th><th>负责人</th><th>工作计划</th><th>进展情况</th></tr>
+                        <tr class="trContent"><th>分类</th><th>优先级</th><th>负责人</th><th>工作计划</th><th>进展情况</th><th>删除</th></tr>
                     @foreach (var item in Model.AffairProductList)
                     {
                         <tr id="trProduct@(item.Id)" class="trContent">
@@ -168,37 +231,52 @@
                             <td><div id="Affair_Product_Tracker_@(item.Id)">@Html.Raw(item.Tracker)</div><button onclick="editText(this);" class="btnEdit"></button></td>
                             <td><div id="Affair_Product_Workplan_@(item.Id)">@Html.Raw(item.Workplan)</div><button onclick="editText(this);" class="btnEdit"></button></td>
                             <td><div id="Affair_Product_Progress_@(item.Id)">@Html.Raw(item.Progress)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+                            <td><button onclick="deleteData('Affair_Product', @(item.Id));" class="btnDeleteData"></button></td>
                         </tr>
                     }
-                        <tr id="trNewProduct" class="trContent">
+                        <tr id="trNewProduct" class="trContent trNewRow">
                             <td><div id="Affair_Product_Classify_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>                            
                             <td><div id="Affair_Product_Priority_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
                             <td><div id="Affair_Product_Tracker_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
                             <td><div id="Affair_Product_Workplan_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
                             <td><div id="Affair_Product_Progress_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+                            <td><button onclick="deleteData('', 0);" class="btnDeleteData"></button></td>
                         </tr>
                     </table>
                 </div>
             </div>
         </div>
 
-        <div class="panelTitle">问题与求助</div>
-        <div class="TabbedPanels" id="Problem">
-            <ul class="TabbedPanelsTabGroup">
-                <li class="TabbedPanelsTab">重点事务</li>
-                <li class="TabbedPanelsTab">求助项</li>
-                <li class="TabbedPanelsTab">改进项</li>
-            </ul>
-            <div class="TabbedPanelsContentGroup">
-                <div id="PanelProblemContent0" class="TabbedPanelsContent">
-                    <table id="tbProblem" class="tbContent">
-                        <tr class="trContent"><th>分类</th><th>优先级</th><th>负责人</th><th>工作计划</th><th>进展情况</th></tr>
-                        <tr id="trNewProblem" class="trContent"><td></td><td></td><td></td><td></td><td></td></tr>
-                    </table>
-                </div>
-                <div id="PanelProblemContent1" class="TabbedPanelsContent"></div>
-                <div id="PanelProblemContent2" class="TabbedPanelsContent"></div>
-            </div>
+        <div class="panelTitle">四、团队工作方式优化</div>
+        <div class="TabbedPanels" id="TeamworkInfo">
+            <table id="tbTeamworkInfo" class="tbContent">
+                <tr id="trTeamworkInfo" class="trContent">
+                    <td>
+                        <div id="Teamwork_Info_Content_@(Model.teamworkInfo.Id)">
+                            @if (@Model.teamworkInfo.Id > 0)
+                            {
+                                @Html.Raw(Model.teamworkInfo.Content)
+                            }
+                        </div><button onclick="editText(this);" class="btnEdit"></button>
+                    </td>
+                </tr>
+            </table>           
+        </div>
+
+        <div class="panelTitle">五、需要的协助和支持</div>
+        <div class="TabbedPanels" id="AssistInfo">
+            <table id="tbAssistInfo" class="tbContent">
+                <tr id="trAssistInfo" class="trContent">
+                    <td>
+                        <div id="Assist_Info_Content_@(Model.assistInfo.Id)">
+                            @if(@Model.assistInfo.Id > 0)
+                            {
+                                @Html.Raw(Model.assistInfo.Content)
+                            }
+                        </div><button onclick="editText(this);" class="btnEdit"></button>
+                    </td>
+                </tr>
+            </table>
         </div>
 
     </div>

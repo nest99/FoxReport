@@ -64,7 +64,17 @@ namespace FoxReport.Controllers
             };
             return Json(obj);
         }
-
+        
+        [HttpPost]
+        public JsonResult DeleteData(string id, string tableName)
+        {
+            int deleteCount = SqlDbHelper.DeleteData(tableName, id);
+            var obj = new
+            {
+                DeleteCount = deleteCount
+            };
+            return Json(obj);
+        }
         public PartialViewResult Summary(string id)
         {
             int userId = 0;
