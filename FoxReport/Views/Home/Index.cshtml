@@ -36,8 +36,8 @@
             <table>
                 <tr>
                     <td><div class="topTitle">业务范围：</div></td>
-                    <td><input type="radio" id="countryInSearch" name="radioCountrySearch" checked="checked" /><label for="countryInSearch">国内</label>
-                        <input type="radio" id="countryOutSearch" name="radioCountrySearch" /><label for="countryOutSearch">国外</label>
+                    <td><input type="radio" id="countryInSearch" name="radioCountrySearch" checked="checked" value="0" /><label for="countryInSearch">国内</label>
+                        <input type="radio" id="countryOutSearch" name="radioCountrySearch" value="1" /><label for="countryOutSearch">国外</label>
                     </td>                    
                     <td><div class="topTitle">周次：</div></td>
                     <td>
@@ -64,13 +64,16 @@
                     </td>
                     <td><div class="topTitle">负责人：</div></td>
                     <td>
-                        <select id="ddlManager">
+                        <select id="ddlTracker">
                             <option value=""></option>
                         @foreach(var item in Model.UserInfoList){
                             <option value="@item.UserId">@item.UserName</option>
                         }
                         </select>
-                    </td>                    
+                    </td>  
+                    <td>
+                        <button id="btnSearch" onclick="Search()">查询</button>
+                    </td>                  
                 </tr>
             </table>
         </div>
@@ -88,7 +91,7 @@
         </div>  
         <div id="resultMsg"></div>
 
-        <div id="editTitle">
+        @*<div id="editTitle">
             填写周报
             <table>
                 <tr>
@@ -111,7 +114,7 @@
                     </td>                                   
                 </tr>
             </table>
-        </div>
+        </div>*@
 
         <div class="panelTitle">一、整体概况</div>
         <div class="TabbedPanels" id="Summary">

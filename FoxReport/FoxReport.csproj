@@ -133,7 +133,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\PreviewController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\SetController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -164,8 +168,10 @@
     <Compile Include="Models\TeamworkInfo.cs" />
     <Compile Include="Models\AssistInfo.cs" />
     <Compile Include="Models\SearchInfo.cs" />
+    <Compile Include="Models\UserAndWeekInfo.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Models\WeekInfo.cs" />
+    <Compile Include="Models\InitReport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource1.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -180,6 +186,7 @@
     <Content Include="css\defaultWord.css" />
     <Content Include="css\SpryTabbedPanels.css" />
     <Content Include="css\fox.css" />
+    <Content Include="css\foxreport.css" />
     <Content Include="Global.asax" />
     <Content Include="img\blue.png" />
     <Content Include="img\gray.png" />
@@ -422,6 +429,7 @@
     <Content Include="js\My97DatePicker\开发包\skin\whyGreen\datepicker.css" />
     <Content Include="js\My97DatePicker\开发包\skin\whyGreen\img.gif" />
     <Content Include="js\SpryTabbedPanels.js" />
+    <Content Include="js\foxreport.js" />
     <Content Include="SqlScript\fox_db.sql" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -470,6 +478,36 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\_Project_Info.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Report\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Report\_Project_Info.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Report\_Summary_Feedback.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Report\_Summary_Suggest.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Report\_Summary_TargetStrategy.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Report\_Summary_Version.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Index\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Report\_SearchDiv.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Set\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

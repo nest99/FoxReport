@@ -1,0 +1,53 @@
+﻿@model FoxReport.Models.UserAndWeekInfo
+
+<div id="searchBox">
+    @*查询周报*@
+    <table>
+        <tr>
+            <td><div class="topTitle">业务范围：</div></td>
+            <td><input type="radio" id="countryInSearch" onclick="Search()" name="radioCountrySearch" @(ViewBag.SelectedIsForeign == "0" ? " checked=\"checked\"" : "") value="0" /><label for="countryInSearch">国内</label>
+                <input type="radio" id="countryOutSearch" onclick="Search()" name="radioCountrySearch" @(ViewBag.SelectedIsForeign == "1" ? " checked=\"checked\"" : "") value="1" /><label for="countryOutSearch">国外</label>
+            </td>                    
+            <td><div class="topTitle">周次：</div></td>
+            <td>
+                <select id="ddlWeekSearch" onchange="Search()">
+                    @*<option value=""></option>*@
+                @foreach (var item in Model.WeekInfoList)
+                {
+                    <option value="@item.YearWeek" @(item.YearWeek == int.Parse(ViewBag.SelectedYearWeek) ? " selected=\"selected\"" : "")>
+                        @(item.YearWeek) (@(item.WeekStart.ToString("MM-dd"))至@(item.WeekEnd.ToString("MM-dd")))
+                    </option>
+                }
+                </select>
+            </td>
+            @*<td><div class="topTitle">时间段：</div></td>
+            <td>
+                <input id="startDate" class="Wdate" type="text" 
+                    onFocus="var endDate=$dp.$('endDate');WdatePicker({onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})"/>
+                至
+                <input id="endDate" class="Wdate" type="text" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startDate\')}'})"/>
+
+
+            </td>*@
+            
+            <td><div class="topTitle">负责人：</div></td>
+            <td>
+                <select id="ddlTracker" onchange="Search()">
+                    @*<option value=""></option>*@
+                @foreach(var item in Model.UserInfoList){
+                    <option value="@item.UserId" @(ViewBag.SelectedUserId == item.UserId ? " selected=\"selected\"" : "")>@item.UserName</option>
+                }
+                </select>
+            </td>  
+
+            @*<td><div class="topTitle">项目：</div></td>
+            <td>
+                <input id="searchProjectName" type="text" />
+            </td>
+            <td>
+                <button id="btnSearch" onclick="Search()">查询</button>
+            </td>*@                  
+        </tr>
+    </table>
+</div>
+            

@@ -1,0 +1,80 @@
+﻿@model FoxReport.Models.InitShow
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Fox Report</title>  
+    <link href="~/js/kindeditor/themes/simple/simple.css" rel="stylesheet" />
+    <link href="~/css/foxreport.css" rel="stylesheet" />
+
+    <script src="~/js/jquery1.7.2.js"></script>    
+    <script src="~/js/My97DatePicker/WdatePicker.js"></script>   
+    <script src="~/js/kindeditor/kindeditor-all.js"></script>
+    <script src="~/js/kindeditor/lang/zh-CN.js"></script>
+    <script src="~/js/foxreport.js"></script>
+</head>
+<body>
+    <div id="leftMenu">
+        <ul class="nav">
+            <li><a href="#" onclick="showPage('Report')">填写周报</a></li>
+            <li><a href="#" onclick="showPage('User')">用户管理</a></li>
+            <li><a href="#" onclick="showPage('Set')">设置</a></li>
+        </ul>
+    </div>
+    <div id="rightPage">
+        <div id="pageReport" class="page">
+
+            @{ Html.RenderAction("SearchDiv", "Report"); }
+
+            <div id="editBack">
+                <div id="editLayer">            
+                    <input type="hidden" id="editId" value="" />            
+                    <textarea id="keText"></textarea>
+                    <div id="btnBox">
+                        <button id="btnSubmit" onclick="saveText();" class="btnSave">保存</button>
+                        <button id="btnCancel" onclick="cancelText();" class="btnCancel">取消</button>
+                    </div>
+                </div>
+            </div> 
+            <div id="delCover">
+                <div id="delConfirm">
+                    <div id="delMsg">你确定要删除此数据？</div>
+                    <div id="delBtn">
+                        <input type="hidden" id="delTableName" value="" />
+                        <input type="hidden" id="delDataId" value="" />
+                        <button id="delOK" onclick="delOK();">确认</button>
+                        <button id="delCancel" onclick="delCancel();">取消</button>
+                    </div>
+                </div>
+            </div>
+            <div id="resultMsg"></div>
+
+            <div id="pageReportContent">
+                @{ Html.RenderAction("Index", "Report"); }
+            </div>
+        </div>
+        <div id="pageUser" class="page">
+            <div id="pageUserContent">
+                @{  Html.RenderPartial("../User/Index");  }
+            </div>
+        </div>
+        <div id="pageSet" class="page">
+
+            <div id="pageSetContent">
+                
+            </div>
+        </div>
+    </div>
+
+    <div id="loadingDiv" style="display:none;">
+        <div id="loadingImgBox">
+            <img id="loadingImg" alt="Loading..." src="/img/loadingDefault.gif" />
+        </div>
+    </div>
+</body>
+</html>

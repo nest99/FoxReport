@@ -117,6 +117,21 @@ namespace FoxReport.Helper
 
             return initShow;
         }
+
+        public static InitReport GetInitReport(string whereCondition, out int[] totalCount, out int[] totalPage)
+        {
+            totalCount = new int[3];
+            totalPage = new int[3];
+
+            InitReport initReport = new InitReport();
+            initReport.SummaryTargetStrategyList = GetSummaryTargetStrategy(whereCondition, out totalCount[0], out totalPage[0]);
+            initReport.ProjectInfoList = GetProjectInfoList(whereCondition, out totalCount[1], out totalPage[1]);
+            initReport.AffairProductList = GetAffairParoduct(whereCondition, out totalCount[2], out totalPage[2]);
+            initReport.teamworkInfo = GetTeamworkInfo(whereCondition);
+            initReport.assistInfo = GetAssistInfo(whereCondition);
+            return initReport;
+        }
+        
         public static int DeleteData(string tableName, string id)
         {
             string sql = "delete from " + tableName + " where Id=" + id.ToString();
@@ -139,12 +154,21 @@ namespace FoxReport.Helper
             }
             return deleteCount;
         }
-        public static int SaveText(string tableName, string columnName, string columnValue, string id)
+        /// <summary>
+        /// 保存字段值到数据库
+        /// </summary>
+        /// <param name="tableName">表名</param>
+        /// <param name="columnName">字段名称</param>
+        /// <param name="columnValue">字段值</param>
+        /// <param name="id">行id</param>
+        /// <returns></returns>
+        public static int SaveText(string tableName, string columnName, string columnValue, string id, string userId, string week, string isForeign)
         {
             string sql = "";
             if (id == "0")
             {
-                sql = "insert into " + tableName + " (" + columnName + ") values(@value);";
+                sql = "insert into " + tableName + " (" + columnName + ", UserId, Week, IsForeign) " +
+                    " values(@value, '" + userId + "', " + week + ", " + isForeign + ");";
             }
             else
             {
@@ -177,15 +201,19 @@ namespace FoxReport.Helper
             return newId;
         }
 
-        public static List<SummaryTargetStrategy> GetSummaryTargetStrategy(int userId, int week, int isForeign)
+        /// <summary>
+        /// 一、整体概况
+        /// </summary>
+        public static List<SummaryTargetStrategy> GetSummaryTargetStrategy(string whereCondition, out int totalCount, out int totalPage)
         {
             List<SummaryTargetStrategy> targetList = new List<SummaryTargetStrategy>();
             MySqlConnection con = new MySqlConnection(ConnectionString);
-            string condition = " where UserId=" + userId.ToString() + " and Week=" + week.ToString() + " and IsForeign=" + isForeign.ToString();
+            totalCount = 0;
             try
             {
                 con.Open();
-                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Summary_TargetStrategy " + condition);
+                totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Summary_TargetStrategy " + whereCondition).ToString());
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Summary_TargetStrategy " + whereCondition);
                 while (reader.Read())
                 {
                     SummaryTargetStrategy t = new SummaryTargetStrategy();
@@ -210,19 +238,22 @@ namespace FoxReport.Helper
             {
                 con.Close();
             }
+            int pageSize = int.Parse(ConfigurationManager.AppSettings["pageSize"]);
+            totalPage = totalCount % pageSize == 0 ? totalCount / pageSize : totalCount / pageSize + 1;
 
             return targetList;
         }
 
-        public static List<SummaryVersion> GetSummaryVersion(int userId, int week, int isForeign)
+        public static List<SummaryVersion> GetSummaryVersion(string whereCondition, out int totalCount, out int totalPage)
         {
             List<SummaryVersion> versionList = new List<SummaryVersion>();
             MySqlConnection con = new MySqlConnection(ConnectionString);
-            string condition = " where UserId=" + userId.ToString() + " and Week=" + week.ToString() + " and IsForeign=" + isForeign.ToString();
+            totalCount = 0;
             try
             {
                 con.Open();
-                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Summary_Version " + condition);
+                totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Summary_Version " + whereCondition).ToString());
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Summary_Version " + whereCondition);
                 while (reader.Read())
                 {
                     SummaryVersion v = new SummaryVersion();
@@ -247,19 +278,22 @@ namespace FoxReport.Helper
             {
                 con.Close();
             }
+            int pageSize = int.Parse(ConfigurationManager.AppSettings["pageSize"]);
+            totalPage = totalCount % pageSize == 0 ? totalCount / pageSize : totalCount / pageSize + 1;
 
             return versionList;
         }
 
-        public static List<SummaryFeedback> GetSummaryFeedback(int userId, int week, int isForeign)
+        public static List<SummaryFeedback> GetSummaryFeedback(string whereCondition, out int totalCount, out int totalPage)
         {
             List<SummaryFeedback> feedbackList = new List<SummaryFeedback>();
             MySqlConnection con = new MySqlConnection(ConnectionString);
-            string condition = " where UserId=" + userId.ToString() + " and Week=" + week.ToString() + " and IsForeign=" + isForeign.ToString();
+            totalCount = 0;
             try
             {
                 con.Open();
-                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Summary_Feedback " + condition);
+                totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Summary_Feedback " + whereCondition).ToString());
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Summary_Feedback " + whereCondition);
                 while (reader.Read())
                 {
                     SummaryFeedback f = new SummaryFeedback();
@@ -286,19 +320,105 @@ namespace FoxReport.Helper
             {
                 con.Close();
             }
+            int pageSize = int.Parse(ConfigurationManager.AppSettings["pageSize"]);
+            totalPage = totalCount % pageSize == 0 ? totalCount / pageSize : totalCount / pageSize + 1;
 
             return feedbackList;
         }
 
-        public static List<ProjectInfo> GetProjectInfo(int userId, int week, int isForeign)
+        public static List<SummarySuggest> GetSummarySuggest(string whereCondition, out int totalCount, out int totalPage)
         {
-            List<ProjectInfo> projectInfoList = new List<ProjectInfo>();
+            List<SummarySuggest> suggestList = new List<SummarySuggest>();
             MySqlConnection con = new MySqlConnection(ConnectionString);
-            string condition = " where UserId=" + userId.ToString() + " and Week=" + week.ToString() + " and IsForeign=" + isForeign.ToString();
+            totalCount = 0;
             try
             {
                 con.Open();
-                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Project_Info " + condition);
+                totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Summary_Suggest " + whereCondition).ToString());
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Summary_Suggest " + whereCondition);
+                while (reader.Read())
+                {
+                    SummarySuggest s = new SummarySuggest();
+                    s.Id = int.Parse(reader["Id"].ToString());
+                    s.Seq = reader["Seq"].ToString();
+                    s.Platform = reader["Platform"].ToString();
+                    s.Issue = reader["Issue"].ToString();
+                    s.SuggestContent = reader["SuggestContent"].ToString();
+                    s.TrackInfo = reader["TrackInfo"].ToString();
+                    s.UserCount = reader["UserCount"].ToString();
+                    s.UserId = reader["UserId"].ToString();
+                    s.Week = int.Parse(reader["Week"].ToString());
+                    s.IsForeign = int.Parse(reader["IsForeign"].ToString());
+                    s.OrderNum = int.Parse(reader["OrderNum"].ToString());
+                    suggestList.Add(s);
+                }
+                reader.Close();
+            }
+            catch (MySqlException e)
+            {
+                Logger.Error("查询SummarySuggest出错。", e);
+            }
+            finally
+            {
+                con.Close();
+            }
+            int pageSize = int.Parse(ConfigurationManager.AppSettings["pageSize"]);
+            totalPage = totalCount % pageSize == 0 ? totalCount / pageSize : totalCount / pageSize + 1;
+
+            return suggestList;
+        }
+
+        /// <summary>
+        /// 二、项目概况
+        /// </summary>
+        public static ProjectInfo GetProjectInfo(string whereCondition)
+        {
+            ProjectInfo projectInfo = new ProjectInfo();
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            try
+            {
+                con.Open();               
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Project_Info " + whereCondition);
+                while (reader.Read())
+                {
+                    projectInfo.Id = int.Parse(reader["Id"].ToString());
+                    projectInfo.ProjectName = reader["ProjectName"].ToString();
+                    projectInfo.Target = reader["Target"].ToString();
+                    projectInfo.Progress = reader["Progress"].ToString();
+                    projectInfo.Teamwork = reader["Teamwork"].ToString();
+                    projectInfo.VersionDetail = reader["VersionDetail"].ToString();
+                    projectInfo.VersionQuality = reader["VersionQuality"].ToString();
+                    projectInfo.UserId = reader["UserId"].ToString();
+                    projectInfo.Week = int.Parse(reader["Week"].ToString());
+                    projectInfo.IsForeign = int.Parse(reader["IsForeign"].ToString());
+                    projectInfo.OrderNum = int.Parse(reader["OrderNum"].ToString());                    
+                }
+                reader.Close();
+            }
+            catch (MySqlException e)
+            {
+                Logger.Error("查询ProjectInfo出错。", e);
+            }
+            finally
+            {
+                con.Close();
+            }
+            
+            return projectInfo;
+        }
+        /// <summary>
+        /// 二、项目概况列表
+        /// </summary>
+        public static List<ProjectInfo> GetProjectInfoList(string whereCondition, out int totalCount, out int totalPage)
+        {
+            List<ProjectInfo> projectInfoList = new List<ProjectInfo>();
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            totalCount = 0;
+            try
+            {
+                con.Open();
+                totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Project_Info " + whereCondition).ToString());
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Project_Info " + whereCondition);
                 while (reader.Read())
                 {
                     ProjectInfo p = new ProjectInfo();
@@ -319,15 +439,129 @@ namespace FoxReport.Helper
             }
             catch (MySqlException e)
             {
-                Logger.Error("查询ProjectInfo出错。", e);
+                Logger.Error("查询ProjectInfoList出错。", e);
+            }
+            finally
+            {
+                con.Close();
+            }
+            int pageSize = int.Parse(ConfigurationManager.AppSettings["pageSize"]);
+            totalPage = totalCount % pageSize == 0 ? totalCount / pageSize : totalCount / pageSize + 1;
+
+            return projectInfoList;
+        }
+        /// <summary>
+        /// 三、重点事务：产品事务
+        /// </summary>
+        public static List<AffairProduct> GetAffairParoduct(string whereCondition, out int totalCount, out int totalPage)
+        {
+            List<AffairProduct> productList = new List<AffairProduct>();
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            totalCount = 0;
+            try
+            {
+                con.Open();
+                totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Affair_Product " + whereCondition).ToString());
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Affair_Product " + whereCondition);
+                while (reader.Read())
+                {
+                    AffairProduct p = new AffairProduct();
+                    p.Id = int.Parse(reader["Id"].ToString());
+                    p.Classify = reader["Classify"].ToString();
+                    p.Priority = reader["Priority"].ToString();
+                    p.Progress = reader["Progress"].ToString();
+                    p.Tracker = reader["Tracker"].ToString();
+                    p.Workplan = reader["Workplan"].ToString();
+                    p.UserId = reader["UserId"].ToString();
+                    p.Week = int.Parse(reader["Week"].ToString());
+                    p.IsForeign = int.Parse(reader["IsForeign"].ToString());
+                    p.OrderNum = int.Parse(reader["OrderNum"].ToString());
+                    productList.Add(p);
+                }
+                reader.Close();
+            }
+            catch (MySqlException e)
+            {
+                Logger.Error("查询InitShow出错。", e);
+            }
+            finally
+            {
+                con.Close();
+            }
+            int pageSize = int.Parse(ConfigurationManager.AppSettings["pageSize"]);
+            totalPage = totalCount % pageSize == 0 ? totalCount / pageSize : totalCount / pageSize + 1;
+
+            return productList;
+        }
+        
+        /// <summary>
+        /// 四、团队工作方式优化
+        /// </summary>
+        public static TeamworkInfo GetTeamworkInfo(string whereCondition)
+        {
+            TeamworkInfo teamworkInfo = new TeamworkInfo();
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            try
+            {
+                con.Open();
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Teamwork_Info " + whereCondition);
+                while (reader.Read())
+                {
+                    teamworkInfo.Id = int.Parse(reader["Id"].ToString());
+                    teamworkInfo.Content = reader["Content"].ToString();
+                    teamworkInfo.UserId = reader["UserId"].ToString();
+                    teamworkInfo.Week = int.Parse(reader["Week"].ToString());
+                    teamworkInfo.IsForeign = int.Parse(reader["IsForeign"].ToString());
+                    teamworkInfo.OrderNum = int.Parse(reader["OrderNum"].ToString());
+                }
+                reader.Close();
+            }
+            catch (MySqlException e)
+            {
+                Logger.Error("查询Teamwork_Info出错。", e);
             }
             finally
             {
                 con.Close();
             }
 
-            return projectInfoList;
+            return teamworkInfo;
         }
+        /// <summary>
+        /// 五、需要的协助和支持
+        /// </summary>
+        public static AssistInfo GetAssistInfo(string whereCondition)
+        {
+            AssistInfo assistInfo = new AssistInfo();
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            try
+            {
+                con.Open();
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Assist_Info " + whereCondition);
+                while (reader.Read())
+                {
+                    AssistInfo p = new AssistInfo();
+                    assistInfo.Id = int.Parse(reader["Id"].ToString());
+                    assistInfo.Content = reader["Content"].ToString();
+                    assistInfo.UserId = reader["UserId"].ToString();
+                    assistInfo.Week = int.Parse(reader["Week"].ToString());
+                    assistInfo.IsForeign = int.Parse(reader["IsForeign"].ToString());
+                    assistInfo.OrderNum = int.Parse(reader["OrderNum"].ToString());
+                }
+                reader.Close();
+            }
+            catch (MySqlException e)
+            {
+                Logger.Error("查询AssistInfo出错。", e);
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return assistInfo;
+        }
+
         /// <summary>
         /// 获取所有用户的信息
         /// </summary>
@@ -362,6 +596,7 @@ namespace FoxReport.Helper
 
             return userInfoList;
         }
+      
         /// <summary>
         /// 获取所有周的信息
         /// </summary>

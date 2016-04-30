@@ -1,5 +1,5 @@
 ﻿/// <reference path="jquery1.7.2.js" />
-var arrowUp = "▲", arrowDown = "▼";
+
 var keditor;
 var keHeight = 350;
 KindEditor.ready(function (K) {
@@ -113,6 +113,7 @@ function cancelText() {
     $("#editLayer").hide();
     $("#editBack").hide();
 }
+//删除指定表名、指定id的数据
 function deleteData(tableName, id){
     var cfm = confirm("你确定要删除此数据吗？");
     if (cfm) {
@@ -166,34 +167,39 @@ function TabPanelClicked(panelId, tabId, spry, tab) {
         }
     });
 }
-
+//查询
+function Search() {
+    var isForeign = $("input[name=radioCountrySearch]:checked").val();
+    var week = $("#ddlWeekSearch").val();
+    var tracker = $("#ddlTracker").val();
+    var project = encodeURIComponent( $("#searchProjectName").val() );
+    var start = encodeURIComponent( $("#startDate").val() );
+    var end = encodeURIComponent($("#endDate").val());
+    
+    //$.ajax({
+    //    url: "Home/Search/" + isForeign + "?week=" + week + "&tracker=" + tracker + 
+    //        "&project=" + project + "&start=" + start + "&end=" + end,
+    //    type: "get",
+    //    success: function (data) {
+    //        $(id).html(data);
+    //        spry.showPanel(tab);
+    //    },
+    //    error: function (data) {
+    //        alert("responseText=" + data.responseText + ", data=" + data);
+    //    }
+    //});
+}
 $(document).ready(function () {
     var Summary = new Spry.Widget.TabbedPanels("Summary", { defaultTab: 0 });
-    //var Detail = new Spry.Widget.TabbedPanels("Detail", { defaultTab: 0 });
-    //var Problem = new Spry.Widget.TabbedPanels("Problem", { defaultTab: 0 });
-    //var ProjectDetail = new Spry.Widget.TabbedPanels("ProjectDetail", { defaultTab: 0 });
-    //var Project2Detail = new Spry.Widget.TabbedPanels("Project2Detail", { defaultTab: 0 });
     
     //二、项目概述中点击每个项目时展开/折叠详细信息
     $(".projectName").each(function(){
         $(this).click(function () {
-            //var id = "#" + $(this).attr("id").replace("_", "Info_");
-            //if ($(this).attr("arrow") != "up") {
-            //    $(this).attr("arrow", "up");
-            //    $(this).children(".projectArrow").removeClass("arrowDown").addClass("arrowUp");
-            //    //$(id).show();
-            //    $(id).slideDown();
-            //} else {
-            //    $(this).attr("arrow", "down");
-            //    $(this).children(".projectArrow").removeClass("arrowUp").addClass("arrowDown");
-            //    //$(id).hide();
-            //    $(id).slideUp();
-            //}
             projectUpDown(this);
         });
     });
 });
-
+//处理展开/折叠事件
 function projectUpDown(obj) {
     var id = "#" + $(obj).attr("id").replace("_", "Info_");
     if ($(obj).attr("arrow") != "up") {

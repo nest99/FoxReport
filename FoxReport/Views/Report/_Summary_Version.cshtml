@@ -1,0 +1,22 @@
+﻿@model IEnumerable<FoxReport.Models.SummaryVersion>
+
+<table id="tbVersion" class="tbContent">
+    <tr class="trContent"><th>项目名称</th><th>核心需求</th><th>计划发布</th><th>进展与风险</th><th class="deleteTH">删除</th></tr>
+@foreach (var item in Model)
+{
+    <tr id="trVersion@(item.Id)" class="trContent">
+        <td><div id="Summary_Version_ProjectName_@(item.Id)">@Html.Raw(item.ProjectName)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><div id="Summary_Version_Request_@(item.Id)">@Html.Raw(item.Request)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><div id="Summary_Version_Publish_@(item.Id)">@Html.Raw(item.Publish)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><div id="Summary_Version_Risk_@(item.Id)">@Html.Raw(item.Risk)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><button onclick="deleteData('Summary_Version', @(item.Id));" class="btnDeleteData"></button></td>
+    </tr>
+}
+    <tr id="trNewVersion" class="trContent trNewRow">
+        <td><div id="Summary_Version_ProjectName_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>                            
+        <td><div id="Summary_Version_Request_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><div id="Summary_Version_Publish_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><div id="Summary_Version_Risk_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><button onclick="deleteData('', 0);" class="btnDeleteData"></button></td>
+    </tr>
+</table>

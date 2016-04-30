@@ -1,0 +1,242 @@
+﻿body {
+    background-color: white;
+}
+#loadingDiv {
+    position:fixed; top:0; left:0; z-index:999;
+    filter:alpha(opacity=0);
+    opacity:0;
+    background-color:#4c4c4c;
+    width:100%; height:100%;
+}
+#loadingImgBox {
+    position:fixed; top:40%; left:50%;
+    width:100px; height:100px;
+}
+ul {
+    padding:0;margin:0;
+}
+.projectHeader {
+    overflow:hidden;
+}
+/*初始时 折叠 */
+.prjContentHide {
+    display:none;
+}
+.prjName {
+    border:1px dashed #f5df69;
+    font-size:16px; margin: 3px 0 0 5px; padding:3px;
+}
+.tabContent {
+    background-color:#fff;
+    clear:both;
+}
+.nav > li > a {
+    margin:1px 10px 0 0;
+    line-height:30px; height:30px;
+    display:block; text-align:center;
+    padding:0 0 5px 0; 
+    background:#4c4c4c;
+    border-bottom:#303030;
+    border-top:#5c5c5c;
+    color:white;
+    background:-moz-linear-gradient(top, #4c4c4c 0%, #404040 100%);
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0%, #4c4c4c), color-stop(100%, #404040));
+    background:-webkit-linear-gradient(top, #4c4c4c 0%, #404040 100%);
+    background:-o-linear-gradient(top, #4c4c4c 0%, #404040 100%);
+    background:-ms-linear-gradient(top, #4c4c4c 0%, #404040 100%);
+    background:linear-gradient(top, #4c4c4c 0%, #404040 100%);
+}
+.btn {
+    display:inline-block;padding:5px 12px;
+    margin-bottom:0; font-size:14px;
+    line-height:1.4; text-align:center; vertical-align:middle; white-space:nowrap;
+    cursor:pointer; border:1px solid transparent;
+    border-radius:8px;
+    background-color:#ccc;
+}
+    .btn:hover {
+        color:red; background-color:#aaa; border-color:#999;
+    }
+    .btn:active {
+        color:red; background-color:#bbb; border-color:#bbb;
+    }
+
+.boxshadow {
+    box-shadow:2px 2px 10px #909090; -webkit-box-shadow:2px 2px 10px #909090;
+    height:auto !important;
+    margin:15px 0;
+    padding:5px;
+}
+    .boxshadow > .content {
+        border-top:1px solid #ddd;
+        display:none;
+    }
+#leftMenu {
+    float:left;
+    width:10%;
+}
+#rightPage {
+    float:left;
+    width:89%;
+}
+.page {
+    display:none;
+}
+.tabs {
+    clear:both;
+}
+.tab {
+	position: relative; top: 1px; float: left;
+	padding: 4px 10px; margin: 0px 1px 0px 0px;
+	font: bold 1em;	
+	list-style: none; -moz-user-select: none; -khtml-user-select: none;
+	cursor: pointer;
+    border-left: solid 1px #CCC;
+	border-bottom: solid 1px #999;
+	border-top: solid 1px #999;
+	border-right: solid 1px #999;
+    background: url(/img/gray.png) repeat-x #99c4dc;/*Tab的背景颜色#DDD*/
+}
+.tab:hover {
+	background: url(/img/red.png) repeat-x  #f96706; /* 鼠标放到Tab上的颜色 #CCC;*/
+}
+.tab.activeTab {
+	background: url(/img/blue.png) repeat-x  #0e97e6; /* 当前选择Tab的颜色#EEE;*/
+	/*border-bottom: 1px solid #006abf;*/ /*#EEE;*/
+}
+#reportTitleDiv {
+    font-size:18px; font-weight:bold; text-align:center;
+    margin-top: 15px;
+}
+#delCover {
+    display:none; background-color:#444; z-index:9999;
+    position:fixed; top:0; left:0; width:100%; height:100%;
+    filter:alpha(opacity=90);opacity:0.9;
+}
+#delConfirm {
+    margin:200px auto 0 auto; width:300px; height:180px;
+    overflow:hidden; background-color:#c00;
+    box-shadow:4px 4px 10px #f00; border-radius:16px;
+}
+#delMsg {
+    background-color:#eee;
+    width:260px; height:120px;
+    margin:10px 10px 3px 10px; padding:10px; border-radius:10px;
+}
+#delBtn {
+    padding:1px 20px 5px 0; text-align:center;
+}
+.projectTitle {
+    text-align:center;
+}
+.panelTitle {
+    font-size:18px;
+    margin:10px 0 5px 0;
+}
+.Hide {
+    display: none;
+}
+.projectArrow {
+    /*width:16px; height:16px; background:url(/img/up.png) no-repeat;
+    display:inline-block;*/
+}
+.projectName {
+    background-color:#ccc; /*border:1px solid #ccc; border-radius:6px;*/
+    line-height:1.4; margin:0; padding:5px; cursor:pointer;
+    clear:both;
+    float:left; width: 150px;
+}
+.projectBox {
+    background-color:#eee; border:1px solid #ccc; border-radius:6px;
+    line-height:1.4; margin:3px 0 0 0; padding:0; 
+    height:auto; overflow:hidden;
+    clear:both;
+}
+    .projectBox .trContent > td {
+        border: none;
+    }
+.arrowUp {
+    width:18px; height:20px; background:url(/img/up.png) no-repeat;
+    display:inline-block; cursor:pointer; margin:0px 13px 0 13px;
+}
+.arrowDown {
+    width:18px; height:20px; 
+    background:url(/img/down.png) no-repeat;
+    display:inline-block; cursor:pointer;margin:0px 13px 0 13px;
+}
+.tbContent{border-collapse:collapse;border:none; width:100%; margin:0;}
+.trContent>td {
+    border:solid 1px #ccc; padding:5px;
+}
+.trContent>th {
+    border:solid 1px #ccc; background:url(/img/white.png) #bbb repeat-x;
+    /*color:white;*/
+    padding:6px;
+}
+.deleteTH {
+    width:36px;
+}
+.btnDeleteData {
+    background:url(/img/minus.png) no-repeat;
+    border:0; cursor:pointer;
+    width:14px; height:14px; float:right;
+}
+.trNewRow .btnDeleteData, #newProjectInfo .btnDeleteData {
+    display:none;
+}
+.btnEdit {
+    background:url(/img/edit.png) no-repeat;
+    border:0; cursor: pointer;
+    width:14px; height:14px;float:right;
+    color:white;
+}
+.topTitle {
+    background-color:#ccc;
+}
+#btnBox {    
+    background-color:#ddd;
+    /*border-bottom:1px solid red;*/
+}
+.btnSave, .btnCancel {
+    background-color:#08c;
+}
+#editLayer {
+    display:none;
+    position:fixed; z-index:999; 
+    padding:0px 2px 0px 0px;
+    background-color:#ccc;
+}
+    #editLayer.centerBox {
+        margin-top: -250px;
+        margin-left: -330px;
+        left: 50%;
+        top: 50%;
+    }
+#editBack {
+    position:fixed;top:0; left:0; width:100%; height:100%;z-index:998;
+    filter:alpha(opacity=98); opacity:0.98;
+    background-color:#333;
+    display:none;
+}
+#resultMsg {
+    margin-top:-50px;
+    margin-left:-200px;
+    z-index:9999;
+    display:none; background-color:#f5df69;
+    left:50%;
+    top:50%;
+    position:fixed;
+    padding:10px;
+    border:solid 3px #ff6a00;
+    border-radius: 8px; box-shadow:2px 2px 10px #ff6a00;
+}
+
+#searchBox {
+    border:1px solid  #7485e5 ;
+    box-shadow:2px 2px 10px #7485e5;
+}
+#editTitle {
+    border:1px solid #bbb;
+    box-shadow:2px 2px 10px #909090;
+    margin-top:20px;
+}

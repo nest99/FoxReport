@@ -1,0 +1,26 @@
+﻿@model IEnumerable<FoxReport.Models.SummaryFeedback>
+
+<table id="tbFeedback" class="tbContent">
+    <tr class="trContent"><th>序号</th><th>平台</th><th>问题概要</th><th>跟进人</th><th>状态</th><th>跟进情况</th><th class="deleteTH">删除</th></tr>
+@foreach (var item in Model)
+{
+    <tr id="trFeedback@(item.Id)" class="trContent">
+        <td><div id="Summary_Feedback_Seq_@(item.Id)"><input type="number" onblur="SetSeq(this);" value="@item.Seq" /></div></td>
+        <td><div id="Summary_Feedback_Platform_@(item.Id)">@Html.Raw(item.Platform)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><div id="Summary_Feedback_Issue_@(item.Id)">@Html.Raw(item.Issue)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><div id="Summary_Feedback_Tracker_@(item.Id)">@Html.Raw(item.Tracker)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><div id="Summary_Feedback_Status_@(item.Id)">@Html.Raw(item.Status)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><div id="Summary_Feedback_TrackInfo_@(item.Id)">@Html.Raw(item.TrackInfo)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><button onclick="deleteData('Summary_Suggest', @(item.Id));" class="btnDeleteData"></button></td>
+    </tr>
+}
+    <tr id="trNewFeedback" class="trContent trNewRow">
+        <td><div id="Summary_Feedback_Seq_0"><input type="number" onblur="SetSeq(this);" /></div></td>                            
+        <td><div id="Summary_Feedback_Platform_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><div id="Summary_Feedback_Issue_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><div id="Summary_Feedback_Tracker_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><div id="Summary_Feedback_Status_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><div id="Summary_Feedback_TrackInfo_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><button onclick="deleteData('', 0);" class="btnDeleteData"></button></td>
+    </tr>
+</table>

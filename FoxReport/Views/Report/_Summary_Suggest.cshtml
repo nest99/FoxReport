@@ -1,0 +1,27 @@
+﻿@model IEnumerable<FoxReport.Models.SummarySuggest>
+
+TotalCount = @ViewBag.TotalCount ,TotalPage = @ViewBag.TotalPage
+<table id="tbSuggest" class="tbContent">
+    <tr class="trContent"><th>序号</th><th>平台</th><th>问题概要</th><th>跟进人</th><th>状态</th><th>跟进情况</th><th class="deleteTH">删除</th></tr>
+@foreach (var item in Model)
+{
+    <tr id="trSuggest@(item.Id)" class="trContent">
+        <td><div id="Summary_Suggest_Seq_@(item.Id)"><input type="number" onblur="SetSeq(this);" value="@item.Seq" /></div></td>
+        <td><div id="Summary_Suggest_Platform_@(item.Id)">@Html.Raw(item.Platform)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><div id="Summary_Suggest_SuggestContent_@(item.Id)">@Html.Raw(item.SuggestContent)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><div id="Summary_Suggest_UserCount_@(item.Id)">@Html.Raw(item.UserCount)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><div id="Summary_Suggest_Issue_@(item.Id)">@Html.Raw(item.Issue)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><div id="Summary_Suggest_TrackInfo_@(item.Id)">@Html.Raw(item.TrackInfo)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><button onclick="deleteData('Summary_Feedback', @(item.Id));" class="btnDeleteData"></button></td>
+    </tr>
+}
+    <tr id="trNewSuggest" class="trContent trNewRow">
+        <td><div id="Summary_Suggest_Seq_0"><input type="number" onblur="SetSeq(this);" /></div></td>                            
+        <td><div id="Summary_Suggest_Platform_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><div id="Summary_Suggest_SuggestContent_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><div id="Summary_Suggest_UserCount_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><div id="Summary_Suggest_Issue_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><div id="Summary_Suggest_TrackInfo_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><button onclick="deleteData('', 0);" class="btnDeleteData"></button></td>
+    </tr>
+</table>

@@ -51,13 +51,16 @@ namespace FoxReport.Controllers
         [HttpPost]
         public JsonResult SaveContent(string id, string content)
         {
+            string userId = Request["userId"];
+            string isForeign = Request["isForeign"];
+            string week = Request["week"];
             string data = content;
             string[] ids = id.Split('_');
             string panel = ids[0];
             string tab = ids[1];
             string column = ids[2];
             string dataId = ids[3];
-            int newId = SqlDbHelper.SaveText(panel + "_" + tab, column, data, dataId);
+            int newId = SqlDbHelper.SaveText(panel + "_" + tab, column, data, dataId, userId, week, isForeign);
             var obj = new
             {
                 NewId = newId
@@ -75,38 +78,39 @@ namespace FoxReport.Controllers
             };
             return Json(obj);
         }
-        public PartialViewResult Summary(string id)
+        public PartialViewResult Summary(string id, int pageIndex, string userId, string week, string isForeign)
         {
-            int userId = 0;
-            int isForeign = 0;
-            int week = 0;
+            int pageSize = int.Parse(ConfigurationManager.AppSettings["pageSize"]);
+            int totalCount = 0;
+            int totalPage = 0;
+            string whereCondition = " where UserId=" + userId + " and Week=" + week + " and IsForeign=" + isForeign +
+                " limit " + ((pageIndex - 1) * pageSize).ToString() + ", " + pageSize.ToString();
+                
             if(id == "Version")
             {
-                List<SummaryVersion> versionList = SqlDbHelper.GetSummaryVersion(userId, week, isForeign);
+                List<SummaryVersion> versionList = SqlDbHelper.GetSummaryVersion(whereCondition, out totalCount, out totalPage);
                 return PartialView("_Summary_" + id, versionList);
             }
             else if (id == "Feedback")
             {
-                List<SummaryFeedback> feedbackList = SqlDbHelper.GetSummaryFeedback(userId, week, isForeign);
+                List<SummaryFeedback> feedbackList = SqlDbHelper.GetSummaryFeedback(whereCondition, out totalCount, out totalPage);
                 return PartialView("_Summary_" + id, feedbackList);
             }
             else// "TargetStrategy"
             {
-                List<SummaryTargetStrategy> targetList = SqlDbHelper.GetSummaryTargetStrategy(userId, week, isForeign);
+                List<SummaryTargetStrategy> targetList = SqlDbHelper.GetSummaryTargetStrategy(whereCondition, out totalCount, out totalPage);
                 return PartialView("_Summary_" + id, targetList);
             }
         }
-        public PartialViewResult ProjectInfo(string id, int recordId)
+        public PartialViewResult ProjectInfo(string id, int recordId, string userId, string week, string isForeign)
         {
-            int userId = 0;
-            int isForeign = 0;
-            int week = 0;
+            string whereCondition = " where UserId=" + userId + " and Week=" + week + " and IsForeign=" + isForeign;
+              
             ViewBag.Column = id;
             ViewBag.Id = recordId;
             string content = "";
-            List<ProjectInfo> projectInfoList = SqlDbHelper.GetProjectInfo(userId, week, isForeign);
-            foreach (ProjectInfo p in projectInfoList)
-            {
+            ProjectInfo p = SqlDbHelper.GetProjectInfo(whereCondition);
+            
                 if (p.Id == recordId)
                 {
                     switch (id)
@@ -128,9 +132,9 @@ namespace FoxReport.Controllers
                             break;
                     }
                 }
-            }
+           
             ViewBag.Content = content;
-            return PartialView("_Project_Info", projectInfoList);
+            return PartialView("_Project_Info", p);
         }
         public PartialViewResult Detail(string id)
         {
