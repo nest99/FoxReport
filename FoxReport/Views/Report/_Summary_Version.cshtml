@@ -5,7 +5,8 @@
 @foreach (var item in Model)
 {
     <tr id="trVersion@(item.Id)" class="trContent">
-        <td><div id="Summary_Version_ProjectName_@(item.Id)">@Html.Raw(item.ProjectName)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+        @*<td><div id="Summary_Version_ProjectName_@(item.Id)">@Html.Raw(item.ProjectName)</div><button onclick="editText(this);" class="btnEdit"></button></td>*@
+        <td><div id="Summary_Version_ProjectName_@(item.Id)"><input onblur="saveColumnTextValue(this, 'Summary_Version', 'ProjectName')" old="@item.ProjectName" value="@item.ProjectName" maxlength="50" type="text" /> </div> </td>
         <td><div id="Summary_Version_Request_@(item.Id)">@Html.Raw(item.Request)</div><button onclick="editText(this);" class="btnEdit"></button></td>
         <td><div id="Summary_Version_Publish_@(item.Id)">@Html.Raw(item.Publish)</div><button onclick="editText(this);" class="btnEdit"></button></td>
         <td><div id="Summary_Version_Risk_@(item.Id)">@Html.Raw(item.Risk)</div><button onclick="editText(this);" class="btnEdit"></button></td>
@@ -13,10 +14,25 @@
     </tr>
 }
     <tr id="trNewVersion" class="trContent trNewRow">
-        <td><div id="Summary_Version_ProjectName_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>                            
+        @*<td><div id="Summary_Version_ProjectName_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>*@ 
+        <td><div id="Summary_Version_ProjectName_0"><input onblur="saveColumnTextValue(this, 'Summary_Version', 'ProjectName')" value="" maxlength="50" type="text" /></div></td>                           
         <td><div id="Summary_Version_Request_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
         <td><div id="Summary_Version_Publish_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
         <td><div id="Summary_Version_Risk_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
         <td><button onclick="deleteData('', 0);" class="btnDeleteData"></button></td>
     </tr>
 </table>
+<div class="pageDiv">
+    <span class="totalCount">总记录数：@ViewBag.TotalCount</span>
+@if(ViewBag.TotalPage > 1){
+    for(int i = 1; i <= ViewBag.TotalPage; i++)
+    {
+        if (ViewBag.PageIndex == i)
+        {
+    <span class="activeLink">@i</span>
+        }else{
+    <a href="javascript:void(0);" onclick="gotoPage('Summary', @i , 'Version')">@i</a>
+        }
+    }
+}
+</div>

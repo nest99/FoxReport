@@ -11,6 +11,11 @@ namespace FoxReport.Models
     /// </summary>
     public class InitReport
     {
+        /// <summary>
+        /// 周报名称
+        /// </summary>
+        public string ReportName = "";
+
         public List<SummaryTargetStrategy> SummaryTargetStrategyList = new List<SummaryTargetStrategy>();
 
         /// <summary>

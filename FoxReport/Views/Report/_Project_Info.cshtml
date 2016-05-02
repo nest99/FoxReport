@@ -1,8 +1,84 @@
-﻿
-<table id="tb@(ViewBag.Column)_@(ViewBag.Id)" class="tbContent">
-    <tr id="tr@(ViewBag.Column)_@(ViewBag.Id)" class="trContent">
-        <td id="tdContent@(ViewBag.Column)_@(ViewBag.Id)">
-            <div id="Project_Info_@(ViewBag.Column)_@(ViewBag.Id)">@Html.Raw(ViewBag.Content)</div>
-            <button onclick="editText(this);" class="btnEdit"></button></td>
-    </tr>
-</table>
+﻿@model List<FoxReport.Models.ProjectInfo>
+@*二、项目概况*@
+
+@foreach(var item in Model){
+<div class="projectBox" id="Project_Info_Box@(item.Id)">
+    <div class="projectHeader">
+        <div class="projectName" id="Project_@(item.Id)"><i class="projectArrow arrowDown"></i>项目名称：</div>
+        <input onblur="saveProjectName(this);" id="Project_Info_ProjectName_@(item.Id)" type="text" class="prjName" maxlength="50" old="@(item.ProjectName)" value="@(item.ProjectName)" />
+        @*<button onclick="saveProjectName(this)" id="saveProjectName_@(item.Id)">保存</button>*@
+        <button onclick="confirmDelete('Project_Info', @(item.Id));" class="btnDeleteData"></button>
+    </div>
+
+    <div class="tabArea prjContentHide" id="ProjectInfo_@(item.Id)">
+        <div>
+            <ul id="ProjectInfoTabs_@(item.Id)" class="tabs">
+                <li id="Target_@(item.Id)" onclick="getProjectInfoTab(this);" class="tab activeTab">目标与近期重点</li>
+                <li id="Progress_@(item.Id)" onclick="getProjectInfoTab(this);" class="tab">项目进展</li>                
+                <li id="Teamwork_@(item.Id)" onclick="getProjectInfoTab(this);" class="tab">团队工作方式优化</li>
+                <li id="VersionDetail_@(item.Id)" onclick="getProjectInfoTab(this);" class="tab">版本详情</li> 
+                <li id="VersionQuality_@(item.Id)" onclick="getProjectInfoTab(this);" class="tab">版本质量分析</li>                
+            </ul>
+        </div>
+        <div id="ProjectInfo_Content_@(item.Id)" class="tabContent">
+            <table class="tbContent" id="tbTarget_@(item.Id)">
+                <tr class="trContent" id="trTarget_@(item.Id)">
+                    <td id="tdContentTrarget_@(item.Id)"><div id="Project_Info_Target_@(item.Id)">@Html.Raw(item.Target)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+                </tr>
+            </table>                    
+        </div>       
+    </div>
+</div>
+}
+@*新增项目概况*@
+<div id="newProjectInfo" class="projectBox">
+    <div class="projectHeader">
+        <div id="Project_0" class="projectName"><i class="projectArrow arrowDown"></i>项目名称：</div>
+        <input onblur="saveProjectName(this);" id="Project_Info_ProjectName_0" type="text" class="prjName" maxlength="50" />
+        @*<button onclick="saveProjectName(this);" id="saveProjectName_0">保存</button>*@
+        <button onclick="confirmDelete('Project_Info', 0);" class="btnDeleteData newHideDelete"></button>
+    </div>
+    <div class="tabArea prjContentHide" id="ProjectInfo_0">
+        <div>
+            <ul id="ProjectInfoTabs_0" class="tabs">
+                <li class="tab activeTab" id="Target_0" onclick="getProjectInfoTab(this);">目标与近期重点</li>
+                <li class="tab" id="Progress_0" onclick="getProjectInfoTab(this);">项目进展</li>
+                <li class="tab" id="Teamwork_0" onclick="getProjectInfoTab(this);">团队工作方式优化</li>
+                <li class="tab" id="VersionDetail_0" onclick="getProjectInfoTab(this);">版本详情</li>
+                <li class="tab" id="VersionQuality_0" onclick="getProjectInfoTab(this);">版本质量分析</li>
+            </ul>
+        </div>
+        <div id="ProjectInfo_Content_0" class="tabContent">                    
+            <table class="tbContent" id="tbTarget_0">
+                <tr class="trContent" id="trTarget_0">
+                    <td id="tdContentTrarget_0"><div id="Project_Info_Target_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+                </tr>
+            </table>
+        </div>                   
+    </div>           
+</div>
+
+<div class="pageDiv">
+    <span class="totalCount">总记录数：@ViewBag.TotalCount</span>    
+@if(ViewBag.TotalPage > 1){
+    for(int i = 1; i <= ViewBag.TotalPage; i++)
+    {
+        if (ViewBag.PageIndex == i)
+        {
+    <span class="activeLink">@i</span>
+        }else{
+    <a href="javascript:void(0);" onclick="gotoPage('ProjectInfo', @i )">@i</a>
+        }
+    }
+}
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {       
+        //二、项目概述中点击每个项目时展开/折叠详细信息
+        $(".projectName").each(function () {
+            $(this).click(function () {
+                projectUpDown(this);
+            });
+        });
+    });
+</script>

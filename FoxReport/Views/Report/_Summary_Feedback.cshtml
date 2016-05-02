@@ -5,22 +5,54 @@
 @foreach (var item in Model)
 {
     <tr id="trFeedback@(item.Id)" class="trContent">
-        <td><div id="Summary_Feedback_Seq_@(item.Id)"><input type="number" onblur="SetSeq(this);" value="@item.Seq" /></div></td>
-        <td><div id="Summary_Feedback_Platform_@(item.Id)">@Html.Raw(item.Platform)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td class="tdSeq"><div id="Summary_Feedback_Seq_@(item.Id)"><input id="FeedbackSeq_@(item.Id)" class="seq" min="1" max="99" type="number" onblur="SetSeq(this);" old="@item.Seq" value="@item.Seq" /></div></td>
+        <td><div id="Summary_Feedback_Platform_@(item.Id)"> <input onblur="saveColumnTextValue(this, 'Summary_Feedback', 'Platform')" old="@item.Platform" value="@item.Platform" maxlength="50" type="text" /> </div></td>
         <td><div id="Summary_Feedback_Issue_@(item.Id)">@Html.Raw(item.Issue)</div><button onclick="editText(this);" class="btnEdit"></button></td>
-        <td><div id="Summary_Feedback_Tracker_@(item.Id)">@Html.Raw(item.Tracker)</div><button onclick="editText(this);" class="btnEdit"></button></td>
-        <td><div id="Summary_Feedback_Status_@(item.Id)">@Html.Raw(item.Status)</div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td><div id="Summary_Feedback_Tracker_@(item.Id)">
+            <select id="ddlTracker_Feedback_@(item.Id)" onchange="ddlTrackerChange(this, 'Summary_Feedback', 'Tracker');">
+                <option value=""></option>
+                @foreach (var u in ViewBag.UserList)
+                {
+                    <option value="@u.UserId" @(u.UserId == item.Tracker ? " selected='selected'" : "")>@u.UserName</option>
+                }
+            </select>
+            </div></td>
+        <td><div id="Summary_Feedback_Status_@(item.Id)"> <input onblur="saveColumnTextValue(this, 'Summary_Feedback', 'Status')" old="@item.Status" value="@item.Status" maxlength="50" type="text" /> </div></td>
         <td><div id="Summary_Feedback_TrackInfo_@(item.Id)">@Html.Raw(item.TrackInfo)</div><button onclick="editText(this);" class="btnEdit"></button></td>
         <td><button onclick="deleteData('Summary_Suggest', @(item.Id));" class="btnDeleteData"></button></td>
     </tr>
 }
     <tr id="trNewFeedback" class="trContent trNewRow">
-        <td><div id="Summary_Feedback_Seq_0"><input type="number" onblur="SetSeq(this);" /></div></td>                            
-        <td><div id="Summary_Feedback_Platform_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td class="tdSeq"><div id="Summary_Feedback_Seq_0"><input id="FeedbackSeq_0" class="seq" min="1" max="99" type="number" onblur="SetSeq(this);" old="" value="" /></div></td>                            
+        <td><div id="Summary_Feedback_Platform_0"><input onblur="saveColumnTextValue(this, 'Summary_Feedback', 'Platform')" type="text" /></div></td>
         <td><div id="Summary_Feedback_Issue_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
-        <td><div id="Summary_Feedback_Tracker_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
-        <td><div id="Summary_Feedback_Status_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
+        <td>
+            <div id="Summary_Feedback_Tracker_0">
+                <select id="ddlTracker_Feedback_0" onchange="ddlTrackerChange(this, 'Summary_Feedback', 'Tracker');">
+                    <option value=""></option>
+                @foreach (var u in ViewBag.UserList)
+                {
+                    <option value="@u.UserId">@u.UserName</option>
+                }
+                </select>
+            </div>
+        </td>
+        <td><div id="Summary_Feedback_Status_0"><input onblur="saveColumnTextValue(this, 'Summary_Feedback', 'Status')" maxlength="50" type="text" /></div></td>
         <td><div id="Summary_Feedback_TrackInfo_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
         <td><button onclick="deleteData('', 0);" class="btnDeleteData"></button></td>
     </tr>
 </table>
+<div class="pageDiv">
+    <span class="totalCount">总记录数：@ViewBag.TotalCount</span>
+@if(ViewBag.TotalPage > 1){
+    for(int i = 1; i <= ViewBag.TotalPage; i++)
+    {
+        if (ViewBag.PageIndex == i)
+        {
+    <span class="activeLink">@i</span>
+        }else{
+    <a href="javascript:void(0);" onclick="gotoPage('Summary', @i , 'Feedback')">@i</a>
+        }
+    }
+}
+</div>

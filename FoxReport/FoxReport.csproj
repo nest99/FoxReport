@@ -483,7 +483,7 @@
     <Content Include="Views\Report\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Report\_Project_Info.cshtml" />
+    <Content Include="Views\Report\_Project_Info_Tab.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Report\_Summary_Feedback.cshtml" />
@@ -508,6 +508,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Set\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Report\_Affair_Product.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Report\_Project_Info.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

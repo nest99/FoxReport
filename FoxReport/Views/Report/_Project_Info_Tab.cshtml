@@ -1,0 +1,9 @@
+﻿@*二、项目概况，每个Tab对应项目的一个字段值*@
+
+<table id="tb@(ViewBag.Column)_@(ViewBag.Id)" class="tbContent">
+    <tr id="tr@(ViewBag.Column)_@(ViewBag.Id)" class="trContent">
+        <td id="tdContent@(ViewBag.Column)_@(ViewBag.Id)">
+            <div id="Project_Info_@(ViewBag.Column)_@(ViewBag.Id)">@Html.Raw(ViewBag.Content)</div>
+            <button onclick="editText(this);" class="btnEdit"></button></td>
+    </tr>
+</table>

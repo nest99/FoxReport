@@ -118,15 +118,16 @@ namespace FoxReport.Helper
             return initShow;
         }
 
-        public static InitReport GetInitReport(string whereCondition, out int[] totalCount, out int[] totalPage)
+        public static InitReport GetInitReport(string whereCondition, string limit, out int[] totalCount, out int[] totalPage)
         {
             totalCount = new int[3];
             totalPage = new int[3];
 
             InitReport initReport = new InitReport();
-            initReport.SummaryTargetStrategyList = GetSummaryTargetStrategy(whereCondition, out totalCount[0], out totalPage[0]);
-            initReport.ProjectInfoList = GetProjectInfoList(whereCondition, out totalCount[1], out totalPage[1]);
-            initReport.AffairProductList = GetAffairParoduct(whereCondition, out totalCount[2], out totalPage[2]);
+            initReport.ReportName = GetReportName(whereCondition);
+            initReport.SummaryTargetStrategyList = GetSummaryTargetStrategy(whereCondition, limit, out totalCount[0], out totalPage[0]);
+            initReport.ProjectInfoList = GetProjectInfoList(whereCondition, limit, out totalCount[1], out totalPage[1]);
+            initReport.AffairProductList = GetAffairProduct(whereCondition, limit, out totalCount[2], out totalPage[2]);
             initReport.teamworkInfo = GetTeamworkInfo(whereCondition);
             initReport.assistInfo = GetAssistInfo(whereCondition);
             return initReport;
@@ -192,7 +193,7 @@ namespace FoxReport.Helper
             }
             catch (MySqlException e)
             {
-                Logger.Error("执行sql出错，sql=" + sql + ", value=" + columnValue + ", id=" + id, e);
+                Logger.Error("SaveText执行sql出错，sql=" + sql + ", value=" + columnValue + ", id=" + id, e);
             }
             finally
             {
@@ -200,11 +201,148 @@ namespace FoxReport.Helper
             }
             return newId;
         }
+        /// <summary>
+        /// 保存纯文本字段值到数据库
+        /// </summary>
+        /// <param name="tableName">表名</param>
+        /// <param name="columnName">字段名称</param>
+        /// <param name="columnValue">字段值</param>
+        /// <param name="id">行id</param>
+        public static int SaveColumnText(string tableName, string columnName, string columnValue, string id, string userId, string week, string isForeign)
+        {
+            string sql = "";
+            if (id == "0")
+            {
+                sql = "insert into " + tableName + " (" + columnName + ", UserId, Week, IsForeign) " +
+                    " values(@value, '" + userId + "', " + week + ", " + isForeign + ");";
+            }
+            else
+            {
+                sql = "update " + tableName + " set " + columnName + "=@value" + " where id=@id ";
+            }
 
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            MySqlCommand cmd = new MySqlCommand(sql, con);
+            cmd.Parameters.Add("@value", MySqlDbType.VarString).Value = columnValue;
+            cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
+
+            int newId = 0;
+            try
+            {
+                con.Open();
+                cmd.ExecuteNonQuery();
+                if (id == "0")
+                {
+                    newId = (int)cmd.LastInsertedId;
+                }
+            }
+            catch (MySqlException e)
+            {
+                Logger.Error("SaveColumnText执行sql出错，sql=" + sql + ", value=" + columnValue + ", id=" + id, e);
+            }
+            finally
+            {
+                con.Close();
+            }
+            return newId;
+        }
+        public static string GetReportName(string whereCondition)
+        {
+            string sql = "select ReportName from report_info " + whereCondition;
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            MySqlCommand cmd = new MySqlCommand(sql, con);
+            string reportName = "";
+            try
+            {
+                con.Open();                
+                object name = cmd.ExecuteScalar();
+                reportName = name == null ? "" : name.ToString();
+            }
+            catch (MySqlException e)
+            {
+                Logger.Error("执行sql出错，sql=" + sql, e);
+            }
+            finally
+            {
+                con.Close();
+            }
+            return reportName;
+        }
+        public static int SaveReportName(string reportName, string userId, string week, string isForeign)
+        {
+            string sqlExist = "select count(*) from report_info where UserId = '" + userId + "' and Week = " + week + " and IsForeign=" + isForeign;
+            string sql = "";
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            MySqlCommand cmdExist = new MySqlCommand(sqlExist, con);            
+            
+            int result = 0;
+            try
+            {
+                con.Open();
+                int count = int.Parse(cmdExist.ExecuteScalar().ToString());                
+                if (count == 0)
+                {
+                    sql = "insert report_info(ReportName, userid, week, isforeign) values(@ReportName, '" + userId + "', " + week + ", " + isForeign + ")";
+                }
+                else
+                {
+                    sql = "update report_info set ReportName = @ReportName where  userId = '" + userId + "' and Week = " + week + " and IsForeign=" + isForeign;
+                }
+                MySqlCommand cmd = new MySqlCommand(sql, con);
+                cmd.Parameters.Add("@ReportName", MySqlDbType.VarString, 50).Value = reportName;
+                result = cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException e)
+            {
+                Logger.Error("执行sql出错，reprotName = " + reportName + ", sqlExist=" + sqlExist + ", sql=" + sql, e);
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+        /// <summary>
+        /// 插入、更新Seq序号
+        /// </summary>
+        /// <param name="seqTable">哪个表：Feedback/Suggest</param>
+        /// <param name="recordId">记录id</param>
+        /// <param name="seq">序号</param>
+        /// <returns></returns>
+        public static int SaveSeq(string seqTable, string recordId, string seq)
+        {            
+            string sql = "";
+            if (recordId == "0")
+            {
+                sql = "insert into Summary_" + seqTable + "(Seq) values(" + seq + ")";
+            }
+            else
+            {
+                sql = "update Summary_" + seqTable + " set Seq=" + seq + " where Id=" + recordId;
+            }
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            MySqlCommand cmd = new MySqlCommand(sql, con);
+
+            int result = 0;
+            try
+            {
+                con.Open(); 
+                result = cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException e)
+            {
+                Logger.Error("执行sql出错，sql=" + sql, e);
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
         /// <summary>
         /// 一、整体概况
         /// </summary>
-        public static List<SummaryTargetStrategy> GetSummaryTargetStrategy(string whereCondition, out int totalCount, out int totalPage)
+        public static List<SummaryTargetStrategy> GetSummaryTargetStrategy(string whereCondition, string limit, out int totalCount, out int totalPage)
         {
             List<SummaryTargetStrategy> targetList = new List<SummaryTargetStrategy>();
             MySqlConnection con = new MySqlConnection(ConnectionString);
@@ -213,7 +351,7 @@ namespace FoxReport.Helper
             {
                 con.Open();
                 totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Summary_TargetStrategy " + whereCondition).ToString());
-                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Summary_TargetStrategy " + whereCondition);
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Summary_TargetStrategy " + whereCondition + limit);
                 while (reader.Read())
                 {
                     SummaryTargetStrategy t = new SummaryTargetStrategy();
@@ -284,7 +422,7 @@ namespace FoxReport.Helper
             return versionList;
         }
 
-        public static List<SummaryFeedback> GetSummaryFeedback(string whereCondition, out int totalCount, out int totalPage)
+        public static List<SummaryFeedback> GetSummaryFeedback(string whereCondition, string limit, out int totalCount, out int totalPage)
         {
             List<SummaryFeedback> feedbackList = new List<SummaryFeedback>();
             MySqlConnection con = new MySqlConnection(ConnectionString);
@@ -293,7 +431,7 @@ namespace FoxReport.Helper
             {
                 con.Open();
                 totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Summary_Feedback " + whereCondition).ToString());
-                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Summary_Feedback " + whereCondition);
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Summary_Feedback " + whereCondition + limit);
                 while (reader.Read())
                 {
                     SummaryFeedback f = new SummaryFeedback();
@@ -326,7 +464,7 @@ namespace FoxReport.Helper
             return feedbackList;
         }
 
-        public static List<SummarySuggest> GetSummarySuggest(string whereCondition, out int totalCount, out int totalPage)
+        public static List<SummarySuggest> GetSummarySuggest(string whereCondition, string limit, out int totalCount, out int totalPage)
         {
             List<SummarySuggest> suggestList = new List<SummarySuggest>();
             MySqlConnection con = new MySqlConnection(ConnectionString);
@@ -335,7 +473,7 @@ namespace FoxReport.Helper
             {
                 con.Open();
                 totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Summary_Suggest " + whereCondition).ToString());
-                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Summary_Suggest " + whereCondition);
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Summary_Suggest " + whereCondition + limit);
                 while (reader.Read())
                 {
                     SummarySuggest s = new SummarySuggest();
@@ -409,7 +547,7 @@ namespace FoxReport.Helper
         /// <summary>
         /// 二、项目概况列表
         /// </summary>
-        public static List<ProjectInfo> GetProjectInfoList(string whereCondition, out int totalCount, out int totalPage)
+        public static List<ProjectInfo> GetProjectInfoList(string whereCondition, string limit, out int totalCount, out int totalPage)
         {
             List<ProjectInfo> projectInfoList = new List<ProjectInfo>();
             MySqlConnection con = new MySqlConnection(ConnectionString);
@@ -418,7 +556,7 @@ namespace FoxReport.Helper
             {
                 con.Open();
                 totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Project_Info " + whereCondition).ToString());
-                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Project_Info " + whereCondition);
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Project_Info " + whereCondition + limit);
                 while (reader.Read())
                 {
                     ProjectInfo p = new ProjectInfo();
@@ -453,7 +591,7 @@ namespace FoxReport.Helper
         /// <summary>
         /// 三、重点事务：产品事务
         /// </summary>
-        public static List<AffairProduct> GetAffairParoduct(string whereCondition, out int totalCount, out int totalPage)
+        public static List<AffairProduct> GetAffairProduct(string whereCondition, string limit, out int totalCount, out int totalPage)
         {
             List<AffairProduct> productList = new List<AffairProduct>();
             MySqlConnection con = new MySqlConnection(ConnectionString);
@@ -462,7 +600,7 @@ namespace FoxReport.Helper
             {
                 con.Open();
                 totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Affair_Product " + whereCondition).ToString());
-                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Affair_Product " + whereCondition);
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Affair_Product " + whereCondition + limit);
                 while (reader.Read())
                 {
                     AffairProduct p = new AffairProduct();

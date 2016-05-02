@@ -28,12 +28,19 @@ CREATE TABLE IF NOT EXISTS `affair_product` (
   `IsForeign` int(11) DEFAULT '0',
   `OrderNum` int(11) DEFAULT '0',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- 正在导出表  fox.affair_product 的数据：~0 rows (大约)
+-- 正在导出表  fox.affair_product 的数据：~8 rows (大约)
 /*!40000 ALTER TABLE `affair_product` DISABLE KEYS */;
 INSERT INTO `affair_product` (`Id`, `Classify`, `Priority`, `Tracker`, `Workplan`, `Progress`, `UserId`, `Week`, `IsForeign`, `OrderNum`) VALUES
-	(1, '分类', '优先级', '负责人', '工作计划', '进展', '0', 0, 0, 0);
+	(2, 'sadf', 'sadfasdf', 'asdfasdf asdfasdfasdfadsf', 'asdfasfdasfd', 'asdfasdf', '', 0, 0, 0),
+	(4, '', 'sfdgsdgsgf', '<p>\n	afasdfasdfasdfasdfasfdsf\n</p>\n<p>\n	阿斯蒂芬\n</p>', '<p>\n	asfasfasfaasfd\n</p>\n<p>\n	阿斯蒂芬\n</p>', 'asdfasfasfasdf', '', 0, 0, 0),
+	(5, '', 'asdfasfssd', '', '', '', '', 0, 0, 0),
+	(6, 'ffff', 'asdf', 'asdf', '', '', '3', 201611, 1, 0),
+	(7, '12分类1', '优先级1', '1', '阿斯蒂芬', '阿斯蒂芬', '3', 201612, 1, 0),
+	(8, '12分类2', '优先级2', '', '', '', '3', 201612, 1, 0),
+	(9, '12分类3', '优先级3', '', '', '', '3', 201612, 1, 0),
+	(10, '阿斯蒂芬', '', '', '', '', '3', 201612, 1, 0);
 /*!40000 ALTER TABLE `affair_product` ENABLE KEYS */;
 
 
@@ -46,10 +53,15 @@ CREATE TABLE IF NOT EXISTS `assist_info` (
   `IsForeign` int(11) DEFAULT '0',
   `OrderNum` int(11) DEFAULT '0',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  fox.assist_info 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `assist_info` DISABLE KEYS */;
+INSERT INTO `assist_info` (`Id`, `Content`, `UserId`, `Week`, `IsForeign`, `OrderNum`) VALUES
+	(1, 'assist info edit', '', 0, 0, 0),
+	(2, '奥古斯丁', '1', 201618, 0, 0),
+	(3, 'asdfasdf', '3', 201611, 1, 0),
+	(4, '5、支持', '3', 201612, 1, 0);
 /*!40000 ALTER TABLE `assist_info` ENABLE KEYS */;
 
 
@@ -89,14 +101,47 @@ CREATE TABLE IF NOT EXISTS `project_info` (
   `IsForeign` int(11) DEFAULT '0',
   `OrderNum` int(11) DEFAULT '0',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- 正在导出表  fox.project_info 的数据：~0 rows (大约)
+-- 正在导出表  fox.project_info 的数据：~15 rows (大约)
 /*!40000 ALTER TABLE `project_info` DISABLE KEYS */;
 INSERT INTO `project_info` (`Id`, `ProjectName`, `Target`, `Progress`, `Teamwork`, `VersionDetail`, `VersionQuality`, `UserId`, `Week`, `IsForeign`, `OrderNum`) VALUES
-	(1, 'ProjectInfo项目详细信息', '目标业务目标项目概况', '进展111项目进展情况', '团队11团队工作方式', '进展阿达的方式', '版本质量111分析', '0', 0, 0, 0),
-	(2, 'pi 222', 'target pjinfo 222asdf', '项目222进展说明', '团队222方式优化', '版本222情况说明', '版本质量222', '', 0, 0, 0);
+	(2, 'pi 222', 'target pjinfo 222asdf', '项目222进展说明', '团队222方式优化', '版本222情况说明', '版本质量222', '', 0, 0, 0),
+	(32, 'asdfasdf', 'asdfasdfasdf', 'asdfasdf', 'asdfasdasdf', 'asdfasfasdf', 'asfasfasdfsadf', '', 0, 0, 0),
+	(33, '啥地方', 'asdfasfasdfasdf', 'asfasasdfasdf', '', '', '', '', 0, 0, 0),
+	(34, '项目名称1发给发放', '快快快1列', '项目进展1', '团队工作方式1', '', '', '3', 201611, 1, 0),
+	(35, '沙发沙发发生规范地方', '阿斯顿发生', '进展2', '', '', '', '3', 201611, 1, 0),
+	(36, '和国际饭店得到', '地方', '打工', '团队工作3', '', '', '3', 201611, 1, 0),
+	(38, 'dfhfdhjfhgj阿斯蒂芬', '', '', '', '', '版本质量分析5', '3', 201611, 1, 0),
+	(39, '5432', '目标与重点6', '', '', '', '', '3', 201611, 1, 0),
+	(40, 'asdf项目1', '目标与近期重点asdfasdf', '项目进展asdfasdfsad', 'asdfasdfas', '', '', '3', 201612, 1, 0),
+	(41, 'safsadf', '', '', '', '', '', '3', 201613, 1, 0),
+	(42, 'hgfd', '', '', '', '', '', '3', 201613, 1, 0),
+	(43, 'hhhh', 'dcxczxv', '', '', '', '', '3', 201613, 1, 0),
+	(44, '12周项目概况2', '', '', '', '', '', '3', 201612, 1, 0),
+	(45, '12周项目概况3', '', '', '', '', '', '3', 201612, 1, 0),
+	(46, '12周项目概况4', '', '', '', '', '', '3', 201612, 1, 0),
+	(47, '12周项目概况5', '', 'asdfasdfasdf', 'asdfasdfasd', '', '', '3', 201612, 1, 0);
 /*!40000 ALTER TABLE `project_info` ENABLE KEYS */;
+
+
+-- 导出  表 fox.report_info 结构
+CREATE TABLE IF NOT EXISTS `report_info` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `ReportName` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `Week` int(11) DEFAULT '0',
+  `UserId` varchar(50) COLLATE utf8_unicode_ci DEFAULT '',
+  `IsForeign` int(11) DEFAULT '0',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- 正在导出表  fox.report_info 的数据：~2 rows (大约)
+/*!40000 ALTER TABLE `report_info` DISABLE KEYS */;
+INSERT INTO `report_info` (`Id`, `ReportName`, `Week`, `UserId`, `IsForeign`) VALUES
+	(1, '沙发大是大非阿斯顿发斯蒂芬', 201611, '3', 1),
+	(2, '安抚12阿斯顿发', 201612, '3', 1),
+	(3, '13周报名称', 201613, '3', 1);
+/*!40000 ALTER TABLE `report_info` ENABLE KEYS */;
 
 
 -- 导出  表 fox.summary_feedback 结构
@@ -113,14 +158,27 @@ CREATE TABLE IF NOT EXISTS `summary_feedback` (
   `IsForeign` int(11) DEFAULT '0',
   `OrderNum` int(11) DEFAULT '0',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- 正在导出表  fox.summary_feedback 的数据：~3 rows (大约)
+-- 正在导出表  fox.summary_feedback 的数据：~15 rows (大约)
 /*!40000 ALTER TABLE `summary_feedback` DISABLE KEYS */;
 INSERT INTO `summary_feedback` (`Id`, `Seq`, `Platform`, `Issue`, `Tracker`, `Status`, `TrackInfo`, `UserId`, `Week`, `IsForeign`, `OrderNum`) VALUES
 	(1, 0, 'plat1', 'issue1', 'tracker', 'status', 'track info', '0', 0, 0, 0),
 	(2, 1, 'plat2', 'issue 2', 'tracker2', 'status', '情况', '0', 0, 0, 0),
-	(3, 2, '大事发生地方', '阿斯蒂芬', '玩儿', '环境概况', '办理非得', '0', 0, 0, 0);
+	(3, 2, '大事发生地方', '阿斯蒂芬', '玩儿', '环境概况', '办理非得', '0', 0, 0, 0),
+	(4, 3, '我去', '', '', '', '', '1', 201618, 1, 0),
+	(5, 0, '阿斯蒂芬', '', '1', '', '', '3', 201611, 1, 0),
+	(6, 0, '大师傅', '是大法官', '2', '', '', '3', 201611, 1, 0),
+	(7, 0, '规范', '啥地方', '3', '', '', '3', 201611, 1, 0),
+	(8, 1, 'platform tracker', 'track info', '1', '状态1', '', '3', 201612, 1, 0),
+	(9, 2, 'platform tracker 2', '', '2', '阿斯蒂芬', '', '3', 201612, 1, 0),
+	(10, 3, '', 'track info 3', '3', '昨天', '', '3', 201612, 1, 0),
+	(11, 4, 'pf1', 'pf1 info', '1', '昨天4', '', '3', 201612, 1, 0),
+	(12, 5, 'pf2', 'pf2info', '2', '', '', '3', 201612, 1, 0),
+	(13, 6, 'pf3', 'pf3info', '3', '', '', '3', 201612, 1, 0),
+	(14, 0, 'p4', 'pf4info', '', '', '', '3', 201612, 1, 0),
+	(15, 0, '', '', '', '', '', '3', 201612, 1, 0),
+	(16, 0, '阿凡达', '', '', '', '', '3', 201612, 1, 0);
 /*!40000 ALTER TABLE `summary_feedback` ENABLE KEYS */;
 
 
@@ -138,10 +196,13 @@ CREATE TABLE IF NOT EXISTS `summary_suggest` (
   `IsForeign` int(11) DEFAULT '0',
   `OrderNum` int(11) DEFAULT '0',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  fox.summary_suggest 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `summary_suggest` DISABLE KEYS */;
+INSERT INTO `summary_suggest` (`Id`, `Seq`, `Platform`, `SuggestContent`, `UserCount`, `Issue`, `TrackInfo`, `UserId`, `Week`, `IsForeign`, `OrderNum`) VALUES
+	(1, 1, 'android', 'content', '4', 'sdd', 'track', '0', 0, 0, 0),
+	(2, 1, '平台1', '问题1', '', NULL, NULL, '3', 201612, 1, 0);
 /*!40000 ALTER TABLE `summary_suggest` ENABLE KEYS */;
 
 
@@ -157,20 +218,26 @@ CREATE TABLE IF NOT EXISTS `summary_targetstrategy` (
   `IsForeign` int(11) DEFAULT '0',
   `OrderNum` int(11) DEFAULT '0',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  fox.summary_targetstrategy 的数据：~9 rows (大约)
 /*!40000 ALTER TABLE `summary_targetstrategy` DISABLE KEYS */;
 INSERT INTO `summary_targetstrategy` (`Id`, `ProjectName`, `Status`, `Target`, `Strategy`, `UserId`, `Week`, `IsForeign`, `OrderNum`) VALUES
-	(1, 'project name', 'status', '<p>\n	targetffffffffffffffffffffffff345题55\n</p>\n<p>\n	dasfascfaZdf\n</p>', '<p>\n	strategy\n</p>\n<p>\n	asdf\n</p>', '0', 0, 0, 0),
-	(2, '<p>\n	nnnameasda\n</p>\n<p>\n	asdfa sd fasf&nbsp;\n</p>', '', '目标2', '策略2', '0', 0, 0, 0),
-	(3, 'nnname', '', '目标3', '策略3', '0', 0, 0, 0),
-	(4, 'nnname', '', '目标4', '策略4', '0', 0, 0, 0),
-	(5, 'nnname', '', '目标5', '策略5', '0', 0, 0, 0),
-	(6, '66nnname', '', '目标6', '策略6', '0', 0, 0, 0),
-	(7, '阿斯蒂芬', '', '山东<div style="color:blue">分公司</div>的', '大公会', '0', 0, 0, 0),
+	(1, 'project name12345', 'status', '<p>\n	targetffffffffffffffffffffffff345题55\n</p>\n<p>\n	dasfascfaZdf\n</p>', '<p>\n	strategy\n</p>\n<p>\n	asdf\n</p>', '0', 0, 0, 0),
 	(8, '阿斯顿发股份和', '', '沙发垫<div style="color:red">沙发上</div>对方沙发上的', 'asdfasdfasdf', '0', 0, 0, 0),
-	(9, 'sadfsdf', '', 'asdfsdsadfasdf', 'asdfasfasfdsadf', '0', 0, 0, 0);
+	(12, 'asdfasf', '', 'asdfasdasfsd', 'asdfasdf', '', 0, 0, 0),
+	(13, '项目名称国外1', '', 'fdsgasfdasfasdfafs', '措施国外1', '1', 201618, 1, 0),
+	(14, 'asdfaf', '', '12345678', '措施与策略1', '1', 201618, 0, 0),
+	(15, '目标与策略2', '', '目标现状2', '', '1', 201618, 0, 0),
+	(16, '目标与策略3', '', '', '', '1', 201618, 0, 0),
+	(17, '国外xm2', '', '措施2', '', '1', 201618, 1, 0),
+	(18, 'user2 项目1', '', '目标', '差', '2', 201618, 1, 0),
+	(19, 'user2 项目1', '', '', '', '2', 201618, 1, 0),
+	(20, '阿斯蒂芬阿斯顿发斯蒂芬', '', '阿斯顿发生', '', '3', 201611, 1, 0),
+	(21, 'dsf12', '', 'sadfsfd2322', '', '3', 201612, 1, 0),
+	(22, '12rtg', '', '', '', '3', 201612, 1, 0),
+	(23, 'asdf', '', '目标3', '', '3', 201612, 1, 0),
+	(24, '项目名称1', '', '目标4', '', '3', 201612, 1, 0);
 /*!40000 ALTER TABLE `summary_targetstrategy` ENABLE KEYS */;
 
 
@@ -186,13 +253,16 @@ CREATE TABLE IF NOT EXISTS `summary_version` (
   `IsForeign` int(11) NOT NULL DEFAULT '0',
   `OrderNum` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- 正在导出表  fox.summary_version 的数据：~2 rows (大约)
+-- 正在导出表  fox.summary_version 的数据：~4 rows (大约)
 /*!40000 ALTER TABLE `summary_version` DISABLE KEYS */;
 INSERT INTO `summary_version` (`Id`, `ProjectName`, `Request`, `Publish`, `Risk`, `UserId`, `Week`, `IsForeign`, `OrderNum`) VALUES
 	(1, 'prj name版本', '<p>\n	request1核心\n</p>\n<p>\n	详情\n</p>', 'publish 1', 'risk 1', '0', 0, 0, 0),
-	(2, '版本version name', 'r2', 'p2', 'risk 2', '0', 0, 0, 0);
+	(2, '版本version name', 'r2', 'p2', 'risk 2', '0', 0, 0, 0),
+	(3, '阿斯蒂芬', '措施', '', '', '1', 201618, 1, 0),
+	(4, '阿萨德飞洒发到付', '', '', '', '3', 201611, 1, 0),
+	(5, '12周项目概况1', '12周核心需求1', '', '', '3', 201612, 1, 0);
 /*!40000 ALTER TABLE `summary_version` ENABLE KEYS */;
 
 
@@ -205,10 +275,15 @@ CREATE TABLE IF NOT EXISTS `teamwork_info` (
   `IsForeign` int(11) DEFAULT '0',
   `OrderNum` int(11) DEFAULT '0',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  fox.teamwork_info 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `teamwork_info` DISABLE KEYS */;
+INSERT INTO `teamwork_info` (`Id`, `Content`, `UserId`, `Week`, `IsForeign`, `OrderNum`) VALUES
+	(1, 'team info 222 eee', '0', 0, 0, 0),
+	(2, '发多少', '1', 201618, 0, 0),
+	(3, 'asdfasdf', '3', 201611, 1, 0),
+	(4, '4、团队', '3', 201612, 1, 0);
 /*!40000 ALTER TABLE `teamwork_info` ENABLE KEYS */;
 
 
@@ -218,10 +293,14 @@ CREATE TABLE IF NOT EXISTS `userinfo` (
   `UserName` varchar(50) COLLATE utf8_unicode_ci DEFAULT '',
   `UserRole` int(11) DEFAULT '0',
   PRIMARY KEY (`UserId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- 正在导出表  fox.userinfo 的数据：~0 rows (大约)
+-- 正在导出表  fox.userinfo 的数据：~2 rows (大约)
 /*!40000 ALTER TABLE `userinfo` DISABLE KEYS */;
+INSERT INTO `userinfo` (`UserId`, `UserName`, `UserRole`) VALUES
+	(1, 'User 1', 0),
+	(2, 'User 2', 0),
+	(3, 'User 3', 0);
 /*!40000 ALTER TABLE `userinfo` ENABLE KEYS */;
 
 

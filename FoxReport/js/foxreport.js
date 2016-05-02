@@ -29,18 +29,24 @@ function editText(obj) {
     var content = $("#" + id).html();
     keditor.html(content);    
     var width = $(obj).parent().width() + 12;//KindEditor的p标签padding=5,两边就是10；editLayer的padding：0 2 0 0就是2   
-    if (width < 170) { width = 170;}
-    $("#editLayer").width(width).height(keHeight + 21);//加上“保存”按钮的高度
+    if (width < 170) { width = 170; }
+    var tdIndex = $(obj).closest("td").index();//当前元素所在的td的序号
+    var columnName = $(obj).closest("table").find("th").eq(tdIndex).text();
+    $("#editColumnName").text(columnName);
+    $("#editLayer").width(width).height(keHeight + 21);//加上“保存”按钮的高度    
+    var left = (($(window).width() - width) / 2);
+    $("#editLayer").css("left", left);
+    //$("#editLayer").css("margin-top", top ).css("margin-left", left);
     $("#editLayer").show();
     $("#editBack").show();
     $("#btnBox").width(width + 2);
-    if (id.indexOf("Project_Info") != -1
-        || id.indexOf("Teamwork_Info") != -1
-        || id.indexOf("Assist_Info") != -1) {
-        $("#editLayer").removeClass("centerBox");
-    } else {
-        $("#editLayer").addClass("centerBox");
-    }
+    //if (id.indexOf("Project_Info") != -1
+    //    || id.indexOf("Teamwork_Info") != -1
+    //    || id.indexOf("Assist_Info") != -1) {
+    //    $("#editLayer").removeClass("centerBox");
+    //} else {
+    //    $("#editLayer").addClass("centerBox");
+    //}
 }
 //function changeIsForeign(n) {
 //    if (n) {
@@ -48,9 +54,139 @@ function editText(obj) {
 //    } else {
 //        $("#reportIsForeign").text("国内");
 //    }
-//}
 
-//blur事件，保存项目名称按钮
+//保存纯文本字段文本值
+function saveColumnTextValue(obj, tableName, column) {
+    var value = $(obj).val().trim();
+    var id = $(obj).parent().attr("id");
+    var recordId = id.replace(tableName + "_" + column + "_", "");
+    var old = $(obj).attr("old");
+    if(value == ""){
+        if (recordId == "0" //新增，没有输入值，返回
+            || !old) { //或者字段就是""
+            return;
+        }
+    }
+    if (value == old) {
+        return;
+    }
+    
+    $.ajax({
+        url: "Report/SaveColumnTextValue/" + id,
+        data: getUrlParam() + "&tableName=" + tableName + "&column=" + column + "&content=" + encodeURIComponent(value),
+        type: "POST",
+        success: function (data) {
+            saveMsg();
+            if (recordId == "0") {//_0结尾为新增                
+                ids = id.split('_');
+                var trNewId = "#trNew" + ids[1];//获取新增行的id
+                //添加一行数据（复制新增行的html代码，插入新增行之前。修改id为新数据的id)
+                $("<tr class=\"trContent\">" + $(trNewId).html().replace(/_0">/g, "_" + data.NewId + "\">") + "</tr>").insertBefore(trNewId);
+                $("#" + id.replace("_0", "_" + data.NewId)).find("input").val(value).attr("old", value);//显示内容到正确的列，设置old属性
+                $("#" + id).find("input").val("");//清空新建行的文字
+            } else {
+                //不以0结尾为编辑已有文本框
+            }
+        },
+        error: function (data) {
+            alert("responseText=" + data.responseText + ", data=" + data);
+        }
+    });
+}
+function ddlTrackerChange(obj, tableName, column) {
+    var value = $(obj).val();
+    var id = $(obj).parent().attr("id");
+    //var id = $(obj).attr("id");
+    var recordId = id.replace(tableName + "_" + column + "_", "");
+    $.ajax({
+        url: "Report/SaveColumnTextValue/" + id,
+        data: getUrlParam() + "&tableName=" + tableName + "&column=" + column + "&content=" + encodeURIComponent(value),
+        type: "POST",
+        success: function (data) {
+            saveMsg();
+            if (recordId == "0") {//_0结尾为新增                
+                ids = id.split('_');
+                var trNewId = "#trNew" + ids[1];//获取新增行的id
+                //添加一行数据（复制新增行的html代码，插入新增行之前。修改id为新数据的id)
+                $("<tr class=\"trContent\">" + $(trNewId).html().replace(/_0">/g, "_" + data.NewId + "\">") + "</tr>").insertBefore(trNewId);
+                $("#" + id.replace("_0", "_" + data.NewId)).find("input").val(value);//显示内容到正确的列 
+                $("#" + id).find("select").val("");//清空新建行的文字
+            } else {
+                //不以0结尾为编辑已有文本框
+            }
+        },
+        error: function (data) {
+            alert("responseText=" + data.responseText + ", data=" + data);
+        }
+    });
+}
+//blur事件，保存报告名称
+function saveReportName() {
+    var old = $("#reportName").attr("old");
+    var reportName = $("#reportName").val().trim();
+    if (old && old == reportName) { //已经有项目名称 且 名称没有改变        
+        return;
+    }
+    $("#reportName").val(reportName).attr("old", reportName);   //保存项目名称
+    $.ajax({
+        url: "Report/SaveReportName",
+        data: getUrlParam() + "&content=" + encodeURIComponent(reportName),
+        type: "POST",
+        success: function (data) {
+            if (data.Result) {
+                saveMsg();
+            } else {
+                saveMsg("保存数据失败！");
+            }
+        },
+        error: function (data) {
+            alert("responseText=" + data.responseText + ", data=" + data);
+        }
+    });
+}
+function SetSeq(obj) {
+    var seq = $(obj).val().trim();
+    var old = $(obj).attr("old");
+    var id = $(obj).attr("id").substr($(obj).attr("id").indexOf("_") + 1);
+
+    if (old && old == seq) { //已经有seq 且 值没有改变        
+        return;
+    }
+    if (seq == "") {
+        if (id == "0") {
+            return;
+        } else {
+            saveMsg("请输入序号");
+            return;
+        }
+    }
+    var seqTable = $(obj).attr("id").indexOf("Feedback") != -1 ? "Feedback" : "Suggest";
+    $.ajax({
+        url: "Report/SaveSeq",
+        data: "recordId=" + id + "&seqTable=" + seqTable + "&seq=" + seq, //getUrlParam()
+        type: "POST",
+        success: function (data) {
+            if (data.Result == 1) {
+                saveMsg();
+            } else if (data.Result == -1) {
+                saveMsg("请输入数字序号！");
+            } else {
+                saveMsg("保存数据失败！");
+            }
+        },
+        error: function (data) {
+            alert("responseText=" + data.responseText + ", data=" + data);
+        }
+    });
+}
+function getUrlParam() {
+    var userId = $("#ddlTracker").val();
+    var week = $("#ddlWeekSearch").val();
+    var isForeign = $("input[name=radioCountrySearch]:checked").val();
+    var urlParam = "userId=" + userId + "&week=" + week + "&isForeign=" + isForeign;
+    return urlParam;
+}
+//blur事件，保存项目名称
 function saveProjectName(obj) {
     var old = $(obj).attr("old");
     var projectName = $(obj).val().trim();
@@ -68,16 +204,12 @@ function saveProjectName(obj) {
     }
     $(obj).val(projectName).attr("old", projectName);   //保存项目名称
 
-    var userId = $("#ddlTracker").val();
-    var week = $("#ddlWeekSearch").val();
-    var isForeign = $("input[name=radioCountrySearch]:checked").val();
-    
-   
     $.ajax({
         url: "Report/SaveContent/" + name + id,
-        data: "userId=" + userId + "&week=" + week + "&isForeign=" + isForeign + "&content=" + encodeURIComponent(projectName),
+        data: getUrlParam() + "&content=" + encodeURIComponent(projectName),
         type: "POST",
         success: function (data) {
+            saveMsg();
             if (id == "0") {//新增项目名称            
                 var prjHtml = "<div class='projectBox'>" + $("#newProjectInfo").html().replace(/_0"/g, "_" + data.NewId + "\"") + "</div>";
                 $(prjHtml).insertBefore("#newProjectInfo");
@@ -95,6 +227,13 @@ function saveProjectName(obj) {
         }
     });
 }
+function saveMsg(msg) {
+    if (msg) {
+        $("#resultMsg").html("<h1>" + msg + "</h1>").show(200).fadeOut(3000);
+    } else {
+        $("#resultMsg").html("<h1>数据保存成功！</h1>").show(200).fadeOut(3000);
+    }
+}
 //点击富文本框保存按钮
 function saveText() {
     loadingShow();
@@ -109,7 +248,7 @@ function saveText() {
         type: "POST",
         success: function (data) {
             loadingHide();
-            $("#resultMsg").html("<h1>数据保存成功！</h1>").show(200).fadeOut(3000);
+            saveMsg();
             if (id.substr(id.length - 2) == "_0") {//以_0结尾为新增
                 if (id.indexOf("Project_Info") != -1) {//新增项目概述
                     var prjHtml = "<div class='projectBox'>" + $("#newProjectInfo").html().replace(/_0"/g, "_" + data.NewId + "\"") + "</div>";
@@ -210,7 +349,28 @@ function getSummaryTab(tab) {
         }
     });
 }
-
+//actionName后台action名称: Summary/Affair/ProjectInfo；pageIndex:页码；tabName可选:Product
+function gotoPage(actionName, pageIndex, tabName) {
+    $.ajax({
+        url: "Report/" + actionName + "/" + tabName + "?pageIndex=" + pageIndex + "&" + getUrlParam(),
+        type: "GET",
+        cache: false,
+        success: function (data) {
+            loadingHide();
+            if (actionName == "Summary") {
+                $("#tabSummaryContent").html(data);
+            } else if (actionName == "Affair") {
+                $("#tabAffairContent").html(data);
+            } else {//ProjectInfo
+                $("#ProjectInfo_Box").html(data);
+            }
+        },
+        error: function (data) {
+            loadingHide();
+            alert("responseText=" + data.responseText + ", data=" + data);
+        }
+    });
+}
 function getProjectInfoTab(obj) {
     loadingShow();
     var userId = $("#ddlTracker").val();
@@ -223,7 +383,7 @@ function getProjectInfoTab(obj) {
     $("#ProjectInfo_" + recordId).find(".activeTab").removeClass("activeTab");
     $("#" + column + "_" + recordId).addClass("activeTab");
     $.ajax({
-        url: "Report/ProjectInfo/" + column + "?recordId=" + recordId + "&userId=" + userId + "&week=" + week + "&isForeign=" + isForeign,
+        url: "Report/ProjectInfoTab/" + column + "?recordId=" + recordId + "&userId=" + userId + "&week=" + week + "&isForeign=" + isForeign,
         type: "GET",
         cache: false,
         success: function (data) {

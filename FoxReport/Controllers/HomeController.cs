@@ -83,8 +83,8 @@ namespace FoxReport.Controllers
             int pageSize = int.Parse(ConfigurationManager.AppSettings["pageSize"]);
             int totalCount = 0;
             int totalPage = 0;
-            string whereCondition = " where UserId=" + userId + " and Week=" + week + " and IsForeign=" + isForeign +
-                " limit " + ((pageIndex - 1) * pageSize).ToString() + ", " + pageSize.ToString();
+            string whereCondition = " where UserId=" + userId + " and Week=" + week + " and IsForeign=" + isForeign;
+            string limit = " limit " + ((pageIndex - 1) * pageSize).ToString() + ", " + pageSize.ToString();
                 
             if(id == "Version")
             {
@@ -93,12 +93,12 @@ namespace FoxReport.Controllers
             }
             else if (id == "Feedback")
             {
-                List<SummaryFeedback> feedbackList = SqlDbHelper.GetSummaryFeedback(whereCondition, out totalCount, out totalPage);
+                List<SummaryFeedback> feedbackList = SqlDbHelper.GetSummaryFeedback(whereCondition, limit, out totalCount, out totalPage);
                 return PartialView("_Summary_" + id, feedbackList);
             }
             else// "TargetStrategy"
             {
-                List<SummaryTargetStrategy> targetList = SqlDbHelper.GetSummaryTargetStrategy(whereCondition, out totalCount, out totalPage);
+                List<SummaryTargetStrategy> targetList = SqlDbHelper.GetSummaryTargetStrategy(whereCondition, limit, out totalCount, out totalPage);
                 return PartialView("_Summary_" + id, targetList);
             }
         }

@@ -15,21 +15,7 @@
 ul {
     padding:0;margin:0;
 }
-.projectHeader {
-    overflow:hidden;
-}
-/*初始时 折叠 */
-.prjContentHide {
-    display:none;
-}
-.prjName {
-    border:1px dashed #f5df69;
-    font-size:16px; margin: 3px 0 0 5px; padding:3px;
-}
-.tabContent {
-    background-color:#fff;
-    clear:both;
-}
+
 .nav > li > a {
     margin:1px 10px 0 0;
     line-height:30px; height:30px;
@@ -140,6 +126,30 @@ ul {
     /*width:16px; height:16px; background:url(/img/up.png) no-repeat;
     display:inline-block;*/
 }
+.projectHeader {
+    overflow:hidden;
+}
+/*初始时 折叠 */
+.prjContentHide {
+    display:none;
+}
+#reportName {
+    border:none;
+    border-bottom:1px dashed #0e97e6;
+    width:80%; text-align:center;
+    /*background-color:#eee;*/
+    font-size:24px; font-weight:bold; margin: 3px 0 0 5px; padding:4px;
+}
+.prjName {
+    border:none;
+    border-bottom:1px dashed #0e97e6;
+    background-color:#eee;
+    font-size:16px; margin: 3px 0 0 5px; padding:4px;
+}
+.tabContent {
+    background-color:#fff;
+    clear:both;
+}
 .projectName {
     background-color:#ccc; /*border:1px solid #ccc; border-radius:6px;*/
     line-height:1.4; margin:0; padding:5px; cursor:pointer;
@@ -205,13 +215,13 @@ ul {
     position:fixed; z-index:999; 
     padding:0px 2px 0px 0px;
     background-color:#ccc;
+    /*left: 50%;*/
+    top: 100px;
 }
-    #editLayer.centerBox {
-        margin-top: -250px;
-        margin-left: -330px;
-        left: 50%;
-        top: 50%;
-    }
+#editLayer.centerBox {
+    margin-top: -250px;
+    margin-left: -330px;    
+}
 #editBack {
     position:fixed;top:0; left:0; width:100%; height:100%;z-index:998;
     filter:alpha(opacity=98); opacity:0.98;
@@ -239,4 +249,42 @@ ul {
     border:1px solid #bbb;
     box-shadow:2px 2px 10px #909090;
     margin-top:20px;
+}
+.totalCount {
+    background-color:#ccc;padding:5px 10px;display:none;
+}
+.pageDiv {
+    padding: 3px;
+    margin: 3px;    
+    /*text-align: center;*/
+}
+.pageDiv span.activeLink {
+    padding: 2px 6px;   
+    font-weight: bold;   
+    color: #fff;
+    background-color:#229fdd;
+    margin-right: 3px;    
+}
+
+.pageDiv a {
+    border: #dedfde 1px solid;
+    padding: 2px 6px;
+    /*background-position: 50% bottom;*/    
+    color: #00f;
+    margin-right: 3px;    
+    text-decoration: none;
+}
+.pageDiv a:hover {
+    border: #000 1px solid;
+    background-image: none;  
+    color: #fff; 
+    background-color: #229fdd
+}
+
+/*td 列宽度*/
+.seq {
+    width:55px;
+}
+.tdSeq {
+    width:60px;
 }
