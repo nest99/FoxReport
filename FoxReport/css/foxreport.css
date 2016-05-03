@@ -2,7 +2,7 @@
     background-color: white;
 }
 #loadingDiv {
-    position:fixed; top:0; left:0; z-index:999;
+    position:fixed; top:0; left:0; z-index:99;
     filter:alpha(opacity=0);
     opacity:0;
     background-color:#4c4c4c;
@@ -95,7 +95,7 @@ ul {
     margin-top: 15px;
 }
 #delCover {
-    display:none; background-color:#444; z-index:9999;
+    display:none; background-color:#444; z-index:99;
     position:fixed; top:0; left:0; width:100%; height:100%;
     filter:alpha(opacity=90);opacity:0.9;
 }
@@ -140,6 +140,24 @@ ul {
     /*background-color:#eee;*/
     font-size:24px; font-weight:bold; margin: 3px 0 0 5px; padding:4px;
 }
+/*一、整体概况的项目名称*/
+.prjName1 {
+    border:none;
+    border-bottom:1px dashed #0e97e6;  
+    font-size:16px; margin: 3px 5px; padding:4px;
+}
+.seq {
+    border:none;
+    border-bottom:1px dashed #0e97e6;  
+    padding-left:4px;
+    width:36px;
+}
+.platform, .feedbackCount, .status {
+    border:none;
+    border-bottom:1px dashed #0e97e6;  
+    padding:4px;
+}
+/*二、项目概况的项目名称*/
 .prjName {
     border:none;
     border-bottom:1px dashed #0e97e6;
@@ -155,6 +173,12 @@ ul {
     line-height:1.4; margin:0; padding:5px; cursor:pointer;
     clear:both;
     float:left; width: 150px;
+}
+/*三、重点事务*/
+.classify, .priority {
+    border:none;
+    border-bottom:1px dashed #0e97e6;  
+    padding:4px; width:80px;
 }
 .projectBox {
     background-color:#eee; border:1px solid #ccc; border-radius:6px;
@@ -179,13 +203,11 @@ ul {
     border:solid 1px #ccc; padding:5px;
 }
 .trContent>th {
-    border:solid 1px #ccc; background:url(/img/white.png) #bbb repeat-x;
+    border:solid 1px #ccc; background:url(/img/gray9.png) #bbb repeat-x;
     /*color:white;*/
     padding:6px;
 }
-.deleteTH {
-    width:36px;
-}
+
 .btnDeleteData {
     background:url(/img/minus.png) no-repeat;
     border:0; cursor:pointer;
@@ -207,12 +229,16 @@ ul {
     background-color:#ddd;
     /*border-bottom:1px solid red;*/
 }
+#editColumnName {
+    padding: 5px 10px;background:url(/img/gray9.png) #bbb repeat-x;
+}
 .btnSave, .btnCancel {
-    background-color:#08c;
+    /*background-color:#08c;*/
+    margin: 5px 5px 5px 10px;
 }
 #editLayer {
     display:none;
-    position:fixed; z-index:999; 
+    position:fixed; z-index:99; 
     padding:0px 2px 0px 0px;
     background-color:#ccc;
     /*left: 50%;*/
@@ -223,7 +249,7 @@ ul {
     margin-left: -330px;    
 }
 #editBack {
-    position:fixed;top:0; left:0; width:100%; height:100%;z-index:998;
+    position:fixed;top:0; left:0; width:100%; height:100%;z-index:98;
     filter:alpha(opacity=98); opacity:0.98;
     background-color:#333;
     display:none;
@@ -231,7 +257,7 @@ ul {
 #resultMsg {
     margin-top:-50px;
     margin-left:-200px;
-    z-index:9999;
+    z-index:100;
     display:none; background-color:#f5df69;
     left:50%;
     top:50%;
@@ -282,9 +308,37 @@ ul {
 }
 
 /*td 列宽度*/
-.seq {
-    width:55px;
-}
-.tdSeq {
-    width:60px;
-}
+/*一、整体概况*/
+.deleteTH { width:36px; }
+.thSum1_1 { width:250px; }
+.thSum1_2 { width:40%; }
+.thSum1_3 { }
+
+
+.thSum2_1 { width:250px; }
+.thSum2_2 { width:30%; }
+.thSum2_3 { }
+.thSum2_4 { width:30%; }
+
+
+.thSum3_1 { width:36px; }
+.thSum3_2 { width:80px; }
+.thSum3_3 { width:30%;}
+.thSum3_4 { width:60px; }
+.thSum3_5 { width:80px; }
+.thSum3_6 {  }
+
+.thSum4_1 { width:36px; }
+.thSum4_2 { width:80px; }
+.thSum4_3 { width:25%;}
+.thSum4_4 { width:80px; }
+.thSum4_5 { width:25%; }
+.thSum4_6 { }
+/*二、项目概况*/
+
+/*三、重点事务 产品事务*/
+.thAffair1_1 { width: 80px;}
+.thAffair1_2 { width: 80px;}
+.thAffair1_3 { width: 80px;}
+.thAffair1_4 { width: 30%;}
+.thAffair1_5 { }

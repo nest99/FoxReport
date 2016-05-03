@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<FoxReport.Models.SummaryTargetStrategy>
 
 <table id="tbTargetStrategy" class="tbContent">
-    <tr class="trContent"><th>项目名称</th><th>目标(现状)</th><th>策略与措施</th><th class="deleteTH">删除</th></tr>
+    <tr class="trContent"><th class="thSum1_1">项目名称</th><th class="thSum1_2">目标(现状)</th><th class="thSum1_3">策略与措施</th><th class="deleteTH">删除</th></tr>
 @foreach (var item in Model)
 {
     <tr id="trTargetStrategy@(item.Id)" class="trContent">
         @*<td><div id="Summary_TargetStrategy_ProjectName_@(item.Id)">@Html.Raw(item.ProjectName)</div><button onclick="editText(this);" class="btnEdit"></button></td>   *@ 
-        <td><div id="Summary_TargetStrategy_ProjectName_@(item.Id)"><input onblur="saveColumnTextValue(this, 'Summary_TargetStrategy', 'ProjectName')" old="@item.ProjectName" value="@item.ProjectName" maxlength="50" type="text" /> </div> </td>                      
+        <td><div id="Summary_TargetStrategy_ProjectName_@(item.Id)"><input onblur="saveColumnTextValue(this, 'Summary_TargetStrategy', 'ProjectName')" old="@item.ProjectName" value="@item.ProjectName" class="prjName1" maxlength="50" type="text" /> </div> </td>                      
         <td><div id="Summary_TargetStrategy_Target_@(item.Id)">@Html.Raw(item.Target)</div><button onclick="editText(this);" class="btnEdit"></button></td>
         <td><div id="Summary_TargetStrategy_Strategy_@(item.Id)">@Html.Raw(item.Strategy)</div><button onclick="editText(this);" class="btnEdit"></button></td>
         <td><button onclick="confirmDelete('Summary_TargetStrategy', @(item.Id));" class="btnDeleteData"></button></td>
@@ -14,7 +14,7 @@
 }
     <tr id="trNewTargetStrategy" class="trContent trNewRow">
         @*<td><div id="Summary_TargetStrategy_ProjectName_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>*@ 
-        <td><div id="Summary_TargetStrategy_ProjectName_0"><input onblur="saveColumnTextValue(this, 'Summary_TargetStrategy', 'ProjectName')" value="" maxlength="50" type="text" /></div></td>                           
+        <td><div id="Summary_TargetStrategy_ProjectName_0"><input onblur="saveColumnTextValue(this, 'Summary_TargetStrategy', 'ProjectName')" value="" class="prjName1" maxlength="50" type="text" /></div></td>                           
         <td><div id="Summary_TargetStrategy_Target_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
         <td><div id="Summary_TargetStrategy_Strategy_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
         <td><button onclick="confirmDelete('', 0);" class="btnDeleteData"></button></td>

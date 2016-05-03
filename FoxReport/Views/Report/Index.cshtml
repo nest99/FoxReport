@@ -15,12 +15,12 @@
             </ul>
             <div id="tabSummaryContent" class="tabContent">               
                     <table id="tbTargetStrategy" class="tbContent">
-                        <tr class="trContent"><th>项目名称</th><th>目标(现状)</th><th>策略与措施</th><th class="deleteTH">删除</th></tr>
+                        <tr class="trContent"><th class="thSum1_1">项目名称</th><th class="thSum1_2">目标(现状)</th><th class="thSum1_3">策略与措施</th><th class="deleteTH">删除</th></tr>
                     @foreach (var item in Model.SummaryTargetStrategyList)
                     {
                         <tr id="trTargetStrategy@(item.Id)" class="trContent">
                             @*<td><div id="Summary_TargetStrategy_ProjectName_@(item.Id)">@Html.Raw(item.ProjectName)</div><button onclick="editText(this);" class="btnEdit"></button></td>*@ 
-                            <td><div id="Summary_TargetStrategy_ProjectName_@(item.Id)"><input onblur="saveColumnTextValue(this, 'Summary_TargetStrategy', 'ProjectName')" old="@item.ProjectName" value="@item.ProjectName" maxlength="50" type="text" /> </div> </td>                           
+                            <td><div id="Summary_TargetStrategy_ProjectName_@(item.Id)"><input onblur="saveColumnTextValue(this, 'Summary_TargetStrategy', 'ProjectName')" old="@item.ProjectName" value="@item.ProjectName" class="prjName1" maxlength="50" type="text" /> </div> </td>                           
                             <td><div id="Summary_TargetStrategy_Target_@(item.Id)">@Html.Raw(item.Target)</div><button onclick="editText(this);" class="btnEdit"></button></td>
                             <td><div id="Summary_TargetStrategy_Strategy_@(item.Id)">@Html.Raw(item.Strategy)</div><button onclick="editText(this);" class="btnEdit"></button></td>
                             <td><button onclick="confirmDelete('Summary_TargetStrategy', @(item.Id));" class="btnDeleteData"></button></td>
@@ -28,7 +28,7 @@
                     }
                         <tr id="trNewTargetStrategy" class="trContent trNewRow">
                             @*<td><div id="Summary_TargetStrategy_ProjectName_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>*@ 
-                            <td><div id="Summary_TargetStrategy_ProjectName_0"><input onblur="saveColumnTextValue(this, 'Summary_TargetStrategy', 'ProjectName')" value="" maxlength="50" type="text" /></div></td>                         
+                            <td><div id="Summary_TargetStrategy_ProjectName_0"><input onblur="saveColumnTextValue(this, 'Summary_TargetStrategy', 'ProjectName')" value="" class="prjName1" maxlength="50" type="text" /></div></td>                         
                             <td><div id="Summary_TargetStrategy_Target_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
                             <td><div id="Summary_TargetStrategy_Strategy_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
                             <td><button onclick="confirmDelete('', 0);" class="btnDeleteData"></button></td>
@@ -122,15 +122,15 @@
             </ul>
             <div id="tabAffairContent" class="tabContent">                
                     <table id="tbProduct" class="tbContent">
-                        <tr class="trContent"><th>分类</th><th>优先级</th><th>负责人</th><th>工作计划</th><th>进展情况</th><th>删除</th></tr>
+                        <tr class="trContent"><th class="thAffair1_1">分类</th><th class="thAffair1_2">优先级</th><th class="thAffair1_3">负责人</th><th class="thAffair1_4">工作计划</th><th class="thAffair1_5">进展情况</th><th class="deleteTH">删除</th></tr>
                     @foreach (var item in Model.AffairProductList)
                     {
                         <tr id="trProduct@(item.Id)" class="trContent">
                             @*<td><div id="Affair_Product_Classify_@(item.Id)">@Html.Raw(item.Classify)</div><button onclick="editText(this);" class="btnEdit"></button></td>                            
                             <td><div id="Affair_Product_Priority_@(item.Id)">@Html.Raw(item.Priority)</div><button onclick="editText(this);" class="btnEdit"></button></td>
                             <td><div id="Affair_Product_Tracker_@(item.Id)">@Html.Raw(item.Tracker)</div><button onclick="editText(this);" class="btnEdit"></button></td>*@
-                            <td><div id="Affair_Product_Classify_@(item.Id)"><input onblur="saveColumnTextValue(this, 'Affair_Product', 'Classify')" old="@item.Classify" value="@item.Classify" maxlength="50" type="text" /></div></td>                            
-                            <td><div id="Affair_Product_Priority_@(item.Id)"><input onblur="saveColumnTextValue(this, 'Affair_Product', 'Priority')" old="@item.Priority" value="@item.Priority" maxlength="50" type="text" /></div></td>
+                            <td><div id="Affair_Product_Classify_@(item.Id)"><input onblur="saveColumnTextValue(this, 'Affair_Product', 'Classify')" old="@item.Classify" value="@item.Classify" maxlength="50" class="classify" type="text" /></div></td>                            
+                            <td><div id="Affair_Product_Priority_@(item.Id)"><input onblur="saveColumnTextValue(this, 'Affair_Product', 'Priority')" old="@item.Priority" value="@item.Priority" maxlength="50" class="priority" type="text" /></div></td>
                             <td>
                                 <div id="Affair_Product_Tracker_@(item.Id)">
                                     <select id="ddlTracker_Product_@(item.Id)" onchange="ddlTrackerChange(this, 'Affair_Product', 'Tracker');">
@@ -151,8 +151,8 @@
                             @*<td><div id="Affair_Product_Classify_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>                            
                             <td><div id="Affair_Product_Priority_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
                             <td><div id="Affair_Product_Tracker_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>*@
-                            <td><div id="Affair_Product_Classify_0"><input onblur="saveColumnTextValue(this, 'Affair_Product', 'Classify')" value="" maxlength="50" type="text" /></div></td>                            
-                            <td><div id="Affair_Product_Priority_0"><input onblur="saveColumnTextValue(this, 'Affair_Product', 'Priority')" value="" maxlength="50" type="text" /></div></td>
+                            <td><div id="Affair_Product_Classify_0"><input onblur="saveColumnTextValue(this, 'Affair_Product', 'Classify')" value="" maxlength="50" class="classify" type="text" /></div></td>                            
+                            <td><div id="Affair_Product_Priority_0"><input onblur="saveColumnTextValue(this, 'Affair_Product', 'Priority')" value="" maxlength="50" class="priority" type="text" /></div></td>
                             <td>
                                 <div id="Affair_Product_Tracker_0">
                                     <select id="ddlTracker_Product_0" onchange="ddlTrackerChange(this, 'Affair_Product', 'Tracker');">

@@ -86,6 +86,7 @@ function saveColumnTextValue(obj, tableName, column) {
                 $("#" + id).find("input").val("");//清空新建行的文字
             } else {
                 //不以0结尾为编辑已有文本框
+                $("#" + id).val(value);
             }
         },
         error: function (data) {
@@ -160,6 +161,7 @@ function SetSeq(obj) {
             return;
         }
     }
+    $(obj).attr("old", seq);
     var seqTable = $(obj).attr("id").indexOf("Feedback") != -1 ? "Feedback" : "Suggest";
     $.ajax({
         url: "Report/SaveSeq",
