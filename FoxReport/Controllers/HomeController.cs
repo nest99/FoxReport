@@ -88,7 +88,7 @@ namespace FoxReport.Controllers
                 
             if(id == "Version")
             {
-                List<SummaryVersion> versionList = SqlDbHelper.GetSummaryVersion(whereCondition, out totalCount, out totalPage);
+                List<SummaryVersion> versionList = SqlDbHelper.GetSummaryVersion(whereCondition, limit, out totalCount, out totalPage);
                 return PartialView("_Summary_" + id, versionList);
             }
             else if (id == "Feedback")

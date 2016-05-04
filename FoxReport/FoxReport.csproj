@@ -161,6 +161,7 @@
     <Compile Include="Models\DetailBizTarget.cs" />
     <Compile Include="Models\InitShow.cs" />
     <Compile Include="Models\ProjectInfo.cs" />
+    <Compile Include="Models\ReportData.cs" />
     <Compile Include="Models\SummaryTargetStrategy.cs" />
     <Compile Include="Models\SummaryFeedback.cs" />
     <Compile Include="Models\SummarySuggest.cs" />

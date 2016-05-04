@@ -5,7 +5,7 @@
 @foreach (var item in Model)
 {
     <tr id="trSuggest@(item.Id)" class="trContent">
-        <td><div id="Summary_Suggest_Seq_@(item.Id)"><input id="SuggestSeq_@(item.Id)" class="seq" min="1" max="99" type="number" onblur="SetSeq(this);" old="@item.Seq" value="@item.Seq" /></div></td>
+        <td><div id="Summary_Suggest_Seq_@(item.Id)"><input id="SuggestSeq_@(item.Id)" onkeyup="onlyNumber(this);" maxlength="2" class="seq" type="text" onblur="SetSeq(this);" old="@item.Seq" value="@item.Seq" /></div></td>
         <td><div id="Summary_Suggest_Platform_@(item.Id)"> <input onblur="saveColumnTextValue(this, 'Summary_Suggest', 'Platform')" old="@item.Platform" value="@item.Platform" maxlength="50" class="platform" type="text" /> </div></td>
         <td><div id="Summary_Suggest_SuggestContent_@(item.Id)">@Html.Raw(item.SuggestContent)</div><button onclick="editText(this);" class="btnEdit"></button></td>
         <td><div id="Summary_Suggest_UserCount_@(item.Id)"> <input onblur="saveColumnTextValue(this, 'Summary_Suggest', 'UserCount')" old="@item.UserCount" value="@item.UserCount" maxlength="50" class="feedbackCount" type="text" /> </div></td>
@@ -15,7 +15,7 @@
     </tr>
 }
     <tr id="trNewSuggest" class="trContent trNewRow">
-        <td><div id="Summary_Suggest_Seq_0"><input id="SuggestSeq_0" class="seq" min="1" max="99" type="number" onblur="SetSeq(this);" old="" value="" /></div></td>                            
+        <td><div id="Summary_Suggest_Seq_0"><input id="SuggestSeq_0" onkeyup="onlyNumber(this);" maxlength="2" class="seq" type="text" onblur="SetSeq(this);" old="" value="" /></div></td>                            
         @*<td><div id="Summary_Suggest_Platform_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>*@
         <td><div id="Summary_Suggest_Platform_0"><input onblur="saveColumnTextValue(this, 'Summary_Suggest', 'Platform')" maxlength="50" class="platform" type="text" /></div></td>
         <td><div id="Summary_Suggest_SuggestContent_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>

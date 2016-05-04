@@ -382,7 +382,7 @@ namespace FoxReport.Helper
             return targetList;
         }
 
-        public static List<SummaryVersion> GetSummaryVersion(string whereCondition, out int totalCount, out int totalPage)
+        public static List<SummaryVersion> GetSummaryVersion(string whereCondition, string limit, out int totalCount, out int totalPage)
         {
             List<SummaryVersion> versionList = new List<SummaryVersion>();
             MySqlConnection con = new MySqlConnection(ConnectionString);
@@ -391,7 +391,7 @@ namespace FoxReport.Helper
             {
                 con.Open();
                 totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Summary_Version " + whereCondition).ToString());
-                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Summary_Version " + whereCondition);
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Summary_Version " + whereCondition + limit);
                 while (reader.Read())
                 {
                     SummaryVersion v = new SummaryVersion();

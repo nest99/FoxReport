@@ -1,4 +1,6 @@
-﻿@{
+﻿@model FoxReport.Models.ReportData
+
+@{
     Layout = null;
 }
 
@@ -9,67 +11,168 @@
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
     <style type="text/css">
-        body {
-    background-color: white;
-}
-.projectTitle {
-    text-align:center;
-}
-.panelTitle {
-    font-size:18px;
-    margin:10px 0 5px 0;
-}
-        h1 {
-            color:blue; font-weight:bold;
+        table {
+            width:100% !important;
         }
-table{border-collapse:collapse;border:none; width:100%; margin:0;}
-td {
+.tbContent{border-collapse:collapse;border:none;  margin:0;}
+.tdBorder {
     border:solid 1px #ccc; padding:0;
 }
-th {
-    border:solid 1px #eee; background-color:#c1c1c1;
-}
-button {
-    background:url(/images/edit.png);
-    border:0; cursor: pointer;
-    width:20px; height:20px;float:right;
-    color:white;
-}
-.topTitle {
-    background-color:#ccc;
+.thTitle {
+    border:solid 1px #eee; background-color:#c1c1c1;font-size:12pt;    
 }
 
-#editLayer {
-    display:none;
-    position:fixed; z-index:999; margin-top:-225px; margin-left:-330px; left:50%; top:50%;
-    width:660px; height:450px; padding:3px; background-color:black;
-}
-
+.thSum1_1,.thSum1_2,.thSum1_3 { border:solid 1px #eee; background-color:#c1c1c1;}
+.thSum1_1{ width:100pt;} 
+.thSum1_2{ width:200pt;}
+.thSum1_3 { width:200pt; }
     </style>
 </head>
 <body>
     <div>
-        <h1>项目名称：测试下载项目，序号：@ViewBag.TestId</h1>
-        <table>
-            <tr><th>项目名称</th><th>详情</th><th>负责人</th></tr>
-            <tr><td>项目名称1</td><td>详情1</td><td>负责人1</td></tr>
-            <tr><td>项目名称2</td><td>详情2</td><td>负责人2</td></tr>
-            <tr><td>项目名称3</td><td>详情3</td><td>负责人3</td></tr>
+        <h3>一、国内@(Model.ReportName)</h3>
+        <h4>1、目标与策略</h4>
+        <table class="tbContent">
+            <tr>
+                <th class="thTitle">项目名称</th>　<th class="thTitle">　</th>
+                <th class="thTitle">目标(现状)</th><th class="thTitle">　</th>
+                <th class="thTitle">策略与措施</th><th class="thTitle">　</th>
+            </tr>
+        @foreach (var item in Model.SummaryTargetStrategyList)
+        {
+            <tr>
+                <td colspan="2" class="tdBorder">@item.ProjectName</td>                           
+                <td colspan="2" class="tdBorder">@Html.Raw(item.Target)</td>
+                <td colspan="2" class="tdBorder">@Html.Raw(item.Strategy)</td>
+            </tr>
+        }
         </table>
-        <h1>项目详细信息：测试详细信息</h1>
-        <table>
-            <tr><th>项目详细信息名称</th><th>详细信息</th><th>详细信息负责人</th></tr>
-            <tr><td>项目详细信息名称1</td><td>详细信息1</td><td>详细信息负责人1</td></tr>
-            <tr><td>项目详细信息名称2</td><td>详细信息2</td><td>详细信息负责人2</td></tr>
-            <tr><td>项目详细信息名称3</td><td>详细信息3</td><td>详细信息负责人3</td></tr>
+
+        <h4>2、版本概况</h4>
+        <table class="tbContent">
+            <tr>
+                <th class="thTitle">项目名称</th>
+                <th class="thTitle">核心需求</th><th class="thTitle">　</th>
+                <th class="thTitle">计划发布</th>
+                <th class="thTitle">进展与风险</th><th class="thTitle">　</th>
+            </tr>
+        @foreach (var item in Model.SummaryVersionList)
+        {
+            <tr>
+                <td class="tdBorder">@item.ProjectName</td>
+                <td class="tdBorder" colspan="2">@Html.Raw(item.Request)</td>
+                <td class="tdBorder">@Html.Raw(item.Publish)</td>
+                <td class="tdBorder" colspan="2">@Html.Raw(item.Risk)</td>
+            </tr>
+        }
+            </table>
+       
+        <h4>3、用户反馈</h4>
+        <h5>A、TOP问题</h5>
+        <table class="tbContent">
+            <tr>
+                <th class="thTitle">序号</th>
+                <th class="thTitle">平台</th>
+                <th class="thTitle">问题概要</th>
+                <th class="thTitle">跟进人</th>
+                <th class="thTitle">状态</th>
+                <th class="thTitle">跟进情况</th>
+            </tr>
+        @foreach (var item in Model.SummaryFeedbackList)
+        {
+            <tr>
+                <td class="tdBorder">@item.Seq</td>
+                <td class="tdBorder">@item.Platform</td>
+                <td class="tdBorder">@Html.Raw(item.Issue)</td>
+                <td class="tdBorder">@item.Tracker</td>
+                <td class="tdBorder">@item.Status</td>
+                <td class="tdBorder">@Html.Raw(item.TrackInfo)</td>
+            </tr>
+        }
+            </table>
+                
+        <h5>B、用户建议</h5>
+        <table class="tbContent">
+            <tr>
+                <th class="thTitle">序号</th>
+                <th class="thTitle">平台</th>
+                <th class="thTitle">建议内容</th>
+                <th class="thTitle">反馈用户数</th>
+                <th class="thTitle">影响用户体验描述</th>
+                <th class="thTitle">跟进情况</th>
+            </tr>
+        @foreach (var item in Model.SummarySuggestList)
+        {
+            <tr>
+                <td class="tdBorder">@item.Seq</td>
+                <td class="tdBorder">@item.Platform</td>
+                <td class="tdBorder">@Html.Raw(item.SuggestContent)</td>
+                <td class="tdBorder">@item.UserCount</td>
+                <td class="tdBorder">@Html.Raw(item.Issue)</td>
+                <td class="tdBorder">@Html.Raw(item.TrackInfo)</td>
+            </tr>
+        }
+            </table>
+
+        <h4>4、各项目概况</h4>
+    @for (int i = 0; i < Model.ProjectInfoList.Count; i++ )
+    {
+        <h5>4.@(i+1) 项目名称：@Model.ProjectInfoList[i].ProjectName</h5>
+        <h6>（1）目标与近期重点</h6>
+        <div>
+            @Html.Raw(Model.ProjectInfoList[i].Target)
+        </div>
+        <h6>（2）项目进展</h6>
+        <div>
+            @Html.Raw(Model.ProjectInfoList[i].Progress)
+        </div>
+        <h6>（3）团队工作方式优化</h6>
+        <div>
+            @Html.Raw(Model.ProjectInfoList[i].Teamwork)
+        </div>
+        <h6>（4）版本详情</h6>
+        <div>
+            @Html.Raw(Model.ProjectInfoList[i].VersionDetail)
+        </div>
+        <h6>（5）版本质量分析</h6>
+        <div>
+            @Html.Raw(Model.ProjectInfoList[i].VersionQuality)
+        </div>
+        
+    }
+        
+      
+        <h4>三、重点事务</h4>
+        <h5>产品事务</h5>
+        <table class="tbContent">
+            <tr>
+                <th class="thTitle">分类</th>
+                <th class="thTitle">优先级</th>
+                <th class="thTitle">负责人</th>
+                <th class="thTitle">工作计划</th><th class="thTitle">　</th>
+                <th class="thTitle">进展情况</th>
+            </tr>
+        @foreach (var item in Model.AffairProductList)
+        {
+            <tr>
+                <td>@item.Classify</td>                            
+                <td>@item.Priority</td>
+                <td>@item.Tracker</td>
+                <td colspan="2">@Html.Raw(item.Workplan)</td>
+                <td>@Html.Raw(item.Progress)</td>
+            </tr>
+        }
         </table>
-        <h1>用户反馈：测试333</h1>
-        <table>
-            <tr><th>反馈名称</th><th>反馈详情</th><th>反馈负责人</th></tr>
-            <tr><td>反馈名称1</td><td>反馈详情1</td><td>反馈负责人1</td></tr>
-            <tr><td>反馈名称2</td><td>反馈详情2</td><td>反馈负责人2</td></tr>
-            <tr><td>反馈名称3</td><td>反馈详情3</td><td>反馈负责人3</td></tr>
-        </table>
+
+        <h4>四、团队工作方式优化</h4>
+        <div>
+            @Html.Raw(Model.teamworkInfo.Content)
+        </div>
+
+        <h4>五、需要的协助和支持</h4>
+        <div>
+            @Html.Raw(Model.assistInfo.Content)
+        </div>
     </div>
 </body>
 </html>

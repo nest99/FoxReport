@@ -2,7 +2,7 @@
 
 <div id="searchBox">
     @*查询周报*@
-    <table>
+    <table class="searchTable">
         <tr>
             <td><div class="topTitle">业务范围：</div></td>
             <td><input type="radio" id="countryInSearch" onclick="Search()" name="radioCountrySearch" @(ViewBag.SelectedIsForeign == "0" ? " checked=\"checked\"" : "") value="0" /><label for="countryInSearch">国内</label>
@@ -16,9 +16,13 @@
                 {
                     <option value="@item.YearWeek" @(item.YearWeek == int.Parse(ViewBag.SelectedYearWeek) ? " selected=\"selected\"" : "")>
                         @(item.YearWeek) (@(item.WeekStart.ToString("MM-dd"))至@(item.WeekEnd.ToString("MM-dd")))
+                        @if (item.YearWeek == ViewBag.YearWeek)
+                        {
+                            <text>本周</text>
+                        } 
                     </option>
                 }
-                </select>
+                </select>                
             </td>
             @*<td><div class="topTitle">时间段：</div></td>
             <td>
@@ -49,5 +53,7 @@
             </td>*@                  
         </tr>
     </table>
+    <a href="Home/Download/2" class="previewLink" target="_blank">导出WORD</a>
+    <a href="Preview/Index/2" class="previewLink" target="_blank">预览</a>
 </div>
             

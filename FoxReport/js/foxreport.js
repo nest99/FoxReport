@@ -145,6 +145,12 @@ function saveReportName() {
         }
     });
 }
+function previewPage() {
+
+}
+function onlyNumber(obj) {
+    obj.value = obj.value.replace(/\D/g, '');
+}
 function SetSeq(obj) {
     var seq = $(obj).val().trim();
     var old = $(obj).attr("old");

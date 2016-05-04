@@ -1,6 +1,6 @@
 ﻿@model FoxReport.Models.InitReport
 
-<div id="pageReportBox">
+<div id="pageReportBox">    
     <div id="reportTitleDiv">
         @*<span id="reportIsForeign">国内</span>：*@
         <input type="text" id="reportName" onblur="saveReportName();" value="@Model.ReportName" maxlength="50" />
@@ -15,7 +15,10 @@
             </ul>
             <div id="tabSummaryContent" class="tabContent">               
                     <table id="tbTargetStrategy" class="tbContent">
-                        <tr class="trContent"><th class="thSum1_1">项目名称</th><th class="thSum1_2">目标(现状)</th><th class="thSum1_3">策略与措施</th><th class="deleteTH">删除</th></tr>
+                        <tr class="trContent">
+                            <th class="thSum1_1">项目名称</th>
+                            <th class="thSum1_2">目标(现状)</th>
+                            <th class="thSum1_3">策略与措施</th><th class="deleteTH">删除</th></tr>
                     @foreach (var item in Model.SummaryTargetStrategyList)
                     {
                         <tr id="trTargetStrategy@(item.Id)" class="trContent">

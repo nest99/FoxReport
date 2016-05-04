@@ -26,7 +26,7 @@ namespace FoxReport.Controllers
             InitReport initReport = SqlDbHelper.GetInitReport(whereCondition, limit, out totalCount, out totalPage);
             initReport.totalCount = totalCount;
             initReport.totalPage = totalPage;
-            ViewBag.UserList = CacheFoxData.UserList;
+            ViewBag.UserList = CacheFoxData.UserList;            
             return PartialView(initReport);
         }
         public ActionResult Search(string userId, string week, string isForeign)
@@ -156,7 +156,7 @@ namespace FoxReport.Controllers
                 
             if (id == "Version")
             {
-                List<SummaryVersion> versionList = SqlDbHelper.GetSummaryVersion(whereCondition, out totalCount, out totalPage);
+                List<SummaryVersion> versionList = SqlDbHelper.GetSummaryVersion(whereCondition, limit, out totalCount, out totalPage);
                 ViewBag.TotalCount = totalCount;
                 ViewBag.TotalPage = totalPage;
                 ViewBag.PageIndex = pageIndex;
@@ -299,7 +299,7 @@ namespace FoxReport.Controllers
             ViewBag.SelectedYearWeek = cookie.Values["week"];
             ViewBag.SelectedUserId = cookie.Values["userId"];
             ViewBag.SelectedIsForeign = cookie.Values["isForeign"];
-
+            ViewBag.YearWeek = DateTime.Now.Year * 100 + WeekHelper.GetWeekOfYear(DateTime.Now);
             UserAndWeekInfo userWeek = new UserAndWeekInfo();
             return PartialView("_SearchDiv", userWeek);
         }
