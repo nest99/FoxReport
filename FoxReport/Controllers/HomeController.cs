@@ -98,7 +98,7 @@ namespace FoxReport.Controllers
             }
             else// "TargetStrategy"
             {
-                List<SummaryTargetStrategy> targetList = SqlDbHelper.GetSummaryTargetStrategy(whereCondition, limit, out totalCount, out totalPage);
+                List<SummaryTargetStrategy> targetList = SqlDbHelper.GetSummaryTargetStrategy(whereCondition, limit, null, out totalCount, out totalPage);
                 return PartialView("_Summary_" + id, targetList);
             }
         }

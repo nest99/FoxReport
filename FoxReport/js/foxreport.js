@@ -9,7 +9,7 @@ var foxParam = {
 };
 
 var keditor;
-var keHeight = 350;
+var keHeight = 300;
 KindEditor.ready(function (K) {
     keditor = K.create("#keText", {
         width: "100%", height: keHeight, resizeType: 0,
@@ -29,7 +29,7 @@ function editText(obj) {
     var content = $("#" + id).html();
     keditor.html(content);    
     var width = $(obj).parent().width() + 12;//KindEditor的p标签padding=5,两边就是10；editLayer的padding：0 2 0 0就是2   
-    if (width < 170) { width = 170; }
+    if (width < 250) { width = 250; }
     var tdIndex = $(obj).closest("td").index();//当前元素所在的td的序号
     var columnName = $(obj).closest("table").find("th").eq(tdIndex).text();
     $("#editColumnName").text(columnName);
@@ -151,16 +151,22 @@ function previewPage() {
 function onlyNumber(obj) {
     obj.value = obj.value.replace(/\D/g, '');
 }
+function setThisWeek(yearWeek) {
+    $("#ddlWeekSearch").val(yearWeek);
+    Search();
+}
 function SetSeq(obj) {
     var seq = $(obj).val().trim();
     var old = $(obj).attr("old");
-    var id = $(obj).attr("id").substr($(obj).attr("id").indexOf("_") + 1);
+    var id = $(obj).parent().attr("id"); //
+    var seqId = $(obj).attr("id");
+    var recordId = seqId.substr(seqId.indexOf("_") + 1);
 
     if (old && old == seq) { //已经有seq 且 值没有改变        
         return;
     }
     if (seq == "") {
-        if (id == "0") {
+        if (recordId == "0") {
             return;
         } else {
             saveMsg("请输入序号");
@@ -171,12 +177,23 @@ function SetSeq(obj) {
     var seqTable = $(obj).attr("id").indexOf("Feedback") != -1 ? "Feedback" : "Suggest";
     $.ajax({
         url: "Report/SaveSeq",
-        data: "recordId=" + id + "&seqTable=" + seqTable + "&seq=" + seq, //getUrlParam()
+        data: "recordId=" + recordId + "&seqTable=" + seqTable + "&seq=" + seq, //getUrlParam()
         type: "POST",
         success: function (data) {
-            if (data.Result == 1) {
+            if (data.NewId > 0) {
                 saveMsg();
-            } else if (data.Result == -1) {
+                if (recordId == "0") {//_0结尾为新增                
+                    ids = id.split('_');
+                    var trNewId = "#trNew" + ids[1];//获取新增行的id
+                    //添加一行数据（复制新增行的html代码，插入新增行之前。修改id为新数据的id)
+                    $("<tr class=\"trContent\">" + $(trNewId).html().replace(/_0">/g, "_" + data.NewId + "\">") + "</tr>").insertBefore(trNewId);
+                    $("#" + id.replace("_0", "_" + data.NewId)).find("input").val(seq).attr("old", seq);//显示内容到正确的列，设置old属性
+                    $("#" + id).find("input").val("");//清空新建行的文字
+                } else {
+                    //不以0结尾为编辑已有文本框
+                    $("#" + id).val(seq);
+                }
+            } else if (data.NewId == -1) {
                 saveMsg("请输入数字序号！");
             } else {
                 saveMsg("保存数据失败！");
@@ -191,7 +208,8 @@ function getUrlParam() {
     var userId = $("#ddlTracker").val();
     var week = $("#ddlWeekSearch").val();
     var isForeign = $("input[name=radioCountrySearch]:checked").val();
-    var urlParam = "userId=" + userId + "&week=" + week + "&isForeign=" + isForeign;
+    var project = encodeURIComponent($("#searchProjectName").val().trim());
+    var urlParam = "userId=" + userId + "&week=" + week + "&isForeign=" + isForeign + "&project=" + project;
     return urlParam;
 }
 //blur事件，保存项目名称
@@ -344,7 +362,7 @@ function getSummaryTab(tab) {
     $("#SummaryTabs").find(".activeTab").removeClass("activeTab");
     $("#" + tab).addClass("activeTab");
     $.ajax({
-        url: "Report/Summary/" + tab + "?pageIndex=" + foxParam["pageIndexSummary" + tab] +"&userId=" + userId + "&week=" + week + "&isForeign=" + isForeign,
+        url: "Report/Summary/" + tab + "?pageIndex=" + foxParam["pageIndexSummary" + tab] + "&" + getUrlParam(), // +"&userId=" + userId + "&week=" + week + "&isForeign=" + isForeign,
         type: "GET",
         cache:false,
         success: function (data) {
@@ -391,7 +409,7 @@ function getProjectInfoTab(obj) {
     $("#ProjectInfo_" + recordId).find(".activeTab").removeClass("activeTab");
     $("#" + column + "_" + recordId).addClass("activeTab");
     $.ajax({
-        url: "Report/ProjectInfoTab/" + column + "?recordId=" + recordId + "&userId=" + userId + "&week=" + week + "&isForeign=" + isForeign,
+        url: "Report/ProjectInfoTab/" + column + "?recordId=" + recordId, // + "&userId=" + userId + "&week=" + week + "&isForeign=" + isForeign,
         type: "GET",
         cache: false,
         success: function (data) {
@@ -410,12 +428,13 @@ function Search() {
     var isForeign = $("input[name=radioCountrySearch]:checked").val();
     var week = $("#ddlWeekSearch").val();
     var userId = $("#ddlTracker").val();
-    //var project = encodeURIComponent( $("#searchProjectName").val() );
+    var project = encodeURIComponent( $("#searchProjectName").val() );
     //var start = encodeURIComponent( $("#startDate").val() );
     //var end = encodeURIComponent($("#endDate").val());
     loadingShow();
     $.ajax({
-        url: "Report/Search/" + isForeign + "?week=" + week + "&userId=" + userId + "&isForeign=" + isForeign,
+        url: "Report/Search/" + isForeign + "?week=" + week + "&userId=" + userId +
+            "&isForeign=" + isForeign + "&project=" + project,
         type: "GET",
         success: function (data) {
             $("#pageReportContent").html(data);

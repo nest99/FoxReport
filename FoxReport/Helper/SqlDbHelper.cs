@@ -18,7 +18,7 @@ namespace FoxReport.Helper
         /// <param name="week">年周</param>
         /// <param name="isForeign">国内=0，国外=1</param>
         /// <returns></returns>
-        public static InitShow GetInitShow(int userId, int week, int isForeign)
+        /*public static InitShow GetInitShow(int userId, int week, int isForeign)
         {
             InitShow initShow = new InitShow();
 
@@ -118,20 +118,21 @@ namespace FoxReport.Helper
             return initShow;
         }
 
-        public static InitReport GetInitReport(string whereCondition, string limit, out int[] totalCount, out int[] totalPage)
+        public static InitReport GetInitReport(string whereCondition, string limit, MySqlParameter[] parameters, out int[] totalCount, out int[] totalPage)
         {
             totalCount = new int[3];
             totalPage = new int[3];
 
             InitReport initReport = new InitReport();
             initReport.ReportName = GetReportName(whereCondition);
-            initReport.SummaryTargetStrategyList = GetSummaryTargetStrategy(whereCondition, limit, out totalCount[0], out totalPage[0]);
+            initReport.SummaryTargetStrategyList = GetSummaryTargetStrategy(whereCondition, limit, parameters, out totalCount[0], out totalPage[0]);
             initReport.ProjectInfoList = GetProjectInfoList(whereCondition, limit, out totalCount[1], out totalPage[1]);
             initReport.AffairProductList = GetAffairProduct(whereCondition, limit, out totalCount[2], out totalPage[2]);
             initReport.teamworkInfo = GetTeamworkInfo(whereCondition);
             initReport.assistInfo = GetAssistInfo(whereCondition);
             return initReport;
         }
+        */
         
         public static int DeleteData(string tableName, string id)
         {
@@ -156,7 +157,7 @@ namespace FoxReport.Helper
             return deleteCount;
         }
         /// <summary>
-        /// 保存字段值到数据库
+        /// 保存富文本字段值到数据库
         /// </summary>
         /// <param name="tableName">表名</param>
         /// <param name="columnName">字段名称</param>
@@ -323,26 +324,30 @@ namespace FoxReport.Helper
             MySqlConnection con = new MySqlConnection(ConnectionString);
             MySqlCommand cmd = new MySqlCommand(sql, con);
 
-            int result = 0;
+            int newId = 0;
             try
             {
-                con.Open(); 
-                result = cmd.ExecuteNonQuery();
+                con.Open();
+                newId = cmd.ExecuteNonQuery();
+                if (recordId == "0")
+                {
+                    newId = (int)cmd.LastInsertedId;
+                }
             }
             catch (MySqlException e)
             {
-                Logger.Error("执行sql出错，sql=" + sql, e);
+                Logger.Error("SaveSeq执行sql出错，sql=" + sql, e);
             }
             finally
             {
                 con.Close();
             }
-            return result;
+            return newId;
         }
         /// <summary>
         /// 一、整体概况
         /// </summary>
-        public static List<SummaryTargetStrategy> GetSummaryTargetStrategy(string whereCondition, string limit, out int totalCount, out int totalPage)
+        public static List<SummaryTargetStrategy> GetSummaryTargetStrategy(string whereCondition, string limit, MySqlParameter[] parameters, out int totalCount, out int totalPage)
         {
             List<SummaryTargetStrategy> targetList = new List<SummaryTargetStrategy>();
             MySqlConnection con = new MySqlConnection(ConnectionString);
@@ -350,8 +355,8 @@ namespace FoxReport.Helper
             try
             {
                 con.Open();
-                totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Summary_TargetStrategy " + whereCondition).ToString());
-                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Summary_TargetStrategy " + whereCondition + limit);
+                totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Summary_TargetStrategy " + whereCondition, parameters).ToString());
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Summary_TargetStrategy " + whereCondition + limit, parameters);
                 while (reader.Read())
                 {
                     SummaryTargetStrategy t = new SummaryTargetStrategy();
@@ -382,7 +387,7 @@ namespace FoxReport.Helper
             return targetList;
         }
 
-        public static List<SummaryVersion> GetSummaryVersion(string whereCondition, string limit, out int totalCount, out int totalPage)
+        public static List<SummaryVersion> GetSummaryVersion(string whereCondition, string limit, MySqlParameter[] parameters, out int totalCount, out int totalPage)
         {
             List<SummaryVersion> versionList = new List<SummaryVersion>();
             MySqlConnection con = new MySqlConnection(ConnectionString);
@@ -390,8 +395,8 @@ namespace FoxReport.Helper
             try
             {
                 con.Open();
-                totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Summary_Version " + whereCondition).ToString());
-                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Summary_Version " + whereCondition + limit);
+                totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Summary_Version " + whereCondition, parameters).ToString());
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Summary_Version " + whereCondition + limit, parameters);
                 while (reader.Read())
                 {
                     SummaryVersion v = new SummaryVersion();
@@ -422,7 +427,7 @@ namespace FoxReport.Helper
             return versionList;
         }
 
-        public static List<SummaryFeedback> GetSummaryFeedback(string whereCondition, string limit, out int totalCount, out int totalPage)
+        public static List<SummaryFeedback> GetSummaryFeedback(string whereCondition, string limit, MySqlParameter[] parameters, out int totalCount, out int totalPage)
         {
             List<SummaryFeedback> feedbackList = new List<SummaryFeedback>();
             MySqlConnection con = new MySqlConnection(ConnectionString);
@@ -430,8 +435,8 @@ namespace FoxReport.Helper
             try
             {
                 con.Open();
-                totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Summary_Feedback " + whereCondition).ToString());
-                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Summary_Feedback " + whereCondition + limit);
+                totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Summary_Feedback " + whereCondition, parameters).ToString());
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Summary_Feedback " + whereCondition + limit, parameters);
                 while (reader.Read())
                 {
                     SummaryFeedback f = new SummaryFeedback();
@@ -464,7 +469,7 @@ namespace FoxReport.Helper
             return feedbackList;
         }
 
-        public static List<SummarySuggest> GetSummarySuggest(string whereCondition, string limit, out int totalCount, out int totalPage)
+        public static List<SummarySuggest> GetSummarySuggest(string whereCondition, string limit, MySqlParameter[] parameters, out int totalCount, out int totalPage)
         {
             List<SummarySuggest> suggestList = new List<SummarySuggest>();
             MySqlConnection con = new MySqlConnection(ConnectionString);
@@ -472,8 +477,8 @@ namespace FoxReport.Helper
             try
             {
                 con.Open();
-                totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Summary_Suggest " + whereCondition).ToString());
-                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Summary_Suggest " + whereCondition + limit);
+                totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Summary_Suggest " + whereCondition, parameters).ToString());
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Summary_Suggest " + whereCondition + limit, parameters);
                 while (reader.Read())
                 {
                     SummarySuggest s = new SummarySuggest();
@@ -547,7 +552,7 @@ namespace FoxReport.Helper
         /// <summary>
         /// 二、项目概况列表
         /// </summary>
-        public static List<ProjectInfo> GetProjectInfoList(string whereCondition, string limit, out int totalCount, out int totalPage)
+        public static List<ProjectInfo> GetProjectInfoList(string whereCondition, string limit, MySqlParameter[] parameters, out int totalCount, out int totalPage)
         {
             List<ProjectInfo> projectInfoList = new List<ProjectInfo>();
             MySqlConnection con = new MySqlConnection(ConnectionString);
@@ -555,8 +560,8 @@ namespace FoxReport.Helper
             try
             {
                 con.Open();
-                totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Project_Info " + whereCondition).ToString());
-                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Project_Info " + whereCondition + limit);
+                totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Project_Info " + whereCondition, parameters).ToString());
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Project_Info " + whereCondition + limit, parameters);
                 while (reader.Read())
                 {
                     ProjectInfo p = new ProjectInfo();
@@ -591,7 +596,7 @@ namespace FoxReport.Helper
         /// <summary>
         /// 三、重点事务：产品事务
         /// </summary>
-        public static List<AffairProduct> GetAffairProduct(string whereCondition, string limit, out int totalCount, out int totalPage)
+        public static List<AffairProduct> GetAffairProduct(string whereCondition, string limit, MySqlParameter[] parameters, out int totalCount, out int totalPage)
         {
             List<AffairProduct> productList = new List<AffairProduct>();
             MySqlConnection con = new MySqlConnection(ConnectionString);
@@ -599,8 +604,8 @@ namespace FoxReport.Helper
             try
             {
                 con.Open();
-                totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Affair_Product " + whereCondition).ToString());
-                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Affair_Product " + whereCondition + limit);
+                totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Affair_Product " + whereCondition, parameters).ToString());
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Affair_Product " + whereCondition + limit, parameters);
                 while (reader.Read())
                 {
                     AffairProduct p = new AffairProduct();

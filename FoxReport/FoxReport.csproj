@@ -132,7 +132,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\PreviewController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
@@ -451,34 +450,13 @@
     <Compile Include="Models\SummaryVersion.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\Detail.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\_Summary_TargetStrategy.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\_Summary_Version.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resource1.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\_Summary_Feedback.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Preview\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\_Summary_Suggest.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\_Project_Info.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Report\Index.cshtml" />

@@ -1,5 +1,6 @@
 ﻿using FoxReport.Helper;
 using FoxReport.Models;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -20,16 +21,28 @@ namespace FoxReport.Controllers
             string week = cookie.Values["week"];
             string isForeign = cookie.Values["isForeign"];
 
-            string whereCondition = " where UserId='" + userId + "' and Week=" + week + " and IsForeign=" + isForeign;
+            string whereCondition = " where UserId='" + userId + "' and Week=" + week;
+            string whereConditionForeign = whereCondition + " and IsForeign=" + isForeign;
             string limit = " limit 0, " + ConfigurationManager.AppSettings["pageSize"];
-            int[] totalCount, totalPage;
-            InitReport initReport = SqlDbHelper.GetInitReport(whereCondition, limit, out totalCount, out totalPage);
+            
+            int c1, c2, c3, p1, p2, p3;
+            InitReport initReport = new InitReport();
+            initReport.ReportName = SqlDbHelper.GetReportName(whereCondition);
+
+            initReport.SummaryTargetStrategyList = SqlDbHelper.GetSummaryTargetStrategy(whereConditionForeign, limit, null, out c1, out p1);
+            initReport.ProjectInfoList = SqlDbHelper.GetProjectInfoList(whereConditionForeign, limit, null, out c2, out p2);
+
+            initReport.AffairProductList = SqlDbHelper.GetAffairProduct(whereCondition, limit, null, out c3, out p3);
+            initReport.teamworkInfo = SqlDbHelper.GetTeamworkInfo(whereCondition);
+            initReport.assistInfo = SqlDbHelper.GetAssistInfo(whereCondition);
+            int[] totalCount = {c1, c2, c3};
+            int[] totalPage ={p1, p2, p3};
             initReport.totalCount = totalCount;
             initReport.totalPage = totalPage;
             ViewBag.UserList = CacheFoxData.UserList;            
             return PartialView(initReport);
         }
-        public ActionResult Search(string userId, string week, string isForeign)
+        public ActionResult Search(string userId, string week, string isForeign, string project)
         {
             HttpCookie cookie = new HttpCookie("SearchInfo");
             cookie.Values["userId"] = userId;
@@ -42,13 +55,42 @@ namespace FoxReport.Controllers
             ViewBag.SelectedUserId = userId;
             ViewBag.SelectedIsForeign = isForeign;
             ViewBag.UserList = CacheFoxData.UserList;
-            string whereCondition = " where UserId='" + userId + "' and Week=" + week + " and IsForeign=" + isForeign;
+            string whereCondition = " where UserId='" + userId + "' and Week=" + week;
+            string whereConditionForeign = whereCondition + " and IsForeign=" + isForeign;
+            string whereConditionProject = whereConditionForeign;
+            MySqlParameter[] parameters = null;
+            if(!string.IsNullOrWhiteSpace(project))
+            {
+                whereConditionProject += " and ProjectName like @project ";                
+                parameters = new MySqlParameter[1];
+                parameters[0] = GetProjectNameParam(project);
+            }
+
             string limit = " limit 0, " + ConfigurationManager.AppSettings["pageSize"];
-            int[] totalCount, totalPage;
-            InitReport initReport = SqlDbHelper.GetInitReport(whereCondition, limit, out totalCount, out totalPage);
+           
+            int c1, c2, c3, p1, p2, p3;
+            InitReport initReport = new InitReport();
+            initReport.ReportName = SqlDbHelper.GetReportName(whereCondition);
+
+            initReport.SummaryTargetStrategyList = SqlDbHelper.GetSummaryTargetStrategy(whereConditionProject, limit, parameters, out c1, out p1);
+            initReport.ProjectInfoList = SqlDbHelper.GetProjectInfoList(whereConditionProject, limit, parameters, out c2, out p2);
+
+            initReport.AffairProductList = SqlDbHelper.GetAffairProduct(whereCondition, limit, null, out c3, out p3);
+            initReport.teamworkInfo = SqlDbHelper.GetTeamworkInfo(whereCondition);
+            initReport.assistInfo = SqlDbHelper.GetAssistInfo(whereCondition);
+            int[] totalCount = { c1, c2, c3 };
+            int[] totalPage = { p1, p2, p3 };
+            initReport.totalCount = totalCount;
+            initReport.totalPage = totalPage;
+
             return PartialView("Index", initReport);
         }
-
+        private MySqlParameter GetProjectNameParam(string project)
+        {
+            MySqlParameter p = new MySqlParameter("@project", MySqlDbType.VarString, 50);
+            p.Value = "%" + project + "%";
+            return p;
+        }
         [HttpPost]
         public JsonResult DeleteData(string id, string tableName)
         {
@@ -126,14 +168,14 @@ namespace FoxReport.Controllers
             string seqTable = Request["seqTable"];
             string seq = Request["seq"];
             int s;
-            int result = -1; //seq不是数字
+            int newId = -1; //seq不是数字
             if (int.TryParse(seq, out s))
             {
-                result = SqlDbHelper.SaveSeq(seqTable, recordId, seq);                
+                newId = SqlDbHelper.SaveSeq(seqTable, recordId, seq);                
             }
             var obj = new
             {
-                Result = result
+                NewId = newId
             };
             return Json(obj);
         }
@@ -146,17 +188,29 @@ namespace FoxReport.Controllers
         /// <param name="week">年周</param>
         /// <param name="isForeign">0国内，1国外</param>
         /// <returns></returns>
-        public PartialViewResult Summary(string id, int pageIndex,string userId, string week, string isForeign)
+        public PartialViewResult Summary(string id, int pageIndex,string userId, string week, string isForeign, string project)
         {
             int pageSize = int.Parse(ConfigurationManager.AppSettings["pageSize"]);
             int totalCount = 0;
             int totalPage = 0;
             string whereCondition = " where UserId=" + userId + " and Week=" + week + " and IsForeign=" + isForeign;
+            string whereConditionProject;
+            MySqlParameter[] parameters = null;
+            if (string.IsNullOrWhiteSpace(project))
+            {
+                whereConditionProject = whereCondition;
+            }
+            else
+            {
+                whereConditionProject = whereCondition + " and ProjectName like @project ";
+                parameters = new MySqlParameter[1];
+                parameters[0] = GetProjectNameParam(project);
+            }
             string limit = " limit " + ((pageIndex - 1) * pageSize).ToString() + ", " + pageSize.ToString();
                 
             if (id == "Version")
             {
-                List<SummaryVersion> versionList = SqlDbHelper.GetSummaryVersion(whereCondition, limit, out totalCount, out totalPage);
+                List<SummaryVersion> versionList = SqlDbHelper.GetSummaryVersion(whereConditionProject, limit, parameters, out totalCount, out totalPage);
                 ViewBag.TotalCount = totalCount;
                 ViewBag.TotalPage = totalPage;
                 ViewBag.PageIndex = pageIndex;
@@ -164,7 +218,7 @@ namespace FoxReport.Controllers
             }
             else if (id == "Feedback")
             {                
-                List<SummaryFeedback> feedbackList = SqlDbHelper.GetSummaryFeedback(whereCondition, limit, out totalCount, out totalPage);
+                List<SummaryFeedback> feedbackList = SqlDbHelper.GetSummaryFeedback(whereCondition, limit, null, out totalCount, out totalPage);
                 ViewBag.TotalCount = totalCount;
                 ViewBag.TotalPage = totalPage;
                 ViewBag.PageIndex = pageIndex;
@@ -173,7 +227,7 @@ namespace FoxReport.Controllers
             }
             else if (id == "Suggest")
             {
-                List<SummarySuggest> suggestList = SqlDbHelper.GetSummarySuggest(whereCondition, limit, out totalCount, out totalPage);
+                List<SummarySuggest> suggestList = SqlDbHelper.GetSummarySuggest(whereCondition, limit, null, out totalCount, out totalPage);
                 ViewBag.TotalCount = totalCount;
                 ViewBag.TotalPage = totalPage;
                 ViewBag.PageIndex = pageIndex;
@@ -182,7 +236,7 @@ namespace FoxReport.Controllers
             }
             else// "TargetStrategy"
             {
-                List<SummaryTargetStrategy> targetList = SqlDbHelper.GetSummaryTargetStrategy(whereCondition, limit, out totalCount, out totalPage);
+                List<SummaryTargetStrategy> targetList = SqlDbHelper.GetSummaryTargetStrategy(whereConditionProject, limit, parameters, out totalCount, out totalPage);
                 ViewBag.TotalCount = totalCount;
                 ViewBag.TotalPage = totalPage;
                 ViewBag.PageIndex = pageIndex;
@@ -206,7 +260,7 @@ namespace FoxReport.Controllers
             string whereCondition = " where UserId=" + userId + " and Week=" + week + " and IsForeign=" + isForeign;
             string limit = " limit " + ((pageIndex - 1) * pageSize).ToString() + ", " + pageSize.ToString();
 
-            List<AffairProduct> targetList = SqlDbHelper.GetAffairProduct(whereCondition, limit, out totalCount, out totalPage);
+            List<AffairProduct> targetList = SqlDbHelper.GetAffairProduct(whereCondition, limit, null, out totalCount, out totalPage);
 
             ViewBag.TotalCount = totalCount;
             ViewBag.TotalPage = totalPage;
@@ -235,7 +289,7 @@ namespace FoxReport.Controllers
         /// <param name="week"></param>
         /// <param name="isForeign"></param>
         /// <returns></returns>
-        public PartialViewResult ProjectInfoTab(string id, int recordId, string userId, string week, string isForeign)
+        public PartialViewResult ProjectInfoTab(string id, int recordId)//, string userId, string week, string isForeign
         {
             string whereCondition = " where id=" + recordId.ToString(); // UserId=" + userId + " and Week=" + week + " and IsForeign=" + isForeign;
                 
@@ -266,6 +320,7 @@ namespace FoxReport.Controllers
             ViewBag.Content = content;
             return PartialView("_Project_Info_Tab", p);
         }
+        
         /// <summary>
         /// 二、项目概况，获取分页的项目概况
         /// </summary>
@@ -276,23 +331,27 @@ namespace FoxReport.Controllers
         /// <param name="week"></param>
         /// <param name="isForeign"></param>
         /// <returns></returns>
-        public PartialViewResult ProjectInfo(int pageIndex, string userId, string week, string isForeign)
-        {
-            int pageSize = int.Parse(ConfigurationManager.AppSettings["pageSize"]);
-            int totalCount = 0;
-            int totalPage = 0;
-            string whereCondition = " where UserId=" + userId + " and Week=" + week + " and IsForeign=" + isForeign;
-            string limit = " limit " + ((pageIndex - 1) * pageSize).ToString() + ", " + pageSize.ToString();
-            List<ProjectInfo> projectInfoList = SqlDbHelper.GetProjectInfoList(whereCondition, limit, out totalCount, out totalPage);
+        //public PartialViewResult ProjectInfo(int pageIndex, string userId, string week, string isForeign)
+        //{
+        //    int pageSize = int.Parse(ConfigurationManager.AppSettings["pageSize"]);
+        //    int totalCount = 0;
+        //    int totalPage = 0;
+        //    string whereCondition = " where UserId=" + userId + " and Week=" + week + " and IsForeign=" + isForeign;
+        //    string limit = " limit " + ((pageIndex - 1) * pageSize).ToString() + ", " + pageSize.ToString();
+        //    List<ProjectInfo> projectInfoList = SqlDbHelper.GetProjectInfoList(whereCondition, limit, out totalCount, out totalPage);
 
-            ViewBag.TotalCount = totalCount;
-            ViewBag.TotalPage = totalPage;
-            ViewBag.PageIndex = pageIndex;
-            ViewBag.UserList = CacheFoxData.UserList;
+        //    ViewBag.TotalCount = totalCount;
+        //    ViewBag.TotalPage = totalPage;
+        //    ViewBag.PageIndex = pageIndex;
+        //    ViewBag.UserList = CacheFoxData.UserList;
 
-            return PartialView("_Project_Info", projectInfoList);
-        }
-        //生成查询Div的html
+        //    return PartialView("_Project_Info", projectInfoList);
+        //}
+               
+        /// <summary>
+        /// 生成查询Div的html
+        /// </summary>
+        /// <returns></returns>
         public ActionResult SearchDiv()
         {
             HttpCookie cookie = GetCookie();

@@ -32,6 +32,7 @@
     <div>
         <h3>一、国内@(Model.ReportName)</h3>
         <h4>1、目标与策略</h4>
+        <div>
         <table class="tbContent">
             <tr>
                 <th class="thTitle">项目名称</th>　<th class="thTitle">　</th>
@@ -40,15 +41,19 @@
             </tr>
         @foreach (var item in Model.SummaryTargetStrategyList)
         {
+            if(item.IsForeign == 0)
+            {
             <tr>
                 <td colspan="2" class="tdBorder">@item.ProjectName</td>                           
                 <td colspan="2" class="tdBorder">@Html.Raw(item.Target)</td>
                 <td colspan="2" class="tdBorder">@Html.Raw(item.Strategy)</td>
             </tr>
+            }
         }
         </table>
-
+        </div>
         <h4>2、版本概况</h4>
+        <div>
         <table class="tbContent">
             <tr>
                 <th class="thTitle">项目名称</th>
@@ -58,18 +63,21 @@
             </tr>
         @foreach (var item in Model.SummaryVersionList)
         {
+            if(item.IsForeign == 0)
+            {
             <tr>
                 <td class="tdBorder">@item.ProjectName</td>
                 <td class="tdBorder" colspan="2">@Html.Raw(item.Request)</td>
                 <td class="tdBorder">@Html.Raw(item.Publish)</td>
                 <td class="tdBorder" colspan="2">@Html.Raw(item.Risk)</td>
             </tr>
+            }
         }
             </table>
-       
+       </div>
         <h4>3、用户反馈</h4>
         <h5>A、TOP问题</h5>
-        <table class="tbContent">
+        <div><table class="tbContent">
             <tr>
                 <th class="thTitle">序号</th>
                 <th class="thTitle">平台</th>
@@ -80,6 +88,8 @@
             </tr>
         @foreach (var item in Model.SummaryFeedbackList)
         {
+            if(item.IsForeign == 0)
+            {
             <tr>
                 <td class="tdBorder">@item.Seq</td>
                 <td class="tdBorder">@item.Platform</td>
@@ -88,10 +98,12 @@
                 <td class="tdBorder">@item.Status</td>
                 <td class="tdBorder">@Html.Raw(item.TrackInfo)</td>
             </tr>
+            }
         }
             </table>
-                
+             </div>   
         <h5>B、用户建议</h5>
+        <div>
         <table class="tbContent">
             <tr>
                 <th class="thTitle">序号</th>
@@ -103,6 +115,8 @@
             </tr>
         @foreach (var item in Model.SummarySuggestList)
         {
+            if(item.IsForeign == 0)
+            {
             <tr>
                 <td class="tdBorder">@item.Seq</td>
                 <td class="tdBorder">@item.Platform</td>
@@ -111,12 +125,15 @@
                 <td class="tdBorder">@Html.Raw(item.Issue)</td>
                 <td class="tdBorder">@Html.Raw(item.TrackInfo)</td>
             </tr>
+            }
         }
             </table>
-
+        </div>
         <h4>4、各项目概况</h4>
     @for (int i = 0; i < Model.ProjectInfoList.Count; i++ )
     {
+        if(Model.ProjectInfoList[i].IsForeign == 0)
+        {
         <h5>4.@(i+1) 项目名称：@Model.ProjectInfoList[i].ProjectName</h5>
         <h6>（1）目标与近期重点</h6>
         <div>
@@ -138,12 +155,141 @@
         <div>
             @Html.Raw(Model.ProjectInfoList[i].VersionQuality)
         </div>
-        
+        }
     }
         
-      
+       <h3>二、国外@(Model.ReportName)</h3>
+        <h4>1、目标与策略</h4>
+        <div>
+        <table class="tbContent">
+            <tr>
+                <th class="thTitle">项目名称</th>　<th class="thTitle">　</th>
+                <th class="thTitle">目标(现状)</th><th class="thTitle">　</th>
+                <th class="thTitle">策略与措施</th><th class="thTitle">　</th>
+            </tr>
+        @foreach (var item in Model.SummaryTargetStrategyList)
+        {
+            if(item.IsForeign == 1)
+            {
+            <tr>
+                <td colspan="2" class="tdBorder">@item.ProjectName</td>                           
+                <td colspan="2" class="tdBorder">@Html.Raw(item.Target)</td>
+                <td colspan="2" class="tdBorder">@Html.Raw(item.Strategy)</td>
+            </tr>
+            }
+        }
+        </table>
+        </div>
+        <h4>2、版本概况</h4>
+        <div>
+        <table class="tbContent">
+            <tr>
+                <th class="thTitle">项目名称</th>
+                <th class="thTitle">核心需求</th><th class="thTitle">　</th>
+                <th class="thTitle">计划发布</th>
+                <th class="thTitle">进展与风险</th><th class="thTitle">　</th>
+            </tr>
+        @foreach (var item in Model.SummaryVersionList)
+        {
+            if(item.IsForeign == 1)
+            {
+            <tr>
+                <td class="tdBorder">@item.ProjectName</td>
+                <td class="tdBorder" colspan="2">@Html.Raw(item.Request)</td>
+                <td class="tdBorder">@Html.Raw(item.Publish)</td>
+                <td class="tdBorder" colspan="2">@Html.Raw(item.Risk)</td>
+            </tr>
+            }
+        }
+            </table>
+       </div>
+        <h4>3、用户反馈</h4>
+        <h5>A、TOP问题</h5>
+        <div>
+        <table class="tbContent">
+            <tr>
+                <th class="thTitle">序号</th>
+                <th class="thTitle">平台</th>
+                <th class="thTitle">问题概要</th>
+                <th class="thTitle">跟进人</th>
+                <th class="thTitle">状态</th>
+                <th class="thTitle">跟进情况</th>
+            </tr>
+        @foreach (var item in Model.SummaryFeedbackList)
+        {
+            if(item.IsForeign == 1)
+            {
+            <tr>
+                <td class="tdBorder">@item.Seq</td>
+                <td class="tdBorder">@item.Platform</td>
+                <td class="tdBorder">@Html.Raw(item.Issue)</td>
+                <td class="tdBorder">@item.Tracker</td>
+                <td class="tdBorder">@item.Status</td>
+                <td class="tdBorder">@Html.Raw(item.TrackInfo)</td>
+            </tr>
+            }
+        }
+            </table>
+        </div>        
+        <h5>B、用户建议</h5>
+        <div>
+        <table class="tbContent">
+            <tr>
+                <th class="thTitle">序号</th>
+                <th class="thTitle">平台</th>
+                <th class="thTitle">建议内容</th>
+                <th class="thTitle">反馈用户数</th>
+                <th class="thTitle">影响用户体验描述</th>
+                <th class="thTitle">跟进情况</th>
+            </tr>
+        @foreach (var item in Model.SummarySuggestList)
+        {
+            if(item.IsForeign == 1)
+            {
+            <tr>
+                <td class="tdBorder">@item.Seq</td>
+                <td class="tdBorder">@item.Platform</td>
+                <td class="tdBorder">@Html.Raw(item.SuggestContent)</td>
+                <td class="tdBorder">@item.UserCount</td>
+                <td class="tdBorder">@Html.Raw(item.Issue)</td>
+                <td class="tdBorder">@Html.Raw(item.TrackInfo)</td>
+            </tr>
+            }
+        }
+            </table>
+        </div>
+        <h4>4、各项目概况</h4>
+    @for (int i = 0; i < Model.ProjectInfoList.Count; i++ )
+    {
+        if(Model.ProjectInfoList[i].IsForeign == 1)
+        {
+        <h5>4.@(i+1) 项目名称：@Model.ProjectInfoList[i].ProjectName</h5>
+        <h6>（1）目标与近期重点</h6>
+        <div>
+            @Html.Raw(Model.ProjectInfoList[i].Target)
+        </div>
+        <h6>（2）项目进展</h6>
+        <div>
+            @Html.Raw(Model.ProjectInfoList[i].Progress)
+        </div>
+        <h6>（3）团队工作方式优化</h6>
+        <div>
+            @Html.Raw(Model.ProjectInfoList[i].Teamwork)
+        </div>
+        <h6>（4）版本详情</h6>
+        <div>
+            @Html.Raw(Model.ProjectInfoList[i].VersionDetail)
+        </div>
+        <h6>（5）版本质量分析</h6>
+        <div>
+            @Html.Raw(Model.ProjectInfoList[i].VersionQuality)
+        </div>
+        }
+    }
+
         <h4>三、重点事务</h4>
         <h5>产品事务</h5>
+        <div>
         <table class="tbContent">
             <tr>
                 <th class="thTitle">分类</th>
@@ -163,7 +309,7 @@
             </tr>
         }
         </table>
-
+        </div>
         <h4>四、团队工作方式优化</h4>
         <div>
             @Html.Raw(Model.teamworkInfo.Content)

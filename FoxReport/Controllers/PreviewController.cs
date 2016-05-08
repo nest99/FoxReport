@@ -2,7 +2,9 @@
 using FoxReport.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -14,30 +16,54 @@ namespace FoxReport.Controllers
         //
         // GET: /Preview/
 
-        public ActionResult Index(int id)
+        public ActionResult Index()
         {
             HttpCookie cookie = GetCookie();
             string userId = cookie.Values["userId"];
             string week = cookie.Values["week"];
             string isForeign = cookie.Values["isForeign"];
 
-            string whereCondition = " where UserId='" + userId + "' and Week=" + week + " and IsForeign=" + isForeign;
-            string limit = " "; //" limit 0, 1000";
-            int[] totalCount, totalPage;
+            string whereCondition = " where UserId='" + userId + "' and Week=" + week;
+            string limit = " "; //" limit 0, 1000";            
             int t, p;
-            InitReport initReport = SqlDbHelper.GetInitReport(whereCondition, limit, out totalCount, out totalPage);
+            
             ReportData report = new ReportData();
-            report.AffairProductList = initReport.AffairProductList;
-            report.assistInfo = initReport.assistInfo;
-            report.ProjectInfoList = initReport.ProjectInfoList;
-            report.ReportName = initReport.ReportName;
-            report.SummaryTargetStrategyList = initReport.SummaryTargetStrategyList;
-            report.SummaryFeedbackList = SqlDbHelper.GetSummaryFeedback(whereCondition, limit, out t, out p);
-            report.SummaryVersionList = SqlDbHelper.GetSummaryVersion(whereCondition, limit, out t, out p);
-            report.SummarySuggestList = SqlDbHelper.GetSummarySuggest(whereCondition, limit, out t, out p);
-            report.teamworkInfo = initReport.teamworkInfo;
+            report.ReportName = SqlDbHelper.GetReportName(whereCondition);
+            report.AffairProductList = SqlDbHelper.GetAffairProduct(whereCondition, limit, null, out t, out p);
+            report.assistInfo = SqlDbHelper.GetAssistInfo(whereCondition);
+
+            report.ProjectInfoList = SqlDbHelper.GetProjectInfoList(whereCondition, limit, null, out t, out p);            
+            report.SummaryTargetStrategyList = SqlDbHelper.GetSummaryTargetStrategy(whereCondition, limit, null, out t, out p);
+            report.SummaryVersionList = SqlDbHelper.GetSummaryVersion(whereCondition, limit, null, out t, out p);
+
+            report.SummaryFeedbackList = SqlDbHelper.GetSummaryFeedback(whereCondition, limit, null, out t, out p);            
+            report.SummarySuggestList = SqlDbHelper.GetSummarySuggest(whereCondition, limit, null, out t, out p);
+            report.teamworkInfo = SqlDbHelper.GetTeamworkInfo(whereCondition);
             return View(report);
         }
+
+        public FileResult Download()
+        {
+            string tempFileName = string.Format("{0}.docx", Guid.NewGuid().ToString());
+            string absolutePath = Path.Combine(Path.GetTempPath(), tempFileName);
+            Uri uri = new Uri(Request.Url.GetLeftPart(UriPartial.Authority)).Append("Preview/Index/0"); //  /" + id.ToString()
+            string baseDirectory = Directory.GetParent(Request.PhysicalApplicationPath).ToString();
+            NameValueCollection headers = Request.Headers;
+            try
+            {
+                string file = DocumentModel.Load(uri.ToString(), baseDirectory, new Identity
+                {
+                    Headers = headers
+                }).SaveAs(absolutePath);
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return File(absolutePath, MimeMapping.GetMimeMapping(".docx"), "LoadFileName.docx");
+        }
+
         private HttpCookie GetCookie()
         {
             HttpCookie cookie = HttpContext.Request.Cookies["SearchInfo"];

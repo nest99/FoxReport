@@ -22,7 +22,7 @@
                         } 
                     </option>
                 }
-                </select>                
+                </select><a href="javascript:void(0);" onclick="setThisWeek(@ViewBag.YearWeek)">本周</a>
             </td>
             @*<td><div class="topTitle">时间段：</div></td>
             <td>
@@ -44,16 +44,16 @@
                 </select>
             </td>  
 
-            @*<td><div class="topTitle">项目：</div></td>
+            <td><div class="topTitle">项目：</div></td>
             <td>
-                <input id="searchProjectName" type="text" />
+                <input id="searchProjectName" onblur="Search()" value="" type="text" />
             </td>
-            <td>
+            @*<td>
                 <button id="btnSearch" onclick="Search()">查询</button>
             </td>*@                  
         </tr>
     </table>
-    <a href="Home/Download/2" class="previewLink" target="_blank">导出WORD</a>
-    <a href="Preview/Index/2" class="previewLink" target="_blank">预览</a>
+    <a href="Preview/Download" class="previewLink" target="_blank">导出WORD</a>
+    <a href="Preview/Index" class="previewLink" target="_blank">预览</a>
 </div>
             
