@@ -22,8 +22,16 @@ KindEditor.ready(function (K) {
         'table', 'link', 'unlink']
     });
 });
+function isAll() {
+    var all = $("#ddlTracker").val() == "all";
+    if (all) {
+        alert("周报填写人选择“所有人”用于查询项目，不能填写周报。\r\n如果要填写周报，请选择具体的周报填写人，然后填写周报。");
+    }
+    return all;
+}
 //处理编辑按钮事件<button onclick="editText(this);" class="btnEdit"></button>
 function editText(obj) {
+    if (isAll()) { return; }
     var id = $(obj).siblings("div").attr("id");
     $("#editId").val(id);
     var content = $("#" + id).html();
@@ -40,23 +48,11 @@ function editText(obj) {
     $("#editLayer").show();
     $("#editBack").show();
     $("#btnBox").width(width + 2);
-    //if (id.indexOf("Project_Info") != -1
-    //    || id.indexOf("Teamwork_Info") != -1
-    //    || id.indexOf("Assist_Info") != -1) {
-    //    $("#editLayer").removeClass("centerBox");
-    //} else {
-    //    $("#editLayer").addClass("centerBox");
-    //}
 }
-//function changeIsForeign(n) {
-//    if (n) {
-//        $("#reportIsForeign").text("国外");
-//    } else {
-//        $("#reportIsForeign").text("国内");
-//    }
 
 //保存纯文本字段文本值
 function saveColumnTextValue(obj, tableName, column) {
+    if (isAll()) { return; }
     var value = $(obj).val().trim();
     var id = $(obj).parent().attr("id");
     var recordId = id.replace(tableName + "_" + column + "_", "");
@@ -95,6 +91,7 @@ function saveColumnTextValue(obj, tableName, column) {
     });
 }
 function ddlTrackerChange(obj, tableName, column) {
+    if (isAll()) { return; }
     var value = $(obj).val();
     var id = $(obj).parent().attr("id");
     //var id = $(obj).attr("id");
@@ -123,6 +120,7 @@ function ddlTrackerChange(obj, tableName, column) {
 }
 //blur事件，保存报告名称
 function saveReportName() {
+    if (isAll()) { return; }
     var old = $("#reportName").attr("old");
     var reportName = $("#reportName").val().trim();
     if (old && old == reportName) { //已经有项目名称 且 名称没有改变        
@@ -145,9 +143,7 @@ function saveReportName() {
         }
     });
 }
-function previewPage() {
 
-}
 function onlyNumber(obj) {
     obj.value = obj.value.replace(/\D/g, '');
 }
@@ -155,55 +151,7 @@ function setThisWeek(yearWeek) {
     $("#ddlWeekSearch").val(yearWeek);
     Search();
 }
-function SetSeq(obj) {
-    var seq = $(obj).val().trim();
-    var old = $(obj).attr("old");
-    var id = $(obj).parent().attr("id"); //
-    var seqId = $(obj).attr("id");
-    var recordId = seqId.substr(seqId.indexOf("_") + 1);
 
-    if (old && old == seq) { //已经有seq 且 值没有改变        
-        return;
-    }
-    if (seq == "") {
-        if (recordId == "0") {
-            return;
-        } else {
-            saveMsg("请输入序号");
-            return;
-        }
-    }
-    $(obj).attr("old", seq);
-    var seqTable = $(obj).attr("id").indexOf("Feedback") != -1 ? "Feedback" : "Suggest";
-    $.ajax({
-        url: "Report/SaveSeq",
-        data: "recordId=" + recordId + "&seqTable=" + seqTable + "&seq=" + seq, //getUrlParam()
-        type: "POST",
-        success: function (data) {
-            if (data.NewId > 0) {
-                saveMsg();
-                if (recordId == "0") {//_0结尾为新增                
-                    ids = id.split('_');
-                    var trNewId = "#trNew" + ids[1];//获取新增行的id
-                    //添加一行数据（复制新增行的html代码，插入新增行之前。修改id为新数据的id)
-                    $("<tr class=\"trContent\">" + $(trNewId).html().replace(/_0">/g, "_" + data.NewId + "\">") + "</tr>").insertBefore(trNewId);
-                    $("#" + id.replace("_0", "_" + data.NewId)).find("input").val(seq).attr("old", seq);//显示内容到正确的列，设置old属性
-                    $("#" + id).find("input").val("");//清空新建行的文字
-                } else {
-                    //不以0结尾为编辑已有文本框
-                    $("#" + id).val(seq);
-                }
-            } else if (data.NewId == -1) {
-                saveMsg("请输入数字序号！");
-            } else {
-                saveMsg("保存数据失败！");
-            }
-        },
-        error: function (data) {
-            alert("responseText=" + data.responseText + ", data=" + data);
-        }
-    });
-}
 function getUrlParam() {
     var userId = $("#ddlTracker").val();
     var week = $("#ddlWeekSearch").val();
@@ -214,6 +162,7 @@ function getUrlParam() {
 }
 //blur事件，保存项目名称
 function saveProjectName(obj) {
+    if (isAll()) { return; }
     var old = $(obj).attr("old");
     var projectName = $(obj).val().trim();
 
@@ -253,13 +202,15 @@ function saveProjectName(obj) {
         }
     });
 }
-function saveMsg(msg) {
+function saveMsg(msg, fadeOut) {
+    var fadeOutTime = fadeOut ? fadeOut : 3000;
     if (msg) {
-        $("#resultMsg").html("<h1>" + msg + "</h1>").show(200).fadeOut(3000);
+        $("#resultMsg").html("<h1>" + msg + "</h1><input type='button' onclick='hideResult();' value='关闭' />").show(200).fadeOut(fadeOutTime);
     } else {
-        $("#resultMsg").html("<h1>数据保存成功！</h1>").show(200).fadeOut(3000);
+        $("#resultMsg").html("<h1>数据保存成功！</h1><input type='button' onclick='hideResult();' value='关闭' />").show(200).fadeOut(fadeOutTime);
     }
 }
+function hideResult() { $("#resultMsg").hide(); }
 //点击富文本框保存按钮
 function saveText() {
     loadingShow();
@@ -493,4 +444,17 @@ function loadingShow(n) {
 }
 function loadingHide() {
     $("#loadingDiv").hide();
+}
+
+function wordDownload(obj) {
+    var userId = $("#ddlTracker").val();
+    var week = $("#ddlWeekSearch").val();
+    var href = "Preview/Download/" + userId + "?week=" + week;
+    $(obj).attr("href", href);
+}
+function wordPreview(obj) {    
+    var userId = $("#ddlTracker").val();
+    var week = $("#ddlWeekSearch").val();
+    var href = "Preview/Index/" + userId + "?week=" + week;
+    $(obj).attr("href", href);
 }

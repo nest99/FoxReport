@@ -1,5 +1,6 @@
 ﻿using FoxReport.Helper;
 using FoxReport.Models;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -13,17 +14,27 @@ namespace FoxReport.Controllers
 {
     public class PreviewController : Controller
     {
+        private static ILog log = LogManager.GetLogger("PreviewLog");
         //
         // GET: /Preview/
 
-        public ActionResult Index()
+        public ActionResult Index(string id, string week)
         {
-            HttpCookie cookie = GetCookie();
-            string userId = cookie.Values["userId"];
-            string week = cookie.Values["week"];
-            string isForeign = cookie.Values["isForeign"];
-
-            string whereCondition = " where UserId='" + userId + "' and Week=" + week;
+            string userId = "";
+            string yearWeek = "";
+            if (string.IsNullOrEmpty(id))
+            {
+                HttpCookie cookie = GetCookie();
+                userId = cookie.Values["userId"];
+                yearWeek = cookie.Values["week"];
+                //string isForeign = cookie.Values["isForeign"];
+            }
+            else
+            {
+                userId = id;
+                yearWeek = week;
+            }
+            string whereCondition = " where UserId='" + userId + "' and Week=" + yearWeek;
             string limit = " "; //" limit 0, 1000";            
             int t, p;
             
@@ -42,11 +53,12 @@ namespace FoxReport.Controllers
             return View(report);
         }
 
-        public FileResult Download()
+        public FileResult Download(string id, string week)
         {
+            log.Info("Preview下载word");
             string tempFileName = string.Format("{0}.docx", Guid.NewGuid().ToString());
             string absolutePath = Path.Combine(Path.GetTempPath(), tempFileName);
-            Uri uri = new Uri(Request.Url.GetLeftPart(UriPartial.Authority)).Append("Preview/Index/0"); //  /" + id.ToString()
+            Uri uri = new Uri(Request.Url.GetLeftPart(UriPartial.Authority)).Append("Preview/Index/" + id + "?week=" + week); //  /" + id.ToString()
             string baseDirectory = Directory.GetParent(Request.PhysicalApplicationPath).ToString();
             NameValueCollection headers = Request.Headers;
             try
@@ -58,7 +70,7 @@ namespace FoxReport.Controllers
             }
             catch (Exception ex)
             {
-
+                log.Error("Preview下载word出错", ex);
             }
 
             return File(absolutePath, MimeMapping.GetMimeMapping(".docx"), "LoadFileName.docx");

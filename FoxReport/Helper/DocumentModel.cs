@@ -127,18 +127,32 @@ namespace FoxReport.Helper
         {
             XElement xhtml = HtmlToWmlReadAsXElement.ReadAsXElement(new FileInfo(this.absolutePath));
             xhtml.Descendants().Where(i => i.Name.LocalName.ToLower() == "script").Remove();
-            //string linkCss = "";
-            //string headerCss = "";
-            var linkStyleSheets = xhtml.Descendants().Where(d => d.Name.LocalName.ToLower() == "link"
-                && d.Attribute("rel").Value.ToLower() == "stylesheet").Select(d => File.ReadAllText(d.Attribute("href").Value));
-            string linkCss = HtmlToWmlConverter.CleanUpCss(string.Join("\r\n", linkStyleSheets));
-            string headerCss = HtmlToWmlConverter.CleanUpCss((string)xhtml.Descendants().FirstOrDefault(d => d.Name.LocalName.ToLower() == "style"));
-            linkCss = linkCss.Trim('\r', '\n');
+            string linkCss = "";
+            string headerCss = "";
+            try
+            {
+                var linkStyleSheets = xhtml.Descendants().Where(d => d.Name.LocalName.ToLower() == "link"
+                    && d.Attribute("rel").Value.ToLower() == "stylesheet").Select(d => File.ReadAllText(d.Attribute("href").Value));
+                linkCss = HtmlToWmlConverter.CleanUpCss(string.Join("\r\n", linkStyleSheets));
+                headerCss = HtmlToWmlConverter.CleanUpCss((string)xhtml.Descendants().FirstOrDefault(d => d.Name.LocalName.ToLower() == "style"));
+                linkCss = linkCss.Trim('\r', '\n');
+            }
+            catch (Exception ecss)
+            {
+                Logger.Error("获取CSS出错", ecss);
+            }
             File.WriteAllText(Path.Combine(this.workingDirectory, "dump-link.css"), linkCss);
             File.WriteAllText(Path.Combine(this.workingDirectory, "dump-header.css"), headerCss);
             HtmlToWmlConverterSettings settings = HtmlToWmlConverter.GetDefaultSettings();
-            WmlDocument word = HtmlToWmlConverter.ConvertHtmlToWml(defaultCss, linkCss, headerCss, xhtml, settings);
-            word.SaveAs(saveTo);
+            try
+            {
+                WmlDocument word = HtmlToWmlConverter.ConvertHtmlToWml(defaultCss, linkCss, headerCss, xhtml, settings);
+                word.SaveAs(saveTo);
+            }
+            catch (Exception ew)
+            {
+                Logger.Error("保存Word出错", ew);
+            }
 #if !DEBUG
             try
             {

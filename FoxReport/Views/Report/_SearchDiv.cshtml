@@ -37,7 +37,7 @@
             <td><div class="topTitle">周报填写人：</div></td>
             <td>
                 <select id="ddlTracker" onchange="Search()">
-                    @*<option value=""></option>*@
+                    @*<option value="all">所有人</option>*@
                 @foreach(var item in Model.UserInfoList){
                     <option value="@item.UserId" @(ViewBag.SelectedUserId == item.UserId ? " selected=\"selected\"" : "")>@item.UserName</option>
                 }
@@ -53,7 +53,7 @@
             </td>*@                  
         </tr>
     </table>
-    <a href="Preview/Download" class="previewLink" target="_blank">导出WORD</a>
-    <a href="Preview/Index" class="previewLink" target="_blank">预览</a>
+    <a href="#" onclick="wordDownload(this);" class="previewLink" target="_blank">导出WORD</a>
+    <a href="#" onclick="wordPreview(this);" class="previewLink" target="_blank">预览</a>
 </div>
             
