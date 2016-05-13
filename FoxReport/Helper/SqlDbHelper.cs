@@ -640,22 +640,26 @@ namespace FoxReport.Helper
         /// <summary>
         /// 四、团队工作方式优化
         /// </summary>
-        public static TeamworkInfo GetTeamworkInfo(string whereCondition)
+        public static List<TeamworkInfo> GetTeamworkInfoList(string whereCondition, string limit, MySqlParameter[] parameters, out int totalCount, out int totalPage)
         {
-            TeamworkInfo teamworkInfo = new TeamworkInfo();
+            List<TeamworkInfo> teamworkInfoList = new List<TeamworkInfo>();
             MySqlConnection con = new MySqlConnection(ConnectionString);
+            totalCount = 0;
             try
             {
                 con.Open();
-                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Teamwork_Info " + whereCondition);
+                totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Teamwork_Info " + whereCondition, parameters).ToString());
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Teamwork_Info " + whereCondition + limit, parameters);                
                 while (reader.Read())
                 {
+                    TeamworkInfo teamworkInfo = new TeamworkInfo();
                     teamworkInfo.Id = int.Parse(reader["Id"].ToString());
                     teamworkInfo.Content = reader["Content"].ToString();
                     teamworkInfo.UserId = reader["UserId"].ToString();
                     teamworkInfo.Week = int.Parse(reader["Week"].ToString());
                     teamworkInfo.IsForeign = int.Parse(reader["IsForeign"].ToString());
                     teamworkInfo.OrderNum = int.Parse(reader["OrderNum"].ToString());
+                    teamworkInfoList.Add(teamworkInfo);
                 }
                 reader.Close();
             }
@@ -667,29 +671,35 @@ namespace FoxReport.Helper
             {
                 con.Close();
             }
+            int pageSize = int.Parse(ConfigurationManager.AppSettings["pageSize"]);
+            totalPage = totalCount % pageSize == 0 ? totalCount / pageSize : totalCount / pageSize + 1;
 
-            return teamworkInfo;
+            return teamworkInfoList;
         }
         /// <summary>
         /// 五、需要的协助和支持
         /// </summary>
-        public static AssistInfo GetAssistInfo(string whereCondition)
+        public static List<AssistInfo> GetAssistInfoList(string whereCondition, string limit, MySqlParameter[] parameters, out int totalCount, out int totalPage)
         {
-            AssistInfo assistInfo = new AssistInfo();
+            List<AssistInfo> assistInfoList = new List<AssistInfo>();
             MySqlConnection con = new MySqlConnection(ConnectionString);
+            totalCount = 0;
             try
             {
                 con.Open();
-                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Assist_Info " + whereCondition);
+                totalCount = int.Parse(MySqlHelper.ExecuteScalar(con, "select count(*) from Assist_Info " + whereCondition, parameters).ToString());
+                MySqlDataReader reader = MySqlHelper.ExecuteReader(con, "select * from Assist_Info " + whereCondition + limit, parameters);                
+                
                 while (reader.Read())
                 {
-                    AssistInfo p = new AssistInfo();
+                    AssistInfo assistInfo = new AssistInfo();
                     assistInfo.Id = int.Parse(reader["Id"].ToString());
                     assistInfo.Content = reader["Content"].ToString();
                     assistInfo.UserId = reader["UserId"].ToString();
                     assistInfo.Week = int.Parse(reader["Week"].ToString());
                     assistInfo.IsForeign = int.Parse(reader["IsForeign"].ToString());
                     assistInfo.OrderNum = int.Parse(reader["OrderNum"].ToString());
+                    assistInfoList.Add(assistInfo);
                 }
                 reader.Close();
             }
@@ -701,8 +711,10 @@ namespace FoxReport.Helper
             {
                 con.Close();
             }
+            int pageSize = int.Parse(ConfigurationManager.AppSettings["pageSize"]);
+            totalPage = totalCount % pageSize == 0 ? totalCount / pageSize : totalCount / pageSize + 1;
 
-            return assistInfo;
+            return assistInfoList;
         }
 
         /// <summary>

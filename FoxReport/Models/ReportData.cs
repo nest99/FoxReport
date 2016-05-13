@@ -30,11 +30,11 @@ namespace FoxReport.Models
         /// <summary>
         /// 四、团队工作方式优化
         /// </summary>
-        public TeamworkInfo teamworkInfo = new TeamworkInfo();
+        public List<TeamworkInfo> TeamworkInfoList = new List<TeamworkInfo>();
 
         /// <summary>
         /// 五、需要的协助和支持
         /// </summary>
-        public AssistInfo assistInfo = new AssistInfo();
+        public List<AssistInfo> AssistInfoList = new List<AssistInfo>();
     }
 }

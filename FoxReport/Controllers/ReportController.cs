@@ -29,7 +29,7 @@ namespace FoxReport.Controllers
             string whereConditionForeign = whereCondition + " and IsForeign=" + isForeign;
             string limit = " limit 0, " + ConfigurationManager.AppSettings["pageSize"];
             
-            int c1, c2, c3, p1, p2, p3;
+            int c1, c2, c3, c4, c5, p1, p2, p3, p4, p5;
             InitReport initReport = new InitReport();
             initReport.ReportName = SqlDbHelper.GetReportName(whereCondition);
 
@@ -37,10 +37,10 @@ namespace FoxReport.Controllers
             initReport.ProjectInfoList = SqlDbHelper.GetProjectInfoList(whereConditionForeign, limit, null, out c2, out p2);
 
             initReport.AffairProductList = SqlDbHelper.GetAffairProduct(whereCondition, limit, null, out c3, out p3);
-            initReport.teamworkInfo = SqlDbHelper.GetTeamworkInfo(whereCondition);
-            initReport.assistInfo = SqlDbHelper.GetAssistInfo(whereCondition);
-            int[] totalCount = {c1, c2, c3};
-            int[] totalPage ={p1, p2, p3};
+            initReport.TeamworkInfoList = SqlDbHelper.GetTeamworkInfoList(whereCondition, limit, null, out c4, out p4);
+            initReport.AssistInfoList = SqlDbHelper.GetAssistInfoList(whereCondition, limit, null, out c5, out p5);
+            int[] totalCount = { c1, c2, c3, c4, c5 };
+            int[] totalPage = { p1, p2, p3, p4, p5 };
             initReport.totalCount = totalCount;
             initReport.totalPage = totalPage;
             ViewBag.UserList = CacheFoxData.UserList;            
@@ -75,19 +75,19 @@ namespace FoxReport.Controllers
             }
 
             string limit = " limit 0, " + ConfigurationManager.AppSettings["pageSize"];
-           
-            int c1, c2, c3, p1, p2, p3;
+
+            int c1, c2, c3, c4, c5, p1, p2, p3, p4, p5;
             InitReport initReport = new InitReport();
             initReport.ReportName = SqlDbHelper.GetReportName(whereCondition);
 
             initReport.SummaryTargetStrategyList = SqlDbHelper.GetSummaryTargetStrategy(whereConditionProject, limit, parameters, out c1, out p1);
             initReport.ProjectInfoList = SqlDbHelper.GetProjectInfoList(whereConditionProject, limit, parameters, out c2, out p2);
 
-            initReport.AffairProductList = SqlDbHelper.GetAffairProduct(whereCondition, limit, null, out c3, out p3);
-            initReport.teamworkInfo = SqlDbHelper.GetTeamworkInfo(whereCondition);
-            initReport.assistInfo = SqlDbHelper.GetAssistInfo(whereCondition);
-            int[] totalCount = { c1, c2, c3 };
-            int[] totalPage = { p1, p2, p3 };
+            initReport.AffairProductList = SqlDbHelper.GetAffairProduct(whereCondition, limit, parameters, out c3, out p3);
+            initReport.TeamworkInfoList = SqlDbHelper.GetTeamworkInfoList(whereCondition, limit, parameters, out c4, out p4);
+            initReport.AssistInfoList = SqlDbHelper.GetAssistInfoList(whereCondition, limit, parameters, out c5, out p5);
+            int[] totalCount = { c1, c2, c3, c4, c5 };
+            int[] totalPage = { p1, p2, p3, p4, p5 };
             initReport.totalCount = totalCount;
             initReport.totalPage = totalPage;
 
@@ -284,17 +284,46 @@ namespace FoxReport.Controllers
             ViewBag.UserList = CacheFoxData.UserList;
 
             return PartialView("_Affair_" + id, targetList);
-            //if (id == "MoreTab")
-            //{
-            //    List<ddd> versionList = SqlDbHelper.Getddd(whereCondition, out totalCount, out totalPage);
-            //    return PartialView("_Affair_" + id, versionList);
-            //}            
-            //else// "Product"
-            //{
-            //    List<AffairProduct> targetList = SqlDbHelper.GetAffairProduct(whereCondition, out totalCount, out totalPage);
-            //    return PartialView("_Affair_" + id, targetList);
-            //}
         }
+        
+         /// <summary>
+         /// 二、项目概况，获取分页的项目概况
+         /// </summary>
+         /// <param name="id">Project_Info表的列名称：Target/Progress/Teamwork/VersionDetail/VersionQuality</param>
+         /// <param name="recordId"></param>
+         /// <param name="pageIndex"></param>
+         /// <param name="userId"></param>
+         /// <param name="week"></param>
+         /// <param name="isForeign"></param>
+         /// <returns></returns>
+        public PartialViewResult ProjectInfo(int pageIndex, string userId, string week, string isForeign, string project)
+        {
+            int pageSize = int.Parse(ConfigurationManager.AppSettings["pageSize"]);
+            int totalCount = 0;
+            int totalPage = 0;
+            string whereCondition = " where Week=" + week + " and IsForeign=" + isForeign;
+            if (userId != "all")
+            {
+                whereCondition += " and UserId='" + userId + "' ";
+            }
+            MySqlParameter[] parameters = null;
+            if (!string.IsNullOrWhiteSpace(project))
+            {                
+                whereCondition += " and ProjectName like @project ";
+                parameters = new MySqlParameter[1];
+                parameters[0] = GetProjectNameParam(project);
+            }
+            string limit = " limit " + ((pageIndex - 1) * pageSize).ToString() + ", " + pageSize.ToString();
+            List<ProjectInfo> projectInfoList = SqlDbHelper.GetProjectInfoList(whereCondition, limit, parameters, out totalCount, out totalPage);
+
+            ViewBag.TotalCount = totalCount;
+            ViewBag.TotalPage = totalPage;
+            ViewBag.PageIndex = pageIndex;
+            //ViewBag.UserList = CacheFoxData.UserList;
+
+            return PartialView("_Project_Info", projectInfoList);
+        }
+
         /// <summary>
         /// 二、项目概况，获取每个Tab内容
         /// </summary>
@@ -336,7 +365,67 @@ namespace FoxReport.Controllers
             ViewBag.Content = content;
             return PartialView("_Project_Info_Tab", p);
         }
-                       
+
+        /// <summary>
+        /// 四、团队工作方式优化
+        /// </summary>
+        /// <param name="id">表名称后面部分：Product</param>
+        /// <param name="pageIndex">当前页码</param>
+        /// <param name="userId">用户id</param>
+        /// <param name="week">年周</param>
+        /// <param name="isForeign">0国内，1国外</param>
+        /// <returns></returns>
+        public PartialViewResult TeamworkInfo(string id, int pageIndex, string userId, string week, string isForeign)
+        {
+            int pageSize = int.Parse(ConfigurationManager.AppSettings["pageSize"]);
+            int totalCount = 0;
+            int totalPage = 0;
+            string whereCondition = " where Week=" + week; //+ " and IsForeign=" + isForeign;
+            if (userId != "all")
+            {
+                whereCondition += " and UserId='" + userId + "' ";
+            }
+            string limit = " limit " + ((pageIndex - 1) * pageSize).ToString() + ", " + pageSize.ToString();
+
+            List<TeamworkInfo> targetList = SqlDbHelper.GetTeamworkInfoList(whereCondition, limit, null, out totalCount, out totalPage);
+
+            ViewBag.TotalCount = totalCount;
+            ViewBag.TotalPage = totalPage;
+            ViewBag.PageIndex = pageIndex;
+
+            return PartialView("_Teamwork_Info", targetList);
+        }
+
+        /// <summary>
+        /// 五、需要的协助和支持
+        /// </summary>
+        /// <param name="id">表名称后面部分：Product</param>
+        /// <param name="pageIndex">当前页码</param>
+        /// <param name="userId">用户id</param>
+        /// <param name="week">年周</param>
+        /// <param name="isForeign">0国内，1国外</param>
+        /// <returns></returns>
+        public PartialViewResult AssistInfo(string id, int pageIndex, string userId, string week, string isForeign)
+        {
+            int pageSize = int.Parse(ConfigurationManager.AppSettings["pageSize"]);
+            int totalCount = 0;
+            int totalPage = 0;
+            string whereCondition = " where Week=" + week;   // +" and IsForeign=" + isForeign;
+            if (userId != "all")
+            {
+                whereCondition += " and UserId='" + userId + "' ";
+            }
+            string limit = " limit " + ((pageIndex - 1) * pageSize).ToString() + ", " + pageSize.ToString();
+
+            List<AssistInfo> targetList = SqlDbHelper.GetAssistInfoList(whereCondition, limit, null, out totalCount, out totalPage);
+
+            ViewBag.TotalCount = totalCount;
+            ViewBag.TotalPage = totalPage;
+            ViewBag.PageIndex = pageIndex;
+
+            return PartialView("_Assist_Info", targetList);
+        }
+
         /// <summary>
         /// 生成查询Div的html
         /// </summary>

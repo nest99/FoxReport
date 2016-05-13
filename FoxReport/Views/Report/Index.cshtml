@@ -39,10 +39,12 @@
                     </table>  
                     <div class="pageDiv">
                         <span class="totalCount">总记录数：@Model.totalCount[0]</span>
-                        @if(Model.totalPage[0] > 1){
+                        @if (Model.totalPage[0] > 1)
+                        {
                             <span class="activeLink">1</span>
                         }
-                        @for(int i = 2; i <= Model.totalPage[0];  i++){
+                        @for (int i = 2; i <= Model.totalPage[0]; i++)
+                        {
                         <a href="javascript:void(0);" onclick="gotoPage('Summary', @i , 'TargetStrategy')">@i</a>
                         }
                     </div>      
@@ -51,7 +53,8 @@
        
         <div>二、项目概况</div>
         <div id="ProjectInfo_Box">
-            @foreach(var item in Model.ProjectInfoList){
+            @foreach (var item in Model.ProjectInfoList)
+            {
             <div class="projectBox" id="Project_Info_Box@(item.Id)">
                 <div class="projectHeader">
                     <div class="projectName" id="Project_@(item.Id)"><i class="projectArrow arrowDown"></i>项目名称：</div>
@@ -109,10 +112,12 @@
             </div>
             
             <div class="pageDiv"><span class="totalCount">总记录数：@Model.totalCount[1]</span>
-                @if(Model.totalPage[1] > 1){
+                @if (Model.totalPage[1] > 1)
+                {
                     <span class="activeLink">1</span>
                 }
-                @for(int i = 2; i <= Model.totalPage[1];  i++){
+                @for (int i = 2; i <= Model.totalPage[1]; i++)
+                {
                 <a href="javascript:void(0);" onclick="gotoPage('ProjectInfo', @i ,'ProjectInfo')">@i</a>
                 }
             </div>
@@ -173,10 +178,12 @@
                         </tr>
                     </table>
                     <div class="pageDiv"><span class="totalCount">总记录数：@Model.totalCount[2]</span>
-                        @if(Model.totalPage[2] > 1){
+                        @if (Model.totalPage[2] > 1)
+                        {
                             <span class="activeLink">1</span>
                         }
-                        @for(int i = 2; i <= Model.totalPage[2]; i++){
+                        @for (int i = 2; i <= Model.totalPage[2]; i++)
+                        {
                         <a href="javascript:void(0);" onclick="gotoPage('Affair', @i , 'Product')">@i</a>
                         }
                     </div>
@@ -186,33 +193,83 @@
         <div class="panelTitle">四、团队工作方式优化</div>
         <div class="TabbedPanels" id="TeamworkInfo">
             <table id="tbTeamworkInfo" class="tbContent">
-                <tr id="trTeamworkInfo" class="trContent">
+            @if (Model.TeamworkInfoList.Count > 0)
+            {
+                foreach (var item in Model.TeamworkInfoList)
+                {
+                <tr id="trTeamworkInfo_@(item.Id)" class="trContent">
                     <td>
-                        <div id="Teamwork_Info_Content_@(Model.teamworkInfo.Id)">
-                            @if (@Model.teamworkInfo.Id > 0)
+                        <div id="Teamwork_Info_Content_@(item.Id)">
+                            @if (item.Id > 0)
                             {
-                                @Html.Raw(Model.teamworkInfo.Content)
+                                @Html.Raw(item.Content)
                             }
                         </div><button onclick="editText(this);" class="btnEdit"></button>
                     </td>
                 </tr>
-            </table>           
+                }
+            }
+            else
+            {
+                <tr id="trTeamworkInfo_0" class="trContent">
+                    <td>
+                        <div id="Teamwork_Info_Content_0">
+                        </div><button onclick="editText(this);" class="btnEdit"></button>
+                    </td>
+                </tr>
+            }
+            </table>  
+            <div class="pageDiv"><span class="totalCount">总记录数：@Model.totalCount[3]</span>
+                @if (Model.totalPage[3] > 1)
+                {
+                    <span class="activeLink">1</span>
+                }
+                @for (int i = 2; i <= Model.totalPage[3]; i++)
+                {
+                <a href="javascript:void(0);" onclick="gotoPage('TeamworkInfo', @i , 'TeamworkInfo')">@i</a>
+                }
+            </div>         
         </div>
 
         <div class="panelTitle">五、需要的协助和支持</div>
         <div class="TabbedPanels" id="AssistInfo">
             <table id="tbAssistInfo" class="tbContent">
-                <tr id="trAssistInfo" class="trContent">
+            @if (Model.AssistInfoList.Count > 0)
+            {
+                foreach (var item in Model.AssistInfoList)
+                {
+                <tr id="trAssistInfo_@(item.Id)" class="trContent">
                     <td>
-                        <div id="Assist_Info_Content_@(Model.assistInfo.Id)">
-                            @if(@Model.assistInfo.Id > 0)
+                        <div id="Assist_Info_Content_@(item.Id)">
+                            @if (@item.Id > 0)
                             {
-                                @Html.Raw(Model.assistInfo.Content)
+                                @Html.Raw(item.Content)
                             }
                         </div><button onclick="editText(this);" class="btnEdit"></button>
                     </td>
                 </tr>
+                }
+            }
+            else
+            {
+                <tr id="trAssistInfo_0" class="trContent">
+                    <td>
+                        <div id="Assist_Info_Content_0">                            
+                        </div><button onclick="editText(this);" class="btnEdit"></button>
+                    </td>
+                </tr>
+            }
             </table>
+            <div class="pageDiv"><span class="totalCount">总记录数：@Model.totalCount[4]</span>
+                @if (Model.totalPage[4] > 1)
+                {
+                    <span class="activeLink">1</span>
+                }
+                @for (int i = 2; i <= Model.totalPage[4]; i++)
+                {
+                <a href="javascript:void(0);" onclick="gotoPage('AssistInfo', @i , 'AssistInfo')">@i</a>
+                }
+            </div>
         </div>
 
 </div>

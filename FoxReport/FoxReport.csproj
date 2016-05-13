@@ -158,7 +158,6 @@
     </Compile>
     <Compile Include="Models\BaseInfo.cs" />
     <Compile Include="Models\DetailBizTarget.cs" />
-    <Compile Include="Models\InitShow.cs" />
     <Compile Include="Models\ProjectInfo.cs" />
     <Compile Include="Models\ReportData.cs" />
     <Compile Include="Models\SummaryTargetStrategy.cs" />
@@ -493,6 +492,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Report\_Project_Info.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\fox.pubxml" />
+    <Content Include="Views\Report\_Teamwork_Info.cshtml" />
+    <Content Include="Views\Report\_Assist_Info.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

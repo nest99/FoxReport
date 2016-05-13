@@ -1,0 +1,29 @@
+﻿@model IEnumerable<FoxReport.Models.TeamworkInfo>
+
+<table id="tbTeamworkInfo" class="tbContent">
+@foreach(var item in Model){
+    <tr id="trTeamworkInfo" class="trContent">
+        <td>
+            <div id="Teamwork_Info_Content_@(item.Id)">
+                @if (item.Id > 0)
+                {
+                    @Html.Raw(item.Content)
+                }
+            </div><button onclick="editText(this);" class="btnEdit"></button>
+        </td>
+    </tr>
+}
+</table>  
+<div class="pageDiv"><span class="totalCount">总记录数：@ViewBag.TotalCount</span>
+@if(ViewBag.TotalPage > 1){
+    for(int i = 1; i <= ViewBag.TotalPage; i++)
+    {
+        if (ViewBag.PageIndex == i)
+        {
+    <span class="activeLink">@i</span>
+        }else{
+    <a href="javascript:void(0);" onclick="gotoPage('TeamworkInfo', @i , 'TeamworkInfo')">@i</a>
+        }
+    }
+}
+</div>   

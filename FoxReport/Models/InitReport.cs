@@ -29,23 +29,23 @@ namespace FoxReport.Models
         public List<AffairProduct> AffairProductList = new List<AffairProduct>();
 
         /// <summary>
-        /// 0,1,2分别保存SummaryTargetStrategyList，ProjectInfoList，AffairProductList
+        /// 0,1,2,3,4分别保存SummaryTargetStrategyList，ProjectInfoList，AffairProductList,TeamworkInfoList,AssistInfoList
         /// </summary>
-        public int[] totalCount = new int[3];
+        public int[] totalCount = new int[5];
         /// <summary>
-        /// 0,1,2分别保存SummaryTargetStrategyList，ProjectInfoList，AffairProductList
+        /// 0,1,2,3,4分别保存SummaryTargetStrategyList，ProjectInfoList，AffairProductList,TeamworkInfoList,AssistInfoList
         /// </summary>
-        public int[] totalPage = new int[3];
+        public int[] totalPage = new int[5];
 
         /// <summary>
         /// 四、团队工作方式优化
         /// </summary>
-        public  TeamworkInfo teamworkInfo = new TeamworkInfo();
+        public  List<TeamworkInfo> TeamworkInfoList = new List<TeamworkInfo>();
 
         /// <summary>
         /// 五、需要的协助和支持
         /// </summary>
-        public AssistInfo assistInfo = new AssistInfo();
+        public List<AssistInfo> AssistInfoList = new List<AssistInfo>();
         
     }
 }

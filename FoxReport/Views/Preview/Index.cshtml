@@ -47,6 +47,11 @@
 .productT1C3 { width:8%; }
 .productT1C4 { width:38%; } 
 .productT1C5 { width:38%; }
+
+.teamworkDiv, .assistDiv {
+    margin:5px 0; border:1px solid #ccc;
+    padding:5px;
+}
     </style>
 </head>
 <body>
@@ -154,11 +159,11 @@
             </table>
         </div>
         <h4>4、各项目概况</h4>
-    @for (int i = 0; i < Model.ProjectInfoList.Count; i++ )
+    @for (int i = 0, num = 1; i < Model.ProjectInfoList.Count; i++)
     {
         if(Model.ProjectInfoList[i].IsForeign == 0)
         {
-        <p>4.@(i+1) 项目名称：@Model.ProjectInfoList[i].ProjectName</p>
+        <p>4.@(num++) 项目名称：@Model.ProjectInfoList[i].ProjectName</p>
         <h5>（1）目标与近期重点</h5>
         <div>
             @Html.Raw(Model.ProjectInfoList[i].Target)
@@ -283,11 +288,11 @@
             </table>
         </div>
         <p>4、各项目概况</p>
-    @for (int i = 0; i < Model.ProjectInfoList.Count; i++ )
+    @for (int i = 0, num = 1; i < Model.ProjectInfoList.Count; i++ )
     {
         if(Model.ProjectInfoList[i].IsForeign == 1)
         {
-        <p>4.@(i+1) 项目名称：@Model.ProjectInfoList[i].ProjectName</p>
+        <p>4.@(num++) 项目名称：@Model.ProjectInfoList[i].ProjectName</p>
         <h5>（1）目标与近期重点</h5>
         <div>
             @Html.Raw(Model.ProjectInfoList[i].Target)
@@ -335,14 +340,20 @@
         </table>
         </div>
         <p>四、团队工作方式优化</p>
-        <div>
-            @Html.Raw(Model.teamworkInfo.Content)
+        @foreach(var item in Model.TeamworkInfoList){            
+        <div class="teamworkDiv">
+            @Html.Raw(item.Content)
         </div>
+        <p style="height:5px; margin:0;">&nbsp;</p>
+        }
 
         <p>五、需要的协助和支持</p>
-        <div>
-            @Html.Raw(Model.assistInfo.Content)
+        @foreach(var item in Model.TeamworkInfoList){            
+        <div class="assistDiv">
+            @Html.Raw(item.Content)
         </div>
+        <p style="height:5px; margin:0;">&nbsp;</p>
+        }
     </div>
 </body>
 </html>

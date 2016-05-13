@@ -326,7 +326,7 @@ function getSummaryTab(tab) {
         }
     });
 }
-//actionName后台action名称: Summary/Affair/ProjectInfo；pageIndex:页码；tabName可选:Product
+//actionName后台action名称: Summary/Affair/ProjectInfo/TeamworkInfo/AssistInfo；pageIndex:页码；tabName可选:Product
 function gotoPage(actionName, pageIndex, tabName) {
     $.ajax({
         url: "Report/" + actionName + "/" + tabName + "?pageIndex=" + pageIndex + "&" + getUrlParam(),
@@ -338,6 +338,10 @@ function gotoPage(actionName, pageIndex, tabName) {
                 $("#tabSummaryContent").html(data);
             } else if (actionName == "Affair") {
                 $("#tabAffairContent").html(data);
+            } else if (actionName == "TeamworkInfo") {
+                $("#TeamworkInfo").html(data);
+            } else if (actionName == "AssistInfo") {
+                $("#AssistInfo").html(data);
             } else {//ProjectInfo
                 $("#ProjectInfo_Box").html(data);
             }
@@ -449,12 +453,14 @@ function loadingHide() {
 function wordDownload(obj) {
     var userId = $("#ddlTracker").val();
     var week = $("#ddlWeekSearch").val();
-    var href = "Preview/Download/" + userId + "?week=" + week;
+    var project = encodeURIComponent($("#searchProjectName").val().trim());
+    var href = "Preview/Download/" + userId + "?week=" + week + "&project=" + project;
     $(obj).attr("href", href);
 }
 function wordPreview(obj) {    
     var userId = $("#ddlTracker").val();
     var week = $("#ddlWeekSearch").val();
-    var href = "Preview/Index/" + userId + "?week=" + week;
+    var project = encodeURIComponent( $("#searchProjectName").val().trim() );
+    var href = "Preview/Index/" + userId + "?week=" + week + "&project=" + project;
     $(obj).attr("href", href);
 }

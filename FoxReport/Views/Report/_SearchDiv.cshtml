@@ -37,7 +37,7 @@
             <td><div class="topTitle">周报填写人：</div></td>
             <td>
                 <select id="ddlTracker" onchange="Search()">
-                    @*<option value="all">所有人</option>*@
+                    <option value="all">所有人</option>
                 @foreach(var item in Model.UserInfoList){
                     <option value="@item.UserId" @(ViewBag.SelectedUserId == item.UserId ? " selected=\"selected\"" : "")>@item.UserName</option>
                 }

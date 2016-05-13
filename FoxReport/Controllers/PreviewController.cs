@@ -1,6 +1,7 @@
 ﻿using FoxReport.Helper;
 using FoxReport.Models;
 using log4net;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -18,7 +19,7 @@ namespace FoxReport.Controllers
         //
         // GET: /Preview/
 
-        public ActionResult Index(string id, string week)
+        public ActionResult Index(string id, string week, string project)
         {
             string userId = "";
             string yearWeek = "";
@@ -34,31 +35,45 @@ namespace FoxReport.Controllers
                 userId = id;
                 yearWeek = week;
             }
-            string whereCondition = " where UserId='" + userId + "' and Week=" + yearWeek;
+            string whereCondition = " where Week=" + yearWeek;
+            if (userId != "all")
+            {
+                whereCondition += " and UserId='" + userId + "' ";
+            }
+            string whereConditionNoProjectName = whereCondition;
+            MySqlParameter[] parameters = null;
+            if (!string.IsNullOrEmpty(project))
+            {
+                MySqlParameter param = new MySqlParameter("@project", MySqlDbType.VarString, 50);
+                whereCondition += " and ProjectName like @project ";
+                param.Value = "%" + project.Trim() + "%";
+                parameters = new MySqlParameter[1];
+                parameters[0] = param;
+            }
             string limit = " "; //" limit 0, 1000";            
             int t, p;
             
             ReportData report = new ReportData();
             report.ReportName = SqlDbHelper.GetReportName(whereCondition);
-            report.AffairProductList = SqlDbHelper.GetAffairProduct(whereCondition, limit, null, out t, out p);
-            report.assistInfo = SqlDbHelper.GetAssistInfo(whereCondition);
+            report.ProjectInfoList = SqlDbHelper.GetProjectInfoList(whereCondition, limit, parameters, out t, out p);
+            report.SummaryTargetStrategyList = SqlDbHelper.GetSummaryTargetStrategy(whereCondition, limit, parameters, out t, out p);
+            report.SummaryVersionList = SqlDbHelper.GetSummaryVersion(whereCondition, limit, parameters, out t, out p);
 
-            report.ProjectInfoList = SqlDbHelper.GetProjectInfoList(whereCondition, limit, null, out t, out p);            
-            report.SummaryTargetStrategyList = SqlDbHelper.GetSummaryTargetStrategy(whereCondition, limit, null, out t, out p);
-            report.SummaryVersionList = SqlDbHelper.GetSummaryVersion(whereCondition, limit, null, out t, out p);
+            report.SummaryFeedbackList = SqlDbHelper.GetSummaryFeedback(whereConditionNoProjectName, limit, null, out t, out p);
+            report.SummarySuggestList = SqlDbHelper.GetSummarySuggest(whereConditionNoProjectName, limit, null, out t, out p);
 
-            report.SummaryFeedbackList = SqlDbHelper.GetSummaryFeedback(whereCondition, limit, null, out t, out p);            
-            report.SummarySuggestList = SqlDbHelper.GetSummarySuggest(whereCondition, limit, null, out t, out p);
-            report.teamworkInfo = SqlDbHelper.GetTeamworkInfo(whereCondition);
+            report.AffairProductList = SqlDbHelper.GetAffairProduct(whereConditionNoProjectName, limit, null, out t, out p);
+            report.TeamworkInfoList = SqlDbHelper.GetTeamworkInfoList(whereConditionNoProjectName, limit, null, out t, out p);
+            report.AssistInfoList = SqlDbHelper.GetAssistInfoList(whereConditionNoProjectName, limit, null, out t, out p);
             return View(report);
         }
 
-        public FileResult Download(string id, string week)
+        public FileResult Download(string id, string week, string project)
         {
             log.Info("Preview下载word");
             string tempFileName = string.Format("{0}.docx", Guid.NewGuid().ToString());
             string absolutePath = Path.Combine(Path.GetTempPath(), tempFileName);
-            Uri uri = new Uri(Request.Url.GetLeftPart(UriPartial.Authority)).Append("Preview/Index/" + id + "?week=" + week); //  /" + id.ToString()
+            Uri uri = new Uri(Request.Url.GetLeftPart(UriPartial.Authority)).Append("Preview/Index/" + id + "?week=" + week + "&project=" + HttpUtility.UrlEncode(project)); //  /" + id.ToString()
             string baseDirectory = Directory.GetParent(Request.PhysicalApplicationPath).ToString();
             NameValueCollection headers = Request.Headers;
             try
