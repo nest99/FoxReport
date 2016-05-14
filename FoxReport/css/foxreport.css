@@ -231,7 +231,10 @@ ul {
     /*border-bottom:1px solid red;*/
 }
 #editColumnName {
-    padding: 5px 10px;background:url(/img/gray9.png) #bbb repeat-x;
+    padding: 5px 10px;/*background:url(/img/gray9.png) #bbb repeat-x;*/
+}
+#editorLengthShow {
+    display:block; margin:5px;
 }
 .btnSave, .btnCancel {
     /*background-color:#08c;*/

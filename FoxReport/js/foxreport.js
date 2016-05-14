@@ -1,4 +1,5 @@
 ﻿/// <reference path="jquery1.7.2.js" />
+/// <reference path="kindeditor/kindeditor-all.js" />
 
 var foxParam = {
     activePage: "Report",
@@ -20,8 +21,20 @@ KindEditor.ready(function (K) {
 		'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
 		'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|',
         'table', 'link', 'unlink']
+        , afterChange: function () {
+            $("#editorLengthShow").text("字数：" + this.html().length);
+            if (this.html().length > 4000) {
+                $("#btnSubmit").attr("disabled", "disabled");
+                $("#editorLength").text(this.html().length);
+                $("#overLengthMsg").show();
+            } else {
+                $("#btnSubmit").removeAttr("disabled");
+                $("#overLengthMsg").hide();
+            }
+        }
     });
 });
+
 function isAll() {
     var all = $("#ddlTracker").val() == "all";
     if (all) {
