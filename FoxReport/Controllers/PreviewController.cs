@@ -54,7 +54,29 @@ namespace FoxReport.Controllers
             int t, p;
             
             ReportData report = new ReportData();
-            report.ReportName = SqlDbHelper.GetReportName(whereCondition);
+            //report.ReportName = SqlDbHelper.GetReportName(whereCondition);
+            DateTime start, end;
+            WeekHelper.GetWeekStartEnd(int.Parse(yearWeek), out start, out end);
+            string reportName = "产品周报_" + start.ToString("yyyyMMdd") + "-" + start.ToString("yyyyMMdd");
+            if (userId == "all")
+            {
+                reportName += "_所有人";
+            }
+            else
+            {   
+                string userName = CacheFoxData.UserList.FirstOrDefault(u => u.UserId == userId).UserName;
+                reportName += "_" + userName;
+            }
+            if (!string.IsNullOrWhiteSpace(project))
+            {
+                reportName += "_项目：" + project;
+            }
+            else
+            {
+                //reportName += "_所有项目";
+            }
+            ViewBag.ReportTitle = reportName;
+            report.ReportName = ""; //SqlDbHelper.GetReportName(whereCondition);
             report.ProjectInfoList = SqlDbHelper.GetProjectInfoList(whereCondition, limit, parameters, out t, out p);
             report.SummaryTargetStrategyList = SqlDbHelper.GetSummaryTargetStrategy(whereCondition, limit, parameters, out t, out p);
             report.SummaryVersionList = SqlDbHelper.GetSummaryVersion(whereCondition, limit, parameters, out t, out p);
@@ -87,8 +109,10 @@ namespace FoxReport.Controllers
             {
                 log.Error("Preview下载word出错", ex);
             }
-
-            return File(absolutePath, MimeMapping.GetMimeMapping(".docx"), "LoadFileName.docx");
+            DateTime start, end;
+            WeekHelper.GetWeekStartEnd(int.Parse(week), out start, out end);
+            string downloadName = "产品周报" + start.ToString("yyyy-MM-dd") + "至" + start.ToString("yyyy-MM-dd");
+            return File(absolutePath, MimeMapping.GetMimeMapping(".docx"), downloadName + ".docx");
         }
 
         private HttpCookie GetCookie()

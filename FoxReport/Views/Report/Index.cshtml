@@ -1,10 +1,10 @@
 ﻿@model FoxReport.Models.InitReport
 
 <div id="pageReportBox">    
-    <div id="reportTitleDiv">
-        @*<span id="reportIsForeign">国内</span>：*@
+    @*<div id="reportTitleDiv">
+        <span id="reportIsForeign">国内</span>：
         <input type="text" id="reportName" onblur="saveReportName();" value="@Model.ReportName" maxlength="50" />
-    </div>
+    </div>*@
         <div class="panelTitle">一、整体概况</div>
         <div class="tabArea" id="Summary">
             <ul id="SummaryTabs" class="tabs">
@@ -51,7 +51,7 @@
             </div>
         </div>
        
-        <div>二、项目概况</div>
+        <div class="panelTitle">二、项目概况</div>
         <div id="ProjectInfo_Box">
             @foreach (var item in Model.ProjectInfoList)
             {

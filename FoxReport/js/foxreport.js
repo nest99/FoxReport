@@ -52,7 +52,10 @@ function editText(obj) {
 
 //保存纯文本字段文本值
 function saveColumnTextValue(obj, tableName, column) {
-    if (isAll()) { return; }
+    if (isAll()) {
+        $(obj).val( $(obj).attr("old") );
+        return;
+    }
     var value = $(obj).val().trim();
     var id = $(obj).parent().attr("id");
     var recordId = id.replace(tableName + "_" + column + "_", "");
@@ -120,7 +123,7 @@ function ddlTrackerChange(obj, tableName, column) {
 }
 //blur事件，保存报告名称
 function saveReportName() {
-    if (isAll()) { return; }
+    if (isAll()) { $(obj).val( $(obj).attr("old") );  return; }
     var old = $("#reportName").attr("old");
     var reportName = $("#reportName").val().trim();
     if (old && old == reportName) { //已经有项目名称 且 名称没有改变        
@@ -162,7 +165,7 @@ function getUrlParam() {
 }
 //blur事件，保存项目名称
 function saveProjectName(obj) {
-    if (isAll()) { return; }
+    if (isAll()) { $(obj).val( $(obj).attr("old") ); return; }
     var old = $(obj).attr("old");
     var projectName = $(obj).val().trim();
 

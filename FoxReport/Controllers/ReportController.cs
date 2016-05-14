@@ -31,7 +31,7 @@ namespace FoxReport.Controllers
             
             int c1, c2, c3, c4, c5, p1, p2, p3, p4, p5;
             InitReport initReport = new InitReport();
-            initReport.ReportName = SqlDbHelper.GetReportName(whereCondition);
+            //initReport.ReportName = SqlDbHelper.GetReportName(whereCondition);
 
             initReport.SummaryTargetStrategyList = SqlDbHelper.GetSummaryTargetStrategy(whereConditionForeign, limit, null, out c1, out p1);
             initReport.ProjectInfoList = SqlDbHelper.GetProjectInfoList(whereConditionForeign, limit, null, out c2, out p2);
@@ -78,7 +78,7 @@ namespace FoxReport.Controllers
 
             int c1, c2, c3, c4, c5, p1, p2, p3, p4, p5;
             InitReport initReport = new InitReport();
-            initReport.ReportName = SqlDbHelper.GetReportName(whereCondition);
+            //initReport.ReportName = SqlDbHelper.GetReportName(whereCondition);
 
             initReport.SummaryTargetStrategyList = SqlDbHelper.GetSummaryTargetStrategy(whereConditionProject, limit, parameters, out c1, out p1);
             initReport.ProjectInfoList = SqlDbHelper.GetProjectInfoList(whereConditionProject, limit, parameters, out c2, out p2);
