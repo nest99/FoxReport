@@ -14,8 +14,8 @@ var keHeight = 300;
 KindEditor.ready(function (K) {
     keditor = K.create("#keText", {
         width: "100%", height: keHeight, resizeType: 0,
-        items: ['source', 'preview', 'code', 'undo', 'redo', '|', 'cut', 'copy', 'paste',
-		'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+        items: ['source', 'preview', 'code', 'undo', 'redo', '|', //'cut', 'copy', 'paste',
+		'plainpaste',  '|', 'justifyleft', 'justifycenter', 'justifyright',
 		'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
 		'superscript', 'clearhtml', 'quickformat', '|',
 		'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
