@@ -191,8 +191,8 @@
         }
     }
         
-       <p>二、国外@(Model.ReportName)</p>
-        <p>1、目标与策略</p>
+       <h3>二、国外@(Model.ReportName)</h3>
+        <h4>1、目标与策略</h4>
         <div style="width:100%;">
         <table style="border-collapse:collapse; border:0; width:100%;">
             <tr>
@@ -213,7 +213,7 @@
         }
         </table>
         </div>
-        <p>2、版本概况</p>
+        <h4>2、版本概况</h4>
         <div style="width:100%;">
         <table style="border-collapse:collapse; border:0; width:100%;">
             <tr>
@@ -236,8 +236,8 @@
         }
             </table>
        </div>
-        <p>3、用户反馈</p>
-        <p>A、TOP问题</p>
+        <h4>3、用户反馈</h4>
+        <h4>A、TOP问题</h4>
         <div style="width:100%;">
         <table style="border-collapse:collapse; border:0; width:100%;">
             <tr>
@@ -264,7 +264,7 @@
         }
             </table>
         </div>        
-        <p>B、用户建议</p>
+        <h4>B、用户建议</h4>
         <div style="width:100%;">
         <table style="border-collapse:collapse; border:0; width:100%;">
             <tr>
@@ -291,7 +291,7 @@
         }
             </table>
         </div>
-        <p>4、各项目概况</p>
+        <h4>4、各项目概况</h4>
     @for (int i = 0, num = 1; i < Model.ProjectInfoList.Count; i++ )
     {
         if(Model.ProjectInfoList[i].IsForeign == 1)
@@ -320,8 +320,8 @@
         }
     }
 
-        <p>三、重点事务</p>
-        <p>产品事务</p>
+        <h3>三、重点事务</h3>
+        <h4>产品事务</h4>
         <div style="width:100%;">
         <table style="border-collapse:collapse; border:0; width:100%;">
             <tr>
@@ -343,7 +343,7 @@
         }
         </table>
         </div>
-        <p>四、团队工作方式优化</p>
+        <h3>四、团队工作方式优化</h3>
         @foreach(var item in Model.TeamworkInfoList){            
         <div class="teamworkDiv">
             @Html.Raw(item.Content)
@@ -351,7 +351,7 @@
         <p style="height:5px; margin:0;">&nbsp;</p>
         }
 
-        <p>五、需要的协助和支持</p>
+        <h3>五、需要的协助和支持</h3>
         @foreach(var item in Model.TeamworkInfoList){            
         <div class="assistDiv">
             @Html.Raw(item.Content)
