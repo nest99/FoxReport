@@ -1,4 +1,21 @@
-﻿
+﻿@model List<FoxReport.Models.UserInfo>
+
 <div id="pageUserBox">
-    user page 
+    <div>用户列表</div>
+    <div id="userList">
+        
+    @foreach (var item in Model)
+    {
+        <div class="userInfo">
+            姓名：<input type="text" id="user@(item.UserId)" value="@item.UserName" class="userName" />
+            <input type="button" onclick="editUser(this);" value="修改" />
+            @*<input type="button" onclick="deleteUser(this);" value="删除" />*@
+        </div>        
+    }
+        <div id="insertUser"></div>
+        <div id="userInfoNew">
+            姓名：<input type="text" id="user0" value="" class="userName" />
+            <input type="button" onclick="addUser();" value="新增" />
+        </div>
+    </div>
 </div>

@@ -353,3 +353,16 @@ ul {
 .thAffair1_3 { width: 80px;}
 .thAffair1_4 { width: 30%;}
 .thAffair1_5 { }
+
+.userInfo {
+    float:left; width:300px;
+    border:1px solid #ccc;
+    margin:10px; padding:10px;
+}
+#insertUser {
+    clear:both;
+}
+#userInfoNew {
+    border:1px solid #ccc;
+    margin:10px; padding:10px;
+}

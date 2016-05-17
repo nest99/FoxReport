@@ -26,9 +26,9 @@
     </div>
     <div id="rightPage">
         <div id="pageReport" class="page">
-
+            <div id="indexSearch">
             @{ Html.RenderAction("SearchDiv", "Report"); }
-
+            </div>
             <div id="editBack">
                 <div id="editLayer">            
                     <input type="hidden" id="editId" value="" /> 
@@ -52,15 +52,16 @@
                     </div>
                 </div>
             </div>
-            <div id="resultMsg"></div>
+            
 
             <div id="pageReportContent">
                 @{ Html.RenderAction("Index", "Report"); }
             </div>
         </div>
+        <div id="resultMsg"></div>
         <div id="pageUser" class="page">
             <div id="pageUserContent">
-                @{  Html.RenderPartial("../User/Index");  }
+                @{  Html.RenderAction("Index", "User");  }
             </div>
         </div>
         <div id="pageSet" class="page">

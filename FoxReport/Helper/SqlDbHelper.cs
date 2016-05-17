@@ -751,7 +751,88 @@ namespace FoxReport.Helper
 
             return userInfoList;
         }
-      
+        public static string AddUser(string userName, string userRole)
+        {
+            string sql = "insert into UserInfo(UserName, UserRole) values(@UserName, @UserRole)";
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            MySqlCommand cmd = new MySqlCommand(sql, con);
+            cmd.Parameters.Add("@UserName", MySqlDbType.VarString, 50).Value = userName.Trim();
+            cmd.Parameters.Add("@UserRole", MySqlDbType.Int32).Value = userRole;
+            long result = 0;
+            try
+            {
+                con.Open();
+                cmd.ExecuteNonQuery();
+                result = cmd.LastInsertedId;
+            }
+            catch (MySqlException e)
+            {
+                Logger.Error("新增UserInfo出错。 userName=" + userName, e);
+            }
+            finally
+            {
+                con.Close();
+            }
+            if (result > 0)
+            {
+                CacheFoxData.RefreshUserInfo();
+            }
+            return result.ToString();
+        }
+        public static bool EditUser(string userId, string userName)
+        {
+            string sql = "update UserInfo set UserName=@UserName where UserId=@UserId";
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            MySqlCommand cmd = new MySqlCommand(sql, con);
+            cmd.Parameters.Add("@UserName", MySqlDbType.VarString, 50).Value = userName.Trim();
+            cmd.Parameters.Add("@UserId", MySqlDbType.Int32).Value = userId;
+            int result = 0;
+            try
+            {
+                con.Open();
+                result = cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException e)
+            {
+                Logger.Error("修改UserInfo出错。userId=" + userId + ", userName=" + userName, e);
+            }
+            finally
+            {
+                con.Close();
+            }
+            if (result > 0)
+            {
+                CacheFoxData.RefreshUserInfo();
+            }
+            return result > 0;
+        }
+
+        public static bool DeleteUser(string userId)
+        {
+            string sql = "delete from UserInfo where UserId=@UserId";
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            MySqlCommand cmd = new MySqlCommand(sql, con);            
+            cmd.Parameters.Add("@UserId", MySqlDbType.Int32).Value = userId;
+            int result = 0;
+            try
+            {
+                con.Open();
+                result = cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException e)
+            {
+                Logger.Error("删除UserInfo出错。userId=" + userId , e);
+            }
+            finally
+            {
+                con.Close();
+            }
+            if (result > 0)
+            {
+                CacheFoxData.RefreshUserInfo();
+            }
+            return result > 0;
+        }
         /// <summary>
         /// 获取所有周的信息
         /// </summary>

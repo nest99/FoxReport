@@ -23,7 +23,7 @@ KindEditor.ready(function (K) {
         'table', 'link', 'unlink']
         , afterChange: function () {
             $("#editorLengthShow").text("字数：" + this.html().length);
-            if (this.html().length > 4000) {
+            if (this.html().length > 40000) {
                 $("#btnSubmit").attr("disabled", "disabled");
                 $("#editorLength").text(this.html().length);
                 $("#overLengthMsg").show();
@@ -436,7 +436,9 @@ function projectUpDown(obj) {
 //点击菜单，加载页面
 function showPage(name) {
     loadingShow();
-    
+    if (name == "Report") {
+        refreshSearchUser();
+    }
     $.ajax({
         url: name + "/Index",
         type: "GET",
@@ -451,6 +453,19 @@ function showPage(name) {
         error: function (data) {
             loadingHide();
             alert("responseText=" + data.responseText + ", data=" + data);
+        }
+    });
+}
+function refreshSearchUser() {
+    
+    $.ajax({
+        url: "Report/SearchDiv",
+        type: "GET",
+        success: function (data) {
+            $("#indexSearch").html(data);//设置页的html           
+        },
+        error: function (data) {           
+            alert("refreshSearchUser responseText=" + data.responseText + ", data=" + data);
         }
     });
 }
@@ -479,4 +494,79 @@ function wordPreview(obj) {
     var project = encodeURIComponent( $("#searchProjectName").val().trim() );
     var href = "Preview/Index/" + userId + "?week=" + week + "&project=" + project;
     $(obj).attr("href", href);
+}
+
+function addUser() {    
+    var userName = $("#user0").val().trim();
+    if (userName == "") {
+        alert("请输入用户姓名");
+        return;
+    }
+    $.ajax({
+        url: "User/AddUser",
+        type: "POST",
+        data: "userName=" + encodeURIComponent( userName),
+        success: function (data) {
+            if (data.OK) {                
+                $('<div class="userInfo">姓名：<input type="text" id="user' + data.UserId +
+                    '" value="' + userName + '" class="userName" />' +
+                    '<input type="button" onclick="editUser(this);" value="修改" /></div>').insertBefore("#insertUser");
+                $("#user0").val("");
+                saveMsg();
+            } else {
+                saveMsg("新增用户失败");
+            }
+        },
+        error: function (data) {
+            alert("responseText=" + data.responseText + ", data=" + data);
+        }
+    });
+}
+function editUser(obj) {
+    var id = $(obj).siblings(".userName").attr("id");
+    var userName = $("#" + id).val().trim();
+    var userId = id.replace("user", "");
+    if (userName == "") {
+        alert("请输入用户姓名");
+        return;
+    }
+    $.ajax({
+        url: "User/EditUser",
+        type: "POST",
+        data: "userId=" + userId + "&userName=" + encodeURIComponent(userName),
+        success: function (data) {
+            if (data.OK) {
+                saveMsg();
+            } else {
+                saveMsg("修改姓名失败");
+            }
+        },
+        error: function (data) {           
+            alert("responseText=" + data.responseText + ", data=" + data);
+        }
+    });
+}
+function deleteUser(obj) {
+    var id = $(obj).siblings(".userName").attr("id");
+    var userName = $("#" + id).val();
+    var userId = id.replace("user", "");
+    if ($.trim(userName) == "") {
+        alert("请输入用户姓名");
+        return;
+    }
+    $.ajax({
+        url: "User/DeleteUser",
+        type: "POST",
+        data: "userId=" + userId,
+        success: function (data) {
+            if (data.OK) {
+                saveMsg();
+            } else {
+                saveMsg("修改姓名失败");
+            }
+        },
+        error: function (data) {
+            alert("responseText=" + data.responseText + ", data=" + data);
+        }
+    });
 }
