@@ -23,7 +23,7 @@ KindEditor.ready(function (K) {
         'table', 'link', 'unlink']
         , afterChange: function () {
             $("#editorLengthShow").text("字数：" + this.html().length);
-            if (this.html().length > 40000) {
+            if (this.html().length > 30000) {
                 $("#btnSubmit").attr("disabled", "disabled");
                 $("#editorLength").text(this.html().length);
                 $("#overLengthMsg").show();
@@ -495,7 +495,41 @@ function wordPreview(obj) {
     var href = "Preview/Index/" + userId + "?week=" + week + "&project=" + project;
     $(obj).attr("href", href);
 }
+function copyWeekReport() {
+    $("#copyDiv").show();
+    return false;
+}
+function cfmCancel() {
+    $("#copyDiv").hide();
+}
+function cfmCopy() {
+    var userId = $("#ddlTracker").val();
+    var week = $("#ddlWeekSearch").val();
+    var project = encodeURIComponent($("#searchProjectName").val().trim());
+    var newUserId = $("#ddlTrackerCopy").val();
+    var newWeek = $("#ddlWeekCopy").val();
 
+    $.ajax({
+        url: "Report/CopyWeekReport",
+        type: "POST",
+        data: getUrlParam() + "&newUserId=" + newUserId + "&newWeek=" + newWeek,
+        success: function (data) {
+            if (data.OK) {
+                $("#copyDiv").hide();
+                saveMsg("复制周报数据成功！");
+                $("#ddlTracker").val(newUserId);
+                $("#ddlWeekSearch").val(newWeek);
+            } else {
+                $("#copyDiv").hide();
+                saveMsg("复制周报数据失败！");
+            }
+        },
+        error: function (data) {
+            $("#copyDiv").hide();
+            alert("responseText=" + data.responseText + ", data=" + data);
+        }
+    });
+}
 function addUser() {    
     var userName = $("#user0").val().trim();
     if (userName == "") {

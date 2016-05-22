@@ -716,7 +716,247 @@ namespace FoxReport.Helper
 
             return assistInfoList;
         }
+        #region 复制周报数据
+        /// <summary>
+        /// 复制周报数据
+        /// </summary>
+        /// <param name="reportUserId">新周报填写人</param>
+        /// <param name="yearWeek">新周报年周</param>
+        /// <param name="condition">复制条件</param>
+        /// <returns></returns>
+        public static bool CopyWeekReport(string reportUserId, string yearWeek, string condition, string projectName)
+        {
+            bool success = true;
+            string conditionProject;
+            MySqlParameter parameter = null;
+            if (string.IsNullOrWhiteSpace(projectName))
+            {
+                conditionProject = condition;
+            }
+            else
+            {
+                conditionProject = condition + " and ProjectName like @project ";
+                parameter = new MySqlParameter("@project", MySqlDbType.VarString, 50);
+                parameter.Value = "%" + projectName + "%";
+            }
 
+            CopyTableAffairProduct(reportUserId, yearWeek, condition);
+            CopyTableAssistInfo(reportUserId, yearWeek, condition);
+            CopyTableProjectInfo(reportUserId, yearWeek, conditionProject, parameter);
+            CopyTableSummaryFeedback(reportUserId, yearWeek, condition);
+            CopyTableSummarySuggest(reportUserId, yearWeek, condition);
+            CopyTableSummaryTargetStrategy(reportUserId, yearWeek, conditionProject, parameter);
+            CopyTableSummaryVersion(reportUserId, yearWeek, conditionProject, parameter);
+            CopyTableTeamworkInfo(reportUserId, yearWeek, condition);
+
+            return success;
+        }
+       
+        public static bool CopyTableSummaryTargetStrategy(string reportUserId, string yearWeek, string conditionProject, MySqlParameter parameter)
+        {
+            bool success = true;
+            string sql = "INSERT INTO `summary_targetstrategy` (`ProjectName`, `Status`, `Target`, `Strategy`, `UserId`, `Week`, `IsForeign`, `OrderNum`)  " +
+                               " SELECT `ProjectName`, `Status`, `Target`, `Strategy`, '" + reportUserId + "', " + yearWeek + ", `IsForeign`, `OrderNum` FROM `summary_targetstrategy` where " + conditionProject;
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            MySqlCommand cmd = new MySqlCommand(sql, con);
+            if (parameter != null)
+            {
+                cmd.Parameters.Add(parameter);
+            }
+
+            try
+            {
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException e)
+            {
+                success = false;
+                Logger.Error("复制summary_targetstrategy出错。condition=" + conditionProject, e);
+            }
+            finally
+            {
+                con.Close();
+            }
+            return success;
+        }
+        public static bool CopyTableSummaryVersion(string reportUserId, string yearWeek, string conditionProject, MySqlParameter parameter)
+        {
+            bool success = true;
+            string sql = "INSERT INTO `summary_version` (`ProjectName`, `Request`, `Publish`, `Risk`, `UserId`, `Week`, `IsForeign`, `OrderNum`)  " +
+                               " SELECT `ProjectName`, `Request`, `Publish`, `Risk`, '" + reportUserId + "', " + yearWeek + ", `IsForeign`, `OrderNum` FROM `summary_version` where " + conditionProject;
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            MySqlCommand cmd = new MySqlCommand(sql, con);
+            if (parameter != null)
+            {
+                cmd.Parameters.Add(parameter);
+            }
+
+            try
+            {
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException e)
+            {
+                success = false;
+                Logger.Error("复制summary_version出错。condition=" + conditionProject, e);
+            }
+            finally
+            {
+                con.Close();
+            }
+            return success;
+        }
+        public static bool CopyTableProjectInfo(string reportUserId, string yearWeek, string conditionProject, MySqlParameter parameter)
+        {
+            bool success = true;
+            string sql = "INSERT INTO `project_info` (`ProjectName`, `Target`, `Progress`, `Teamwork`, `VersionDetail`, `VersionQuality`, `UserId`, `Week`, `IsForeign`, `OrderNum`)  " +
+                               " SELECT `ProjectName`, `Target`, `Progress`, `Teamwork`, `VersionDetail`, `VersionQuality`, '" + reportUserId + "', " + yearWeek + ", `IsForeign`, `OrderNum` FROM `project_info` where " + conditionProject;
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            MySqlCommand cmd = new MySqlCommand(sql, con);
+            if (parameter != null)
+            {
+                cmd.Parameters.Add(parameter);
+            }
+            try
+            {
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException e)
+            {
+                success = false;
+                Logger.Error("复制project_info出错。condition=" + conditionProject, e);
+            }
+            finally
+            {
+                con.Close();
+            }
+            return success;
+        }
+
+        public static bool CopyTableSummaryFeedback(string reportUserId, string yearWeek, string condition)
+        {
+            bool success = true;
+            string sql = "INSERT INTO `summary_feedback` (`Seq`, `Platform`, `Issue`, `Tracker`, `Status`, `TrackInfo`, `UserId`, `Week`, `IsForeign`, `OrderNum`)  " +
+                               " SELECT `Seq`, `Platform`, `Issue`, `Tracker`, `Status`, `TrackInfo`, '" + reportUserId + "', " + yearWeek + ", `IsForeign`, `OrderNum` FROM `summary_feedback` where " + condition;
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            MySqlCommand cmd = new MySqlCommand(sql, con);
+
+            try
+            {
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException e)
+            {
+                success = false;
+                Logger.Error("复制summary_feedback出错。condition=" + condition, e);
+            }
+            finally
+            {
+                con.Close();
+            }
+            return success;
+        }
+        public static bool CopyTableSummarySuggest(string reportUserId, string yearWeek, string condition)
+        {
+            bool success = true;
+            string sql = "INSERT INTO `summary_suggest` (`Seq`, `Platform`, `SuggestContent`, `UserCount`, `Issue`, `TrackInfo`, `UserId`, `Week`, `IsForeign`, `OrderNum`)  " +
+                               " SELECT `Seq`, `Platform`, `SuggestContent`, `UserCount`, `Issue`, `TrackInfo`, '" + reportUserId + "', " + yearWeek + ", `IsForeign`, `OrderNum` FROM `summary_suggest` where " + condition;
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            MySqlCommand cmd = new MySqlCommand(sql, con);
+
+            try
+            {
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException e)
+            {
+                success = false;
+                Logger.Error("复制summary_suggest出错。condition=" + condition, e);
+            }
+            finally
+            {
+                con.Close();
+            }
+            return success;
+        }
+        public static bool CopyTableAffairProduct(string reportUserId, string yearWeek, string condition)
+        {
+            bool success = true;            
+            string sql = "INSERT INTO  `affair_product` (`Classify`, `Priority`, `Tracker`, `Workplan`, `Progress`, `UserId`, `Week`, `IsForeign`, `OrderNum`)  " +
+                               " SELECT `Classify`, `Priority`, `Tracker`, `Workplan`, `Progress`, '" + reportUserId + "', " + yearWeek + ", `IsForeign`, `OrderNum` FROM `affair_product` where " + condition;
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            MySqlCommand cmd = new MySqlCommand(sql, con);
+
+            try
+            {
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException e)
+            {
+                success = false;
+                Logger.Error("复制affair_product出错。condition=" + condition, e);
+            }
+            finally
+            {
+                con.Close();
+            }
+            return success;
+        }
+        public static bool CopyTableAssistInfo(string reportUserId, string yearWeek, string condition)
+        {
+            bool success = true;            
+            string sql = "INSERT INTO `assist_info` (`Content`, `UserId`, `Week`, `IsForeign`, `OrderNum`)  " +
+                               " SELECT `Content`, '" + reportUserId + "', " + yearWeek + ", `IsForeign`, `OrderNum` FROM `assist_info` where " + condition;
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            MySqlCommand cmd = new MySqlCommand(sql, con);
+
+            try
+            {
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException e)
+            {
+                success = false;
+                Logger.Error("复制assist_info出错。condition=" + condition, e);
+            }
+            finally
+            {
+                con.Close();
+            }
+            return success;
+        }
+        public static bool CopyTableTeamworkInfo(string reportUserId, string yearWeek, string condition)
+        {
+            bool success = true;
+            string sql = "INSERT INTO `teamwork_info` (`Content`, `UserId`, `Week`, `IsForeign`, `OrderNum`)  " +
+                               " SELECT `Content`, '" + reportUserId + "', " + yearWeek + ", `IsForeign`, `OrderNum` FROM `teamwork_info` where " + condition;
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            MySqlCommand cmd = new MySqlCommand(sql, con);
+
+            try
+            {
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException e)
+            {
+                success = false;
+                Logger.Error("复制teamwork_info出错。condition=" + condition, e);
+            }
+            finally
+            {
+                con.Close();
+            }
+            return success;
+        }
+        #endregion
         /// <summary>
         /// 获取所有用户的信息
         /// </summary>

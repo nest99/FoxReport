@@ -1,0 +1,9 @@
+﻿truncate table affair_product;
+truncate table assist_info;
+truncate table project_info;
+truncate table report_info;
+truncate table summary_feedback;
+truncate table summary_suggest;
+truncate table summary_targetstrategy;
+truncate table summary_version;
+truncate table teamwork_info;

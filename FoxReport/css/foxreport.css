@@ -270,7 +270,17 @@ ul {
     border:solid 3px #ff6a00;
     border-radius: 8px; box-shadow:2px 2px 10px #ff6a00;
 }
-
+#copyDiv {    
+    margin-left:-310px;
+    left:50%;
+    top:40px;
+    position:fixed;
+    padding:10px;
+    border:solid 3px #ff6a00;
+    border-radius: 8px; box-shadow:2px 2px 10px #ff6a00;
+    background-color:#f5df69;
+    z-index:100;
+}
 #searchBox {
     border:1px solid  #7485e5 ;
     box-shadow:2px 2px 10px #7485e5;
@@ -281,6 +291,9 @@ ul {
 }
 .previewLink {
     float:right; color:blue; text-decoration:none; margin: 3px 10px;
+}
+#copyWeekReport {
+    float:left; color:blue; text-decoration:none; margin:3px 10px;
 }
 #editTitle {
     border:1px solid #bbb;

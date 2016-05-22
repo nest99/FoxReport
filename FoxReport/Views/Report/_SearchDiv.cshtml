@@ -1,6 +1,7 @@
 ﻿@model FoxReport.Models.UserAndWeekInfo
 
 <div id="searchBox">
+    <a href="javascript:void(0);" onclick="return copyWeekReport();" id="copyWeekReport" target="_blank">复制周报</a>
     @*查询周报*@
     <table class="searchTable">
         <tr>
@@ -53,7 +54,32 @@
             </td>*@                  
         </tr>
     </table>
+    
     <a href="#" onclick="wordDownload(this);" class="previewLink" target="_blank">导出WORD</a>
     <a href="#" onclick="wordPreview(this);" class="previewLink" target="_blank">预览</a>
+</div>
+
+<div id="copyDiv" style="display:none">   
+    新周报周次：
+    <select id="ddlWeekCopy">     
+        @foreach (var item in Model.WeekInfoList)
+        {
+            <option value="@item.YearWeek" @(item.YearWeek == ViewBag.YearWeek ? " selected=\"selected\"" : "")>
+                @(item.YearWeek) (@(item.WeekStart.ToString("MM-dd"))至@(item.WeekEnd.ToString("MM-dd")))
+                @if (item.YearWeek == ViewBag.YearWeek)
+                {
+                    <text>本周</text>
+                } 
+            </option>
+        }
+    </select>
+    新周报填写人：
+    <select id="ddlTrackerCopy">        
+        @foreach(var item in Model.UserInfoList){
+            <option value="@item.UserId">@item.UserName</option>
+        }
+    </select>
+    <button id="cfmCopy" onclick="cfmCopy();">确认</button>
+    <button id="cfmCancel" onclick="cfmCancel();">取消</button>
 </div>
             

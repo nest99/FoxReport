@@ -187,6 +187,27 @@ namespace FoxReport.Controllers
             };
             return Json(obj);
         }
+        [HttpPost]
+        public JsonResult CopyWeekReport()
+        {
+            string newUserId = Request["newUserId"];
+            string newWeek = Request["newWeek"];
+            string userId = Request["userId"];
+            string week = Request["week"];
+            string project = Request["project"];
+            string condition = " Week=" + week;
+            if (userId != "all")
+            {
+                condition += " AND UserId='" + userId + "' ";
+            }
+
+            bool success = SqlDbHelper.CopyWeekReport(newUserId, newWeek, condition, project);
+            var result = new
+            {
+                OK = success
+            };
+            return Json(result);
+        }
         /// <summary>
         /// 一、整体概况，获取每个Tab内容
         /// </summary>
