@@ -10,7 +10,7 @@
         <td><div id="Summary_Version_Request_@(item.Id)">@Html.Raw(item.Request)</div><button onclick="editText(this);" class="btnEdit"></button></td>
         <td><div id="Summary_Version_Publish_@(item.Id)">@Html.Raw(item.Publish)</div><button onclick="editText(this);" class="btnEdit"></button></td>
         <td><div id="Summary_Version_Risk_@(item.Id)">@Html.Raw(item.Risk)</div><button onclick="editText(this);" class="btnEdit"></button></td>
-        <td><button onclick="deleteData('Summary_Version', @(item.Id));" class="btnDeleteData"></button></td>
+        <td><button onclick="confirmDelete('Summary_Version', @(item.Id));" class="btnDeleteData"></button></td>
     </tr>
 }
     <tr id="trNewVersion" class="trContent trNewRow">
@@ -19,7 +19,7 @@
         <td><div id="Summary_Version_Request_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
         <td><div id="Summary_Version_Publish_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
         <td><div id="Summary_Version_Risk_0"></div><button onclick="editText(this);" class="btnEdit"></button></td>
-        <td><button onclick="deleteData('', 0);" class="btnDeleteData"></button></td>
+        <td><button onclick="confirmDelete('Summary_Version', 0);" class="btnDeleteData"></button></td>
     </tr>
 </table>
 <div class="pageDiv">
