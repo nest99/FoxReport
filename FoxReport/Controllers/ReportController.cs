@@ -454,9 +454,19 @@ namespace FoxReport.Controllers
         public ActionResult SearchDiv()
         {
             HttpCookie cookie = GetCookie();
-            ViewBag.SelectedYearWeek = cookie.Values["week"];
+            var w = cookie.Values["week"];
+            if (w == null || w == "null")
+                ViewBag.SelectedYearWeek = (DateTime.Now.Year * 100 + WeekHelper.GetWeekOfYear(DateTime.Now)).ToString();
+            else
+                ViewBag.SelectedYearWeek = cookie.Values["week"];
+
             ViewBag.SelectedUserId = cookie.Values["userId"];
-            ViewBag.SelectedIsForeign = cookie.Values["isForeign"];
+            var f = cookie.Values["isForeign"];
+            if (f == null || f == "null")
+                ViewBag.SelectedIsForeign = "0";
+            else
+                ViewBag.SelectedIsForeign = cookie.Values["isForeign"];
+
             ViewBag.YearWeek = DateTime.Now.Year * 100 + WeekHelper.GetWeekOfYear(DateTime.Now);
             UserAndWeekInfo userWeek = new UserAndWeekInfo();
             return PartialView("_SearchDiv", userWeek);
