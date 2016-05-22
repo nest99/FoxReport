@@ -57,7 +57,7 @@ namespace FoxReport.Controllers
             //report.ReportName = SqlDbHelper.GetReportName(whereCondition);
             DateTime start, end;
             WeekHelper.GetWeekStartEnd(int.Parse(yearWeek), out start, out end);
-            string reportName = "产品周报_" + start.ToString("yyyyMMdd") + "-" + start.ToString("yyyyMMdd");
+            string reportName = "产品周报_" + start.ToString("yyyyMMdd") + "-" + end.ToString("yyyyMMdd");
             if (userId == "all")
             {
                 reportName += "_所有人";
