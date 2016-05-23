@@ -15,7 +15,7 @@ KindEditor.ready(function (K) {
     keditor = K.create("#keText", {
         width: "100%", height: keHeight, resizeType: 0,
         items: ['source', 'preview', 'code', 'undo', 'redo', '|', //'cut', 'copy', 'paste',
-		'plainpaste',  '|', 'justifyleft', 'justifycenter', 'justifyright',
+		'plainpaste', 'wordpaste',  '|', 'justifyleft', 'justifycenter', 'justifyright',
 		'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
 		'superscript', 'clearhtml', 'quickformat', '|',
 		'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
@@ -93,7 +93,14 @@ function saveColumnTextValue(obj, tableName, column) {
                 ids = id.split('_');
                 var trNewId = "#trNew" + ids[1];//获取新增行的id
                 //添加一行数据（复制新增行的html代码，插入新增行之前。修改id为新数据的id)
-                $("<tr class=\"trContent\">" + $(trNewId).html().replace(/_0">/g, "_" + data.NewId + "\">") + "</tr>").insertBefore(trNewId);
+                var code = $(trNewId).html().replace(/_0">/g, "_" + data.NewId + "\">").replace("0);", data.NewId + ");");
+                var rowId;
+                if (tableName.indexOf("Summary_") != -1) {
+                    rowId = "tr" + tableName.replace("Summary_", "") + data.NewId;
+                }  else {
+                    rowId = "trProduct" + data.NewId;
+                }
+                $("<tr class=\"trContent\" id=\"" + rowId + "\">" + code + "</tr>").insertBefore(trNewId);
                 $("#" + id.replace("_0", "_" + data.NewId)).find("input").val(value).attr("old", value);//显示内容到正确的列，设置old属性
                 $("#" + id).find("input").val("");//清空新建行的文字
             } else {
@@ -122,8 +129,13 @@ function ddlTrackerChange(obj, tableName, column) {
                 ids = id.split('_');
                 var trNewId = "#trNew" + ids[1];//获取新增行的id
                 //添加一行数据（复制新增行的html代码，插入新增行之前。修改id为新数据的id)
-                $("<tr class=\"trContent\">" + $(trNewId).html().replace(/_0">/g, "_" + data.NewId + "\">") + "</tr>").insertBefore(trNewId);
-                $("#" + id.replace("_0", "_" + data.NewId)).find("input").val(value);//显示内容到正确的列 
+                var code = $(trNewId).html().replace(/_0"/g, "_" + data.NewId + "\"").replace("0);", data.NewId + ");");
+                var rowId = "trFeedback";
+                if ($(obj).attr("id").indexOf("Product") != -1) { rowId = "trProduct"; }
+                rowId = rowId + data.NewId;
+                $("<tr class=\"trContent\" id=\"" + rowId + "\">" + code + "</tr>").insertBefore(trNewId);
+                var selectId = $(obj).attr("id").replace("_0", "_" + data.NewId);
+                $("#" + selectId).val(value);//显示内容到正确的列 
                 $("#" + id).find("select").val("");//清空新建行的文字
             } else {
                 //不以0结尾为编辑已有文本框
@@ -202,7 +214,8 @@ function saveProjectName(obj) {
         success: function (data) {
             saveMsg();
             if (id == "0") {//新增项目名称            
-                var prjHtml = "<div class='projectBox'>" + $("#newProjectInfo").html().replace(/_0"/g, "_" + data.NewId + "\"") + "</div>";
+                var code = $("#newProjectInfo").html().replace(/_0"/g, "_" + data.NewId + "\"").replace("0);", data.NewId + ");");
+                var prjHtml = "<div class='projectBox' id='Project_Info_Box" + data.NewId + "'>" + code + "</div>";
                 $(prjHtml).insertBefore("#newProjectInfo");
                 $("#Project_Info_ProjectName_" + data.NewId).val($("#Project_Info_ProjectName_0").val());//设置插入行的项目名称
                 $("#Project_Info_ProjectName_0").val(""); //清空新增行的项目名称 
@@ -244,20 +257,24 @@ function saveText() {
             saveMsg();
             if (id.substr(id.length - 2) == "_0") {//以_0结尾为新增
                 if (id.indexOf("Project_Info") != -1) {//新增项目概述
-                    var prjHtml = "<div class='projectBox'>" + $("#newProjectInfo").html().replace(/_0"/g, "_" + data.NewId + "\"") + "</div>";
+                    var prjHtml = "<div class='projectBox' id='Project_Info_Box" + data.NewId + "'>" + $("#newProjectInfo").html().replace(/_0"/g, "_" + data.NewId + "\"").replace("0);", data.NewId + ");") + "</div>";
                     $(prjHtml).insertBefore("#newProjectInfo");                    
                     $("#" + id.replace("_0", "_" + data.NewId)).html(content);//显示内容到正确的列
-                } else if (id.indexOf("Teamwork_Info") != -1) {
+                } else if (id.indexOf("Teamwork_Info") != -1) {//四、
                     $("#Teamwork_Info_Content_0").html(content);
                     $("#Teamwork_Info_Content_0").attr("id", "Teamwork_Info_Content_" + data.NewId);
-                } else if (id.indexOf("Assist_Info") != -1) {
+                } else if (id.indexOf("Assist_Info") != -1) {//五、
                     $("#Assist_Info_Content_0").html(content);
                     $("#Assist_Info_Content_0").attr("id", "Assist_Info_Content_" + data.NewId);
+                } else if (id.indexOf("Affair_Product") != -1) {//三、
+                    var prjHtml = "<tr class='trContent' id='trProduct" + data.NewId + "'>" + $("#trNewProduct").html().replace(/_0"/g, "_" + data.NewId + "\"").replace("0);", data.NewId + ");") + "</tr>";
+                    $(prjHtml).insertBefore("#trNewProduct");
+                    $("#" + id.replace("_0", "_" + data.NewId)).html(content);//显示内容到正确的列
                 } else {
                     ids = id.split('_');
                     var trNewId = "#trNew" + ids[1];//获取新增行的id
                     //添加一行数据（复制新增行的html代码，插入新增行之前。修改id为新数据的id)
-                    $("<tr class=\"trContent\">" + $(trNewId).html().replace(/_0">/g, "_" + data.NewId + "\">") + "</tr>").insertBefore(trNewId);
+                    $("<tr class=\"trContent\" id='tr" + ids[1] + data.NewId + "'>" + $(trNewId).html().replace(/_0">/g, "_" + data.NewId + "\">").replace("0);", data.NewId + ");") + "</tr>").insertBefore(trNewId);
                     $("#" + id.replace("_0", "_" + data.NewId)).html(content);//显示内容到正确的列
                 }
             } else {//不_0结尾为编辑已有
@@ -485,7 +502,7 @@ function wordDownload(obj) {
     var userId = $("#ddlTracker").val();
     var week = $("#ddlWeekSearch").val();
     var project = encodeURIComponent($("#searchProjectName").val().trim());
-    var href = "Preview/Download/" + userId + "?week=" + week + "&project=" + project;
+    var href = "Preview/DownloadWordHtml/" + userId + "?week=" + week + "&project=" + project;
     $(obj).attr("href", href);
 }
 function wordPreview(obj) {    
