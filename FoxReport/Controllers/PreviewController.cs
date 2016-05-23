@@ -105,7 +105,6 @@ namespace FoxReport.Controllers
         {
             string absolutePath = Path.Combine(Request.PhysicalApplicationPath, "WordHtml\\" + Guid.NewGuid().ToString() + ".doc");
             Uri uri = new Uri(Request.Url.GetLeftPart(UriPartial.Authority)).Append("Preview/WordHtml/" + id + "?week=" + week + "&project=" + HttpUtility.UrlEncode(project));
-            
             WebClient client = new WebClient();            
             client.DownloadFile(uri, absolutePath);
 

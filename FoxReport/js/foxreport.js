@@ -17,7 +17,7 @@ KindEditor.ready(function (K) {
         items: ['source', 'preview', 'code', 'undo', 'redo', '|', //'cut', 'copy', 'paste',
 		'plainpaste', 'wordpaste',  '|', 'justifyleft', 'justifycenter', 'justifyright',
 		'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
-		'superscript', 'clearhtml', 'quickformat', '|',
+		'superscript', 'clearhtml', 'quickformat', '|', 
 		'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
 		'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|',
         'table', 'link', 'unlink']
