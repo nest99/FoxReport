@@ -432,6 +432,7 @@
     <Content Include="SqlScript\fox_db.sql" />
     <Content Include="SqlScript\删除数据.txt" />
     <Content Include="SqlScript\插入周数据.txt" />
+    <Content Include="Views\Preview\Index.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -455,9 +456,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Preview\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Report\Index.cshtml" />
