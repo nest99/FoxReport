@@ -443,6 +443,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="WordHtml\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -499,6 +500,7 @@
     <None Include="Properties\PublishProfiles\fox.pubxml" />
     <Content Include="Views\Report\_Teamwork_Info.cshtml" />
     <Content Include="Views\Report\_Assist_Info.cshtml" />
+    <Content Include="Views\Preview\WordHtml.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

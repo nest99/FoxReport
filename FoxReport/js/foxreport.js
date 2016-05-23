@@ -15,7 +15,7 @@ KindEditor.ready(function (K) {
     keditor = K.create("#keText", {
         width: "100%", height: keHeight, resizeType: 0,
         items: ['source', 'preview', 'code', 'undo', 'redo', '|', //'cut', 'copy', 'paste',
-		'plainpaste',  '|', 'justifyleft', 'justifycenter', 'justifyright',
+		'plainpaste', 'wordpaste',  '|', 'justifyleft', 'justifycenter', 'justifyright',
 		'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
 		'superscript', 'clearhtml', 'quickformat', '|',
 		'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
@@ -502,7 +502,7 @@ function wordDownload(obj) {
     var userId = $("#ddlTracker").val();
     var week = $("#ddlWeekSearch").val();
     var project = encodeURIComponent($("#searchProjectName").val().trim());
-    var href = "Preview/Download/" + userId + "?week=" + week + "&project=" + project;
+    var href = "Preview/DownloadWordHtml/" + userId + "?week=" + week + "&project=" + project;
     $(obj).attr("href", href);
 }
 function wordPreview(obj) {    

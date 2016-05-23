@@ -1,0 +1,558 @@
+﻿@model FoxReport.Models.ReportData
+
+@{
+    Layout = null;
+}
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 12">
+<meta name=Originator content="Microsoft Word 12">
+
+<style>
+<!--
+ /* Font Definitions */
+ @@font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-alt:SimSun;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 680460288 22 0 262145 0;}
+@@font-face
+	{font-family:黑体;
+	panose-1:2 1 6 9 6 1 1 1 1 1;
+	mso-font-alt:SimHei;
+	mso-font-charset:134;
+	mso-generic-font-family:modern;
+	mso-font-pitch:fixed;
+	mso-font-signature:-2147482945 953122042 22 0 262145 0;}
+@@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:-536870145 1107305727 0 0 415 0;}
+@@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:-520092929 1073786111 9 0 415 0;}
+@@font-face
+	{font-family:"\@@宋体";
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 680460288 22 0 262145 0;}
+@@font-face
+	{font-family:"\@@黑体";
+	panose-1:2 1 6 9 6 1 1 1 1 1;
+	mso-font-charset:134;
+	mso-generic-font-family:modern;
+	mso-font-pitch:fixed;
+	mso-font-signature:-2147482945 953122042 22 0 262145 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	mso-pagination:none;
+	font-size:10.5pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:宋体;
+	mso-fareast-theme-font:minor-fareast;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	mso-font-kerning:1.0pt;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-link:"页眉 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:none;
+	tab-stops:center 207.65pt right 415.3pt;
+	layout-grid-mode:char;
+	border:none;
+	mso-border-bottom-alt:solid windowtext .75pt;
+	padding:0cm;
+	mso-padding-alt:0cm 0cm 1.0pt 0cm;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:宋体;
+	mso-fareast-theme-font:minor-fareast;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	mso-font-kerning:1.0pt;}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-link:"页脚 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:none;
+	tab-stops:center 207.65pt right 415.3pt;
+	layout-grid-mode:char;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:宋体;
+	mso-fareast-theme-font:minor-fareast;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	mso-font-kerning:1.0pt;}
+span.Char
+	{mso-style-name:"页眉 Char";
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:页眉;
+	mso-ansi-font-size:9.0pt;
+	mso-bidi-font-size:9.0pt;}
+span.Char0
+	{mso-style-name:"页脚 Char";
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:页脚;
+	mso-ansi-font-size:9.0pt;
+	mso-bidi-font-size:9.0pt;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	mso-default-props:yes;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}
+ /* Page Definitions */
+ @@page
+	{mso-page-border-surround-header:no;
+	mso-page-border-surround-footer:no;
+	mso-footnote-separator:url("test.files/header.htm") fs;
+	mso-footnote-continuation-separator:url("test.files/header.htm") fcs;
+	mso-endnote-separator:url("test.files/header.htm") es;
+	mso-endnote-continuation-separator:url("test.files/header.htm") ecs;}
+@@page Section1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	mso-header-margin:42.55pt;
+	mso-footer-margin:49.6pt;
+	mso-paper-source:0;
+	layout-grid:15.6pt;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+    <style type="text/css">
+.tdBorder {
+    border:solid 1px #ccc; padding:5px 1px;
+    font-size:10pt;
+}
+.thTitle {
+    border:solid 1px #999; 
+    background-color:#c1c1c1;
+    font-size:10pt;
+    padding:5px 1px;    
+}
+.sumT1C1{ width:20%; }
+.sumT1C2, .sumT1C3{ width:40%; }
+
+.sumT2C1{ width:20%; } 
+.sumT2C2, .sumT2C4 { width:34%;}
+.sumT2C3{ width:12%; }
+
+.sumT3C1{ width:6%; } 
+.sumT3C2{ width:10%; } 
+.sumT3C3{ width:34%; } 
+.sumT3C4{ width:9%; } 
+.sumT3C5{ width:7%; } 
+.sumT3C6{ width:34%; } 
+
+.sumT4C1{ width:6%; } 
+.sumT4C2{ width:10%; } 
+.sumT4C3{ width:25%; } 
+.sumT4C4{ width:9%; } 
+.sumT4C5{ width:25%; } 
+.sumT4C6{ width:25%; } 
+
+.productT1C1 { width:6%; } 
+.productT1C2 { width:10%; }
+.productT1C3 { width:8%; }
+.productT1C4 { width:38%; } 
+.productT1C5 { width:38%; }
+
+.teamworkDiv, .assistDiv {
+    margin:5px 0; border:1px solid #ccc;
+    padding:5px;
+}
+    </style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:普通表格;
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.5pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	mso-font-kerning:1.0pt;}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="3074"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="2"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=ZH-CN style='tab-interval:21.0pt;text-justify-trim:punctuation'>
+ <div style="width:100%;">
+        <div style="text-align:center;">
+        <h1>@ViewBag.ReportTitle</h1>
+        </div>
+        <p>&nbsp;</p>
+        <h3>一、国内@(Model.ReportName)</h3>
+        <h4>1、目标与策略</h4>
+        <div style="width:100%;">
+        
+        <table style="border-collapse:collapse; border:0; width:100%;">
+            <tr style="width:100%;">
+                <th class="thTitle sumT1C1">项目名称</th>　
+                <th class="thTitle sumT1C2">目标(现状)</th>
+                <th class="thTitle sumT1C3">策略与措施</th>
+            </tr>
+        @foreach (var item in Model.SummaryTargetStrategyList)
+        {
+            if(item.IsForeign == 0)
+            {
+            <tr>
+                <td class="tdBorder sumT1C1">@item.ProjectName</td>                           
+                <td class="tdBorder sumT1C2">@Html.Raw(item.Target)</td>
+                <td class="tdBorder sumT1C3">@Html.Raw(item.Strategy)</td>
+            </tr>
+            }
+        }
+        </table>         
+        </div>
+
+        <h4>2、版本概况</h4>
+        <div style="width:100%;">        
+        <table style="border-collapse:collapse; border:0; width:100%;">
+            <tr style="width:100%;">
+                <th class="thTitle sumT2C1">项目名称</th>
+                <th class="thTitle sumT2C2">核心需求</th>
+                <th class="thTitle sumT2C3">计划发布</th>
+                <th class="thTitle sumT2C4">进展与风险</th>
+            </tr>
+        @foreach (var item in Model.SummaryVersionList)
+        {
+            if(item.IsForeign == 0)
+            {
+            <tr style="width:100%;">
+                <td class="tdBorder sumT2C1">@item.ProjectName</td>
+                <td class="tdBorder sumT2C2">@Html.Raw(item.Request)</td>
+                <td class="tdBorder sumT2C3">@Html.Raw(item.Publish)</td>
+                <td class="tdBorder sumT2C4">@Html.Raw(item.Risk)</td>
+            </tr>
+            }
+        }
+            </table>
+       </div>
+        <h4>3、用户反馈</h4>
+        <h4>A、TOP问题</h4>
+        <div style="width:100%;">
+            <table style="border-collapse:collapse; border:0; width:100%;">
+            <tr>
+                <th class="thTitle sumT3C1">序号</th>
+                <th class="thTitle sumT3C2">平台</th>
+                <th class="thTitle sumT3C3">问题概要</th>
+                <th class="thTitle sumT3C4">跟进人</th>
+                <th class="thTitle sumT3C5">状态</th>
+                <th class="thTitle sumT3C6">跟进情况</th>
+            </tr>
+        @foreach (var item in Model.SummaryFeedbackList)
+        {
+            if(item.IsForeign == 0)
+            {
+            <tr>
+                <td class="tdBorder sumT3C1">@item.Seq</td>
+                <td class="tdBorder sumT3C2">@item.Platform</td>
+                <td class="tdBorder sumT3C3">@Html.Raw(item.Issue)</td>
+                <td class="tdBorder sumT3C4">@item.Tracker</td>
+                <td class="tdBorder sumT3C5">@item.Status</td>
+                <td class="tdBorder sumT3C6">@Html.Raw(item.TrackInfo)</td>
+            </tr>
+            }
+        }
+            </table>
+             </div>   
+        <h4>B、用户建议</h4>
+        <div style="width:100%;">
+        <table style="border-collapse:collapse; border:0; width:100%;">
+            <tr>
+                <th class="thTitle sumT4C1">序号</th>
+                <th class="thTitle sumT4C2">平台</th>
+                <th class="thTitle sumT4C3">建议内容</th>
+                <th class="thTitle sumT4C4">反馈用户数</th>
+                <th class="thTitle sumT4C5">影响用户体验描述</th>
+                <th class="thTitle sumT4C6">跟进情况</th>
+            </tr>
+        @foreach (var item in Model.SummarySuggestList)
+        {
+            if(item.IsForeign == 0)
+            {
+            <tr>
+                <td class="tdBorder sumT4C1">@item.Seq</td>
+                <td class="tdBorder sumT4C2">@item.Platform</td>
+                <td class="tdBorder sumT4C3">@Html.Raw(item.SuggestContent)</td>
+                <td class="tdBorder sumT4C4">@item.UserCount</td>
+                <td class="tdBorder sumT4C5">@Html.Raw(item.Issue)</td>
+                <td class="tdBorder sumT4C6">@Html.Raw(item.TrackInfo)</td>
+            </tr>
+            }
+        }
+            </table>
+        </div>
+        <h4>4、各项目概况</h4>
+    @for (int i = 0, num = 1; i < Model.ProjectInfoList.Count; i++)
+    {
+        if(Model.ProjectInfoList[i].IsForeign == 0)
+        {
+        <p>4.@(num++) 项目名称：@Model.ProjectInfoList[i].ProjectName</p>
+        <h5>（1）目标与近期重点</h5>
+        <div>
+            @Html.Raw(Model.ProjectInfoList[i].Target)
+        </div>
+        <h5>（2）项目进展</h5>
+        <div>
+            @Html.Raw(Model.ProjectInfoList[i].Progress)
+        </div>
+        <h5>（3）团队工作方式优化</h5>
+        <div>
+            @Html.Raw(Model.ProjectInfoList[i].Teamwork)
+        </div>
+        <h5>（4）版本详情</h5>
+        <div>
+            @Html.Raw(Model.ProjectInfoList[i].VersionDetail)
+        </div>
+        <h5>（5）版本质量分析</h5>
+        <div>
+            @Html.Raw(Model.ProjectInfoList[i].VersionQuality)
+        </div>
+        }
+    }
+        
+       <h3>二、国外@(Model.ReportName)</h3>
+        <h4>1、目标与策略</h4>
+        <div style="width:100%;">
+        <table style="border-collapse:collapse; border:0; width:100%;">
+            <tr>
+                <th class="thTitle sumT1C1">项目名称</th>　
+                <th class="thTitle sumT1C2">目标(现状)</th>
+                <th class="thTitle sumT1C3">策略与措施</th>
+            </tr>
+        @foreach (var item in Model.SummaryTargetStrategyList)
+        {
+            if(item.IsForeign == 1)
+            {
+            <tr>
+                <td class="tdBorder sumT1C1">@item.ProjectName</td>                           
+                <td class="tdBorder sumT1C2">@Html.Raw(item.Target)</td>
+                <td class="tdBorder sumT1C3">@Html.Raw(item.Strategy)</td>
+            </tr>
+            }
+        }
+        </table>
+        </div>
+        <h4>2、版本概况</h4>
+        <div style="width:100%;">
+        <table style="border-collapse:collapse; border:0; width:100%;">
+            <tr>
+                <th class="thTitle sumT2C1">项目名称</th>
+                <th class="thTitle sumT2C2">核心需求</th>
+                <th class="thTitle sumT2C3">计划发布</th>
+                <th class="thTitle sumT2C4">进展与风险</th>
+            </tr>
+        @foreach (var item in Model.SummaryVersionList)
+        {
+            if(item.IsForeign == 1)
+            {
+            <tr>
+                <td class="tdBorder sumT2C1">@item.ProjectName</td>
+                <td class="tdBorder sumT2C2">@Html.Raw(item.Request)</td>
+                <td class="tdBorder sumT2C3">@Html.Raw(item.Publish)</td>
+                <td class="tdBorder sumT2C4">@Html.Raw(item.Risk)</td>
+            </tr>
+            }
+        }
+            </table>
+       </div>
+        <h4>3、用户反馈</h4>
+        <h4>A、TOP问题</h4>
+        <div style="width:100%;">
+        <table style="border-collapse:collapse; border:0; width:100%;">
+            <tr>
+                <th class="thTitle sumT3C1">序号</th>
+                <th class="thTitle sumT3C2">平台</th>
+                <th class="thTitle sumT3C3">问题概要</th>
+                <th class="thTitle sumT3C4">跟进人</th>
+                <th class="thTitle sumT3C5">状态</th>
+                <th class="thTitle sumT3C6">跟进情况</th>
+            </tr>
+        @foreach (var item in Model.SummaryFeedbackList)
+        {
+            if(item.IsForeign == 1)
+            {
+            <tr>
+                <td class="tdBorder sumT3C1">@item.Seq</td>
+                <td class="tdBorder sumT3C2">@item.Platform</td>
+                <td class="tdBorder sumT3C3">@Html.Raw(item.Issue)</td>
+                <td class="tdBorder sumT3C4">@item.Tracker</td>
+                <td class="tdBorder sumT3C5">@item.Status</td>
+                <td class="tdBorder sumT3C6">@Html.Raw(item.TrackInfo)</td>
+            </tr>
+            }
+        }
+            </table>
+        </div>        
+        <h4>B、用户建议</h4>
+        <div style="width:100%;">
+        <table style="border-collapse:collapse; border:0; width:100%;">
+            <tr>
+                <th class="thTitle sumT4C1">序号</th>
+                <th class="thTitle sumT4C2">平台</th>
+                <th class="thTitle sumT4C3">建议内容</th>
+                <th class="thTitle sumT4C4">反馈用户数</th>
+                <th class="thTitle sumT4C5">影响用户体验描述</th>
+                <th class="thTitle sumT4C6">跟进情况</th>
+            </tr>
+        @foreach (var item in Model.SummarySuggestList)
+        {
+            if(item.IsForeign == 1)
+            {
+            <tr>
+                <td class="tdBorder sumT4C1">@item.Seq</td>
+                <td class="tdBorder sumT4C2">@item.Platform</td>
+                <td class="tdBorder sumT4C3">@Html.Raw(item.SuggestContent)</td>
+                <td class="tdBorder sumT4C4">@item.UserCount</td>
+                <td class="tdBorder sumT4C5">@Html.Raw(item.Issue)</td>
+                <td class="tdBorder sumT4C6">@Html.Raw(item.TrackInfo)</td>
+            </tr>
+            }
+        }
+            </table>
+        </div>
+        <h4>4、各项目概况</h4>
+    @for (int i = 0, num = 1; i < Model.ProjectInfoList.Count; i++ )
+    {
+        if(Model.ProjectInfoList[i].IsForeign == 1)
+        {
+        <p>4.@(num++) 项目名称：@Model.ProjectInfoList[i].ProjectName</p>
+        <h5>（1）目标与近期重点</h5>
+        <div>
+            @Html.Raw(Model.ProjectInfoList[i].Target)
+        </div>
+        <h5>（2）项目进展</h5>
+        <div>
+            @Html.Raw(Model.ProjectInfoList[i].Progress)
+        </div>
+        <h5>（3）团队工作方式优化</h5>
+        <div>
+            @Html.Raw(Model.ProjectInfoList[i].Teamwork)
+        </div>
+        <h5>（4）版本详情</h5>
+        <div>
+            @Html.Raw(Model.ProjectInfoList[i].VersionDetail)
+        </div>
+        <h5>（5）版本质量分析</h5>
+        <div>
+            @Html.Raw(Model.ProjectInfoList[i].VersionQuality)
+        </div>
+        }
+    }
+
+        <h3>三、重点事务</h3>
+        <h4>产品事务</h4>
+        <div style="width:100%;">
+        <table style="border-collapse:collapse; border:0; width:100%;">
+            <tr>
+                <th class="thTitle productT1C1">分类</th>
+                <th class="thTitle productT1C2">优先级</th>
+                <th class="thTitle productT1C3">负责人</th>
+                <th class="thTitle productT1C4">工作计划</th>
+                <th class="thTitle productT1C5">进展情况</th>
+            </tr>
+        @foreach (var item in Model.AffairProductList)
+        {
+            <tr>
+                <td class="tdBorder productT1C1">@item.Classify</td>                            
+                <td class="tdBorder productT1C2">@item.Priority</td>
+                <td class="tdBorder productT1C3">@item.Tracker</td>
+                <td class="tdBorder productT1C4">@Html.Raw(item.Workplan)</td>
+                <td class="tdBorder productT1C5">@Html.Raw(item.Progress)</td>
+            </tr>
+        }
+        </table>
+        </div>
+        <h3>四、团队工作方式优化</h3>
+        @foreach(var item in Model.TeamworkInfoList){            
+        <div class="teamworkDiv">
+            @Html.Raw(item.Content)
+        </div>
+        <p style="height:5px; margin:0;">&nbsp;</p>
+        }
+
+        <h3>五、需要的协助和支持</h3>
+        @foreach(var item in Model.TeamworkInfoList){            
+        <div class="assistDiv">
+            @Html.Raw(item.Content)
+        </div>
+        <p style="height:5px; margin:0;">&nbsp;</p>
+        }
+    </div>
+</body>
+</html>

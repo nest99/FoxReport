@@ -8,6 +8,7 @@ using System.Collections.Specialized;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -20,6 +21,16 @@ namespace FoxReport.Controllers
         // GET: /Preview/
 
         public ActionResult Index(string id, string week, string project)
+        {
+            ReportData report = GetReportData(id, week, project);
+            return View(report);
+        }
+        public ActionResult WordHtml(string id, string week, string project)
+        {
+            ReportData report = GetReportData(id, week, project);
+            return View(report);
+        }
+        private ReportData GetReportData(string id, string week, string project)
         {
             string userId = "";
             string yearWeek = "";
@@ -52,9 +63,9 @@ namespace FoxReport.Controllers
             }
             string limit = " "; //" limit 0, 1000";            
             int t, p;
-            
+
             ReportData report = new ReportData();
-            //report.ReportName = SqlDbHelper.GetReportName(whereCondition);
+            
             DateTime start, end;
             WeekHelper.GetWeekStartEnd(int.Parse(yearWeek), out start, out end);
             string reportName = "产品周报_" + start.ToString("yyyyMMdd") + "-" + end.ToString("yyyyMMdd");
@@ -63,7 +74,7 @@ namespace FoxReport.Controllers
                 reportName += "_所有人";
             }
             else
-            {   
+            {
                 string userName = CacheFoxData.UserList.FirstOrDefault(u => u.UserId == userId).UserName;
                 reportName += "_" + userName;
             }
@@ -87,7 +98,21 @@ namespace FoxReport.Controllers
             report.AffairProductList = SqlDbHelper.GetAffairProduct(whereConditionNoProjectName, limit, null, out t, out p);
             report.TeamworkInfoList = SqlDbHelper.GetTeamworkInfoList(whereConditionNoProjectName, limit, null, out t, out p);
             report.AssistInfoList = SqlDbHelper.GetAssistInfoList(whereConditionNoProjectName, limit, null, out t, out p);
-            return View(report);
+            return report;
+        }
+        
+        public FileResult DownloadWordHtml(string id, string week, string project)
+        {
+            string absolutePath = Path.Combine(Request.PhysicalApplicationPath, "WordHtml\\" + Guid.NewGuid().ToString() + ".docx");
+            Uri uri = new Uri(Request.Url.GetLeftPart(UriPartial.Authority)).Append("Preview/WordHtml/" + id + "?week=" + week + "&project=" + HttpUtility.UrlEncode(project));
+            
+            WebClient client = new WebClient();            
+            client.DownloadFile(uri, absolutePath);
+
+            DateTime start, end;
+            WeekHelper.GetWeekStartEnd(int.Parse(week), out start, out end);
+            string downloadName = "产品周报" + start.ToString("yyyy-MM-dd") + "至" + start.ToString("yyyy-MM-dd");
+            return File(absolutePath, MimeMapping.GetMimeMapping(".docx"), downloadName + ".docx");
         }
 
         public FileResult Download(string id, string week, string project)
