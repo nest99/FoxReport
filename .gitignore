@@ -2,3 +2,5 @@
 /FoxReport/Log
 /FoxReport/bin/FoxReport.dll
 /FoxReport/bin/FoxReport.pdb
+/FoxReport/WordHtml/*.docx
+/FoxReport/WordHtml/*.doc

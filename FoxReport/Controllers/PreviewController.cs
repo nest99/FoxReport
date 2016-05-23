@@ -103,7 +103,7 @@ namespace FoxReport.Controllers
         
         public FileResult DownloadWordHtml(string id, string week, string project)
         {
-            string absolutePath = Path.Combine(Request.PhysicalApplicationPath, "WordHtml\\" + Guid.NewGuid().ToString() + ".docx");
+            string absolutePath = Path.Combine(Request.PhysicalApplicationPath, "WordHtml\\" + Guid.NewGuid().ToString() + ".doc");
             Uri uri = new Uri(Request.Url.GetLeftPart(UriPartial.Authority)).Append("Preview/WordHtml/" + id + "?week=" + week + "&project=" + HttpUtility.UrlEncode(project));
             
             WebClient client = new WebClient();            
@@ -112,7 +112,7 @@ namespace FoxReport.Controllers
             DateTime start, end;
             WeekHelper.GetWeekStartEnd(int.Parse(week), out start, out end);
             string downloadName = "产品周报" + start.ToString("yyyy-MM-dd") + "至" + start.ToString("yyyy-MM-dd");
-            return File(absolutePath, MimeMapping.GetMimeMapping(".docx"), downloadName + ".docx");
+            return File(absolutePath, MimeMapping.GetMimeMapping(".doc"), downloadName + ".doc");
         }
 
         public FileResult Download(string id, string week, string project)
