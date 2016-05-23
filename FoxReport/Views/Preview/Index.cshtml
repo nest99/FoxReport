@@ -10,6 +10,9 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+
+    <!-- 
+
     <style type="text/css">
 .tdBorder {
     border:solid 1px #ccc; padding:5px 1px;
@@ -52,312 +55,561 @@
     margin:5px 0; border:1px solid #ccc;
     padding:5px;
 }
+
+      
+    </style>  -->
+
+    <style type="text/css">
+        * {
+            font-family: "微软雅黑";
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .tdBorder {
+            border: solid 1px #ccc;
+            padding: 5px 1px;
+            font-size: 10pt;
+        }
+
+        .thTitle {
+            border: solid 1px #fff;
+            background-color: #3397e1;
+            font-size: 10pt;
+            padding: 5px 1px;
+            color: #fff;
+        }
+
+        .sumT1C1 {
+            width: 20%;
+            padding-left: 10px;
+        }
+
+        td.sumT1C1, td.sumT2C1, td.sumT3C1, td.sumT4C1, td.sumT5C1, td.sumT6C1 {
+            color: #3397e2;
+        }
+
+        .sumT1C2, .sumT1C3 {
+            width: 40%;
+            padding-left: 10px;
+        }
+
+        .sumT2C1 {
+            width: 20%;
+            padding-left: 10px;
+        }
+
+        .sumT2C2, .sumT2C4 {
+            width: 34%padding-left:10px;
+        }
+
+        .sumT2C3 {
+            width: 12%;
+        }
+
+        .sumT3C1 {
+            width: 6%;
+            padding-left: 10px;
+        }
+
+        .sumT3C2 {
+            width: 10%;
+            padding-left: 10px;
+        }
+
+        .sumT3C3 {
+            width: 34%;
+            padding-left: 10px;
+        }
+
+        .sumT3C4 {
+            width: 9%;
+            padding-left: 10px;
+        }
+
+        .sumT3C5 {
+            width: 7%;
+            padding-left: 10px;
+        }
+
+        .sumT3C6 {
+            width: 34%;
+            padding-left: 10px;
+        }
+
+        .sumT4C1 {
+            width: 6%;
+            padding-left: 10px;
+        }
+
+        .sumT4C2 {
+            width: 10%;
+            padding-left: 10px;
+        }
+
+        .sumT4C3 {
+            width: 25%;
+            padding-left: 10px;
+        }
+
+        .sumT4C4 {
+            width: 9%;
+            padding-left: 10px;
+        }
+
+        .sumT4C5 {
+            width: 25%;
+            padding-left: 10px;
+        }
+
+        .sumT4C6 {
+            width: 25%;
+            padding-left: 10px;
+        }
+
+        .productT1C1 {
+            width: 6%;
+            padding-left: 10px;
+        }
+
+        .productT1C2 {
+            width: 10%;
+            padding-left: 10px;
+        }
+
+        .productT1C3 {
+            width: 8%;
+            padding-left: 10px;
+        }
+
+        .productT1C4 {
+            width: 38%;
+            padding-left: 10px;
+        }
+
+        .productT1C5 {
+            width: 38%;
+            padding-left: 10px;
+        }
+
+        .teamworkDiv, .assistDiv {
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+
+        .MsoNormal {
+            font-size: 13px;
+            font-weight: normal;
+            line-height: 20px;
+        }
     </style>
 </head>
 <body>
-    <div style="width:100%;">
-        <div style="text-align:center;">
-        <h1>@ViewBag.ReportTitle</h1>
-        </div>
-        <p>&nbsp;</p>
-        <h3>一、国内@(Model.ReportName)</h3>
-        <h4>1、目标与策略</h4>
-        <div style="width:100%;">
-        
-        <table style="border-collapse:collapse; border:0; width:100%;">
-            <tr style="width:100%;">
-                <th class="thTitle sumT1C1">项目名称</th>　
-                <th class="thTitle sumT1C2">目标(现状)</th>
-                <th class="thTitle sumT1C3">策略与措施</th>
-            </tr>
-        @foreach (var item in Model.SummaryTargetStrategyList)
-        {
-            if(item.IsForeign == 0)
-            {
-            <tr>
-                <td class="tdBorder sumT1C1">@item.ProjectName</td>                           
-                <td class="tdBorder sumT1C2">@Html.Raw(item.Target)</td>
-                <td class="tdBorder sumT1C3">@Html.Raw(item.Strategy)</td>
-            </tr>
-            }
-        }
-        </table>         
-        </div>
 
-        <h4>2、版本概况</h4>
-        <div style="width:100%;">        
-        <table style="border-collapse:collapse; border:0; width:100%;">
-            <tr style="width:100%;">
-                <th class="thTitle sumT2C1">项目名称</th>
-                <th class="thTitle sumT2C2">核心需求</th>
-                <th class="thTitle sumT2C3">计划发布</th>
-                <th class="thTitle sumT2C4">进展与风险</th>
-            </tr>
-        @foreach (var item in Model.SummaryVersionList)
-        {
-            if(item.IsForeign == 0)
-            {
-            <tr style="width:100%;">
-                <td class="tdBorder sumT2C1">@item.ProjectName</td>
-                <td class="tdBorder sumT2C2">@Html.Raw(item.Request)</td>
-                <td class="tdBorder sumT2C3">@Html.Raw(item.Publish)</td>
-                <td class="tdBorder sumT2C4">@Html.Raw(item.Risk)</td>
-            </tr>
-            }
-        }
-            </table>
-       </div>
-        <h4>3、用户反馈</h4>
-        <h4>A、TOP问题</h4>
-        <div style="width:100%;">
-            <table style="border-collapse:collapse; border:0; width:100%;">
-            <tr>
-                <th class="thTitle sumT3C1">序号</th>
-                <th class="thTitle sumT3C2">平台</th>
-                <th class="thTitle sumT3C3">问题概要</th>
-                <th class="thTitle sumT3C4">跟进人</th>
-                <th class="thTitle sumT3C5">状态</th>
-                <th class="thTitle sumT3C6">跟进情况</th>
-            </tr>
-        @foreach (var item in Model.SummaryFeedbackList)
-        {
-            if(item.IsForeign == 0)
-            {
-            <tr>
-                <td class="tdBorder sumT3C1">@item.Seq</td>
-                <td class="tdBorder sumT3C2">@item.Platform</td>
-                <td class="tdBorder sumT3C3">@Html.Raw(item.Issue)</td>
-                <td class="tdBorder sumT3C4">@item.Tracker</td>
-                <td class="tdBorder sumT3C5">@item.Status</td>
-                <td class="tdBorder sumT3C6">@Html.Raw(item.TrackInfo)</td>
-            </tr>
-            }
-        }
-            </table>
-             </div>   
-        <h4>B、用户建议</h4>
-        <div style="width:100%;">
-        <table style="border-collapse:collapse; border:0; width:100%;">
-            <tr>
-                <th class="thTitle sumT4C1">序号</th>
-                <th class="thTitle sumT4C2">平台</th>
-                <th class="thTitle sumT4C3">建议内容</th>
-                <th class="thTitle sumT4C4">反馈用户数</th>
-                <th class="thTitle sumT4C5">影响用户体验描述</th>
-                <th class="thTitle sumT4C6">跟进情况</th>
-            </tr>
-        @foreach (var item in Model.SummarySuggestList)
-        {
-            if(item.IsForeign == 0)
-            {
-            <tr>
-                <td class="tdBorder sumT4C1">@item.Seq</td>
-                <td class="tdBorder sumT4C2">@item.Platform</td>
-                <td class="tdBorder sumT4C3">@Html.Raw(item.SuggestContent)</td>
-                <td class="tdBorder sumT4C4">@item.UserCount</td>
-                <td class="tdBorder sumT4C5">@Html.Raw(item.Issue)</td>
-                <td class="tdBorder sumT4C6">@Html.Raw(item.TrackInfo)</td>
-            </tr>
-            }
-        }
-            </table>
-        </div>
-        <h4>4、各项目概况</h4>
-    @for (int i = 0, num = 1; i < Model.ProjectInfoList.Count; i++)
-    {
-        if(Model.ProjectInfoList[i].IsForeign == 0)
-        {
-        <p>4.@(num++) 项目名称：@Model.ProjectInfoList[i].ProjectName</p>
-        <h5>（1）目标与近期重点</h5>
-        <div>
-            @Html.Raw(Model.ProjectInfoList[i].Target)
-        </div>
-        <h5>（2）项目进展</h5>
-        <div>
-            @Html.Raw(Model.ProjectInfoList[i].Progress)
-        </div>
-        <h5>（3）团队工作方式优化</h5>
-        <div>
-            @Html.Raw(Model.ProjectInfoList[i].Teamwork)
-        </div>
-        <h5>（4）版本详情</h5>
-        <div>
-            @Html.Raw(Model.ProjectInfoList[i].VersionDetail)
-        </div>
-        <h5>（5）版本质量分析</h5>
-        <div>
-            @Html.Raw(Model.ProjectInfoList[i].VersionQuality)
-        </div>
-        }
-    }
-        
-       <h3>二、国外@(Model.ReportName)</h3>
-        <h4>1、目标与策略</h4>
-        <div style="width:100%;">
-        <table style="border-collapse:collapse; border:0; width:100%;">
-            <tr>
-                <th class="thTitle sumT1C1">项目名称</th>　
-                <th class="thTitle sumT1C2">目标(现状)</th>
-                <th class="thTitle sumT1C3">策略与措施</th>
-            </tr>
-        @foreach (var item in Model.SummaryTargetStrategyList)
-        {
-            if(item.IsForeign == 1)
-            {
-            <tr>
-                <td class="tdBorder sumT1C1">@item.ProjectName</td>                           
-                <td class="tdBorder sumT1C2">@Html.Raw(item.Target)</td>
-                <td class="tdBorder sumT1C3">@Html.Raw(item.Strategy)</td>
-            </tr>
-            }
-        }
-        </table>
-        </div>
-        <h4>2、版本概况</h4>
-        <div style="width:100%;">
-        <table style="border-collapse:collapse; border:0; width:100%;">
-            <tr>
-                <th class="thTitle sumT2C1">项目名称</th>
-                <th class="thTitle sumT2C2">核心需求</th>
-                <th class="thTitle sumT2C3">计划发布</th>
-                <th class="thTitle sumT2C4">进展与风险</th>
-            </tr>
-        @foreach (var item in Model.SummaryVersionList)
-        {
-            if(item.IsForeign == 1)
-            {
-            <tr>
-                <td class="tdBorder sumT2C1">@item.ProjectName</td>
-                <td class="tdBorder sumT2C2">@Html.Raw(item.Request)</td>
-                <td class="tdBorder sumT2C3">@Html.Raw(item.Publish)</td>
-                <td class="tdBorder sumT2C4">@Html.Raw(item.Risk)</td>
-            </tr>
-            }
-        }
-            </table>
-       </div>
-        <h4>3、用户反馈</h4>
-        <h4>A、TOP问题</h4>
-        <div style="width:100%;">
-        <table style="border-collapse:collapse; border:0; width:100%;">
-            <tr>
-                <th class="thTitle sumT3C1">序号</th>
-                <th class="thTitle sumT3C2">平台</th>
-                <th class="thTitle sumT3C3">问题概要</th>
-                <th class="thTitle sumT3C4">跟进人</th>
-                <th class="thTitle sumT3C5">状态</th>
-                <th class="thTitle sumT3C6">跟进情况</th>
-            </tr>
-        @foreach (var item in Model.SummaryFeedbackList)
-        {
-            if(item.IsForeign == 1)
-            {
-            <tr>
-                <td class="tdBorder sumT3C1">@item.Seq</td>
-                <td class="tdBorder sumT3C2">@item.Platform</td>
-                <td class="tdBorder sumT3C3">@Html.Raw(item.Issue)</td>
-                <td class="tdBorder sumT3C4">@item.Tracker</td>
-                <td class="tdBorder sumT3C5">@item.Status</td>
-                <td class="tdBorder sumT3C6">@Html.Raw(item.TrackInfo)</td>
-            </tr>
-            }
-        }
-            </table>
-        </div>        
-        <h4>B、用户建议</h4>
-        <div style="width:100%;">
-        <table style="border-collapse:collapse; border:0; width:100%;">
-            <tr>
-                <th class="thTitle sumT4C1">序号</th>
-                <th class="thTitle sumT4C2">平台</th>
-                <th class="thTitle sumT4C3">建议内容</th>
-                <th class="thTitle sumT4C4">反馈用户数</th>
-                <th class="thTitle sumT4C5">影响用户体验描述</th>
-                <th class="thTitle sumT4C6">跟进情况</th>
-            </tr>
-        @foreach (var item in Model.SummarySuggestList)
-        {
-            if(item.IsForeign == 1)
-            {
-            <tr>
-                <td class="tdBorder sumT4C1">@item.Seq</td>
-                <td class="tdBorder sumT4C2">@item.Platform</td>
-                <td class="tdBorder sumT4C3">@Html.Raw(item.SuggestContent)</td>
-                <td class="tdBorder sumT4C4">@item.UserCount</td>
-                <td class="tdBorder sumT4C5">@Html.Raw(item.Issue)</td>
-                <td class="tdBorder sumT4C6">@Html.Raw(item.TrackInfo)</td>
-            </tr>
-            }
-        }
-            </table>
-        </div>
-        <h4>4、各项目概况</h4>
-    @for (int i = 0, num = 1; i < Model.ProjectInfoList.Count; i++ )
-    {
-        if(Model.ProjectInfoList[i].IsForeign == 1)
-        {
-        <p>4.@(num++) 项目名称：@Model.ProjectInfoList[i].ProjectName</p>
-        <h5>（1）目标与近期重点</h5>
-        <div>
-            @Html.Raw(Model.ProjectInfoList[i].Target)
-        </div>
-        <h5>（2）项目进展</h5>
-        <div>
-            @Html.Raw(Model.ProjectInfoList[i].Progress)
-        </div>
-        <h5>（3）团队工作方式优化</h5>
-        <div>
-            @Html.Raw(Model.ProjectInfoList[i].Teamwork)
-        </div>
-        <h5>（4）版本详情</h5>
-        <div>
-            @Html.Raw(Model.ProjectInfoList[i].VersionDetail)
-        </div>
-        <h5>（5）版本质量分析</h5>
-        <div>
-            @Html.Raw(Model.ProjectInfoList[i].VersionQuality)
-        </div>
-        }
-    }
 
-        <h3>三、重点事务</h3>
-        <h4>产品事务</h4>
-        <div style="width:100%;">
-        <table style="border-collapse:collapse; border:0; width:100%;">
-            <tr>
-                <th class="thTitle productT1C1">分类</th>
-                <th class="thTitle productT1C2">优先级</th>
-                <th class="thTitle productT1C3">负责人</th>
-                <th class="thTitle productT1C4">工作计划</th>
-                <th class="thTitle productT1C5">进展情况</th>
-            </tr>
-        @foreach (var item in Model.AffairProductList)
-        {
-            <tr>
-                <td class="tdBorder productT1C1">@item.Classify</td>                            
-                <td class="tdBorder productT1C2">@item.Priority</td>
-                <td class="tdBorder productT1C3">@item.Tracker</td>
-                <td class="tdBorder productT1C4">@Html.Raw(item.Workplan)</td>
-                <td class="tdBorder productT1C5">@Html.Raw(item.Progress)</td>
-            </tr>
-        }
-        </table>
+    <div style="width:1260px; margin:auto; margin-top:44px; margin-bottom:50px;">
+        <div style="position:relative; width:100%; height:100px; padding-bottom:20px;">
+            <div style="width:100px;height:100px;border-radius:50px; background-color:#3397e1; color:#fff; font-size:40px; font-weight:bold; text-align:center; line-height:100px; float:left;font-family:'微软雅黑';"><i>UC</i></div>
+            <h1 align="center">@ViewBag.ReportTitle</h1>
+           
+         
         </div>
-        <h3>四、团队工作方式优化</h3>
-        @foreach(var item in Model.TeamworkInfoList){            
-        <div class="teamworkDiv">
-            @Html.Raw(item.Content)
-        </div>
-        <p style="height:5px; margin:0;">&nbsp;</p>
-        }
+        <div style=" background-color:#3397e1; width:1260px; height:42px; "></div>
+        <div style="width:1196px; border:2px solid #b8b8b8; overflow:hidden; padding:20px 30px;">
+            <h3 style="margin-bottom:10px;">一、国内@(Model.ReportName)</h3>
+           
+            <h4 style="margin-left:35px; margin-bottom:5px;">1、目标与策略&nbsp;&nbsp;</h4>
+            <div style="width:95.2%; margin-left:62px; margin-bottom:15px;">
+                <table style="border-collapse:collapse; border:0; width:100%;">
+                    <tr style="width:100%;">
+                        <th class="thTitle sumT1C1">项目名称</th>
+                        <th class="thTitle sumT1C2">目标(现状)</th>
+                        <th class="thTitle sumT1C3">策略与措施</th>
+                    </tr>
+                    <!-- 
+                    <tr>
+                        <td class="tdBorder sumT1C1">Android(U3)</td>
+                        <td class="tdBorder sumT1C2"></td>
+                        <td class="tdBorder sumT1C3"></td>
+                    </tr>
+                    -->
+                    @foreach (var item in Model.SummaryTargetStrategyList)
+                    {
+                        if (item.IsForeign == 0)
+                        {
+                            <tr>
+                                <td class="tdBorder sumT1C1">@item.ProjectName</td>
+                                <td class="tdBorder sumT1C2">@Html.Raw(item.Target)</td>
+                                <td class="tdBorder sumT1C3">@Html.Raw(item.Strategy)</td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
 
-        <h3>五、需要的协助和支持</h3>
-        @foreach(var item in Model.TeamworkInfoList){            
-        <div class="assistDiv">
-            @Html.Raw(item.Content)
-        </div>
-        <p style="height:5px; margin:0;">&nbsp;</p>
-        }
-    </div>
+
+
+            <h4 style="margin-left:35px; margin-bottom:5px;">2、版本概况&nbsp;&nbsp;</h4>
+            <div style="width:95.2%; margin-left:62px;margin-bottom:15px;">
+                <table style="border-collapse:collapse; width:100%;">
+                    <tr style="width:100%;">
+                        <th class="thTitle sumT2C1">项目名称</th>
+                        <th class="thTitle sumT2C2">核心需求</th>
+                        <th class="thTitle sumT2C3">计划发布</th>
+                        <th class="thTitle sumT2C4">进展与风险</th>
+                    </tr>
+                    <!--
+                    <tr>
+                        <td class="tdBorder sumT2C1">&nbsp;</td>
+                        <td class="tdBorder sumT2C2">&nbsp;</td>
+                        <td class="tdBorder sumT2C3">&nbsp;</td>
+                        <td class="tdBorder sumT2C4">&nbsp;</td>
+                    </tr>-->
+                            
+                    @foreach (var item in Model.SummaryVersionList)
+                    {
+                        if (item.IsForeign == 0)
+                        {
+                            <tr style="width:100%;">
+                                <td class="tdBorder sumT2C1">@item.ProjectName</td>
+                                <td class="tdBorder sumT2C2">@Html.Raw(item.Request)</td>
+                                <td class="tdBorder sumT2C3">@Html.Raw(item.Publish)</td>
+                                <td class="tdBorder sumT2C4">@Html.Raw(item.Risk)</td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+            <h4 style="margin-left:35px; margin-bottom:5px;">3、用户反馈&nbsp;&nbsp;</h4>
+            <h5 style="margin-left:62px; margin-bottom:5px; color:#3397e1;">A、TOP问题</h5>
+            <div style="width:95.2%; margin-left:62px; margin-bottom:5px;">
+                <table style="border-collapse:collapse; border:0; width:100%;">
+                    <tr>
+                        <th class="thTitle sumT3C1">序号</th>
+                        <th class="thTitle sumT3C2">平台</th>
+                        <th class="thTitle sumT3C3">问题概要</th>
+                        <th class="thTitle sumT3C4">跟进人</th>
+                        <th class="thTitle sumT3C5">状态</th>
+                        <th class="thTitle sumT3C6">跟进情况</th>
+                    </tr>
+                    <!--
+                    <tr>
+                        <td class="tdBorder sumT3C1">&nbsp;</td>
+                        <td class="tdBorder sumT3C2">&nbsp;</td>
+                        <td class="tdBorder sumT3C3">&nbsp;</td>
+                        <td class="tdBorder sumT3C4">&nbsp;</td>
+                        <td class="tdBorder sumT3C5">&nbsp;</td>
+                        <td class="tdBorder sumT3C6">&nbsp;</td>
+                    </tr>-->
+
+                    @foreach (var item in Model.SummaryFeedbackList)
+                    {
+                        if (item.IsForeign == 0)
+                        {
+                            <tr>
+                                <td class="tdBorder sumT3C1">@item.Seq</td>
+                                <td class="tdBorder sumT3C2">@item.Platform</td>
+                                <td class="tdBorder sumT3C3">@Html.Raw(item.Issue)</td>
+                                <td class="tdBorder sumT3C4">@item.Tracker</td>
+                                <td class="tdBorder sumT3C5">@item.Status</td>
+                                <td class="tdBorder sumT3C6">@Html.Raw(item.TrackInfo)</td>
+                            </tr>
+                        }
+                    }
+
+                </table>
+            </div>
+            <h5 style="margin-left:62px;  margin-bottom:5px; color:#3397e1;">B、用户建议</h5>
+            <div style="width:95.2%; margin-left:62px; margin-bottom:15px;">
+                <table style="border-collapse:collapse; border:0; width:100%;">
+                    <tr>
+                        <th class="thTitle sumT4C1">序号</th>
+                        <th class="thTitle sumT4C2">平台</th>
+                        <th class="thTitle sumT4C3">建议内容</th>
+                        <th class="thTitle sumT4C4">反馈用户数</th>
+                        <th class="thTitle sumT4C5">影响用户体验描述</th>
+                        <th class="thTitle sumT4C6">跟进情况</th>
+                    </tr>
+                    <!-- 
+                    <tr>
+                        <td class="tdBorder sumT4C1">&nbsp;</td>
+                        <td class="tdBorder sumT4C2">&nbsp;</td>
+                        <td class="tdBorder sumT4C3">&nbsp;</td>
+                        <td class="tdBorder sumT4C4">&nbsp;</td>
+                        <td class="tdBorder sumT4C5">&nbsp;</td>
+                        <td class="tdBorder sumT4C6">&nbsp;</td>
+                    </tr>-->
+                    @foreach (var item in Model.SummarySuggestList)
+                    {
+                        if (item.IsForeign == 0)
+                        {
+                            <tr>
+                                <td class="tdBorder sumT4C1">@item.Seq</td>
+                                <td class="tdBorder sumT4C2">@item.Platform</td>
+                                <td class="tdBorder sumT4C3">@Html.Raw(item.SuggestContent)</td>
+                                <td class="tdBorder sumT4C4">@item.UserCount</td>
+                                <td class="tdBorder sumT4C5">@Html.Raw(item.Issue)</td>
+                                <td class="tdBorder sumT4C6">@Html.Raw(item.TrackInfo)</td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+
+            <h4 style="margin-left:35px; margin-bottom:5px">4、各项目概况&nbsp;&nbsp;</h4>
+            @for (int i = 0, num = 1; i < Model.ProjectInfoList.Count; i++)
+            {
+                if (Model.ProjectInfoList[i].IsForeign == 0)
+                {
+                    
+                    <p style="margin-left:62px;margin-bottom:5px; font-size:14px;"><span style="font-weight:bold;">4.@(num++) 项目名称：@Model.ProjectInfoList[i].ProjectName</span><span style=" color:#305891"></span></p>
+                   <h5 style=" margin-left:62px;margin-bottom:5px; ">（1）目标与近期重点</h5>
+                 <div class="MsoNormal" style=" margin-left:96px; font-size:12px; margin-bottom:5px;"> @Html.Raw(Model.ProjectInfoList[i].Target) </div>
+                 
+                   <h5 style=" margin-left:62px;margin-bottom:5px; ">（2）项目进展</h5>
+                 <div class="MsoNormal" style=" margin-left:96px; font-size:12px; margin-bottom:5px;"> @Html.Raw(Model.ProjectInfoList[i].Progress) </div>
+                  
+                   <h5 style=" margin-left:62px; margin-bottom:5px;margin-bottom:5px;">（3）团队工作方式优化</h5>
+                 <div class="MsoNormal" style=" margin-left:96px; font-size:12px; margin-bottom:5px;"> @Html.Raw(Model.ProjectInfoList[i].Teamwork) </div>
+                   
+                   <h5 style=" margin-left:62px;margin-bottom:5px; ">（4）版本详情</h5>
+                  <div class="MsoNormal" style=" margin-left:96px; font-size:12px; margin-bottom:5px;"> @Html.Raw(Model.ProjectInfoList[i].VersionDetail) </div>
+                   
+                 <h5 style=" margin-left:62px; margin-bottom:5px;">（5）版本质量分析</h5>
+                  <div class="MsoNormal" style=" margin-left:96px; font-size:12px; margin-bottom:5px;"> @Html.Raw(Model.ProjectInfoList[i].VersionQuality) </div>
+                   
+                }
+            }
+
+            <div style=" margin-top:25px;"></div>
+
+            <h3 style="border-top:1px solid #ddd; padding-top:15px; margin-bottom:5px;">二、国外@(Model.ReportName)<span style="color:#3397e1; font-weight:normal"></span></h3>
+           
+
+            <h4 style="margin-left:35px; margin-bottom:5px;">1、目标与策略&nbsp;&nbsp;</h4>
+            <div style="width:95.2%; margin-left:62px; margin-bottom:15px;">
+                <table style="border-collapse:collapse; border:0; width:100%;">
+                    <tr style="width:100%;">
+                        <th class="thTitle sumT1C1">项目名称</th>
+                        <th class="thTitle sumT1C2">目标(现状)</th>
+                        <th class="thTitle sumT1C3">策略与措施</th>
+                    </tr>
+                    <!--
+            <tr>
+                <td class="tdBorder sumT1C1">Android(U3)</td>
+                <td class="tdBorder sumT1C2"></td>
+                <td class="tdBorder sumT1C3"></td>
+            </tr>
+            -->
+                    @foreach (var item in Model.SummaryTargetStrategyList)
+                    {
+                        if (item.IsForeign == 1)
+                        {
+                            <tr>
+                                <td class="tdBorder sumT1C1">@item.ProjectName</td>
+                                <td class="tdBorder sumT1C2">@Html.Raw(item.Target)</td>
+                                <td class="tdBorder sumT1C3">@Html.Raw(item.Strategy)</td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+
+
+
+            <h4 style="margin-left:35px; margin-bottom:5px;">2、版本概况&nbsp;&nbsp;</h4>
+            <div style="width:95.2%; margin-left:62px;margin-bottom:15px;">
+                <table style="border-collapse:collapse; width:100%;">
+                    <tr style="width:100%;">
+                        <th class="thTitle sumT2C1">项目名称</th>
+                        <th class="thTitle sumT2C2">核心需求</th>
+                        <th class="thTitle sumT2C3">计划发布</th>
+                        <th class="thTitle sumT2C4">进展与风险</th>
+                    </tr>
+                    <!--
+            <tr>
+                <td class="tdBorder sumT2C1">&nbsp;</td>
+                <td class="tdBorder sumT2C2">&nbsp;</td>
+                <td class="tdBorder sumT2C3">&nbsp;</td>
+                <td class="tdBorder sumT2C4">&nbsp;</td>
+            </tr>-->
+                    @foreach (var item in Model.SummaryVersionList)
+                    {
+                        if (item.IsForeign == 1)
+                        {
+                            <tr style="width:100%;">
+                                <td class="tdBorder sumT2C1">@item.ProjectName</td>
+                                <td class="tdBorder sumT2C2">@Html.Raw(item.Request)</td>
+                                <td class="tdBorder sumT2C3">@Html.Raw(item.Publish)</td>
+                                <td class="tdBorder sumT2C4">@Html.Raw(item.Risk)</td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+            <h4 style="margin-left:35px; margin-bottom:5px;">3、用户反馈&nbsp;&nbsp;</h4>
+            <h5 style="margin-left:62px; margin-bottom:5px; color:#3397e1;">A、TOP问题</h5>
+            <div style="width:95.2%; margin-left:62px; margin-bottom:5px;">
+                <table style="border-collapse:collapse; border:0; width:100%;">
+                    <tr>
+                        <th class="thTitle sumT3C1">序号</th>
+                        <th class="thTitle sumT3C2">平台</th>
+                        <th class="thTitle sumT3C3">问题概要</th>
+                        <th class="thTitle sumT3C4">跟进人</th>
+                        <th class="thTitle sumT3C5">状态</th>
+                        <th class="thTitle sumT3C6">跟进情况</th>
+                    </tr>
+                    <!--
+            <tr>
+                <td class="tdBorder sumT3C1">&nbsp;</td>
+                <td class="tdBorder sumT3C2">&nbsp;</td>
+                <td class="tdBorder sumT3C3">&nbsp;</td>
+                <td class="tdBorder sumT3C4">&nbsp;</td>
+                <td class="tdBorder sumT3C5">&nbsp;</td>
+                <td class="tdBorder sumT3C6">&nbsp;</td>
+            </tr>-->
+                    @foreach (var item in Model.SummaryFeedbackList)
+                    {
+                        if (item.IsForeign == 1)
+                        {
+                            <tr>
+                                <td class="tdBorder sumT3C1">@item.Seq</td>
+                                <td class="tdBorder sumT3C2">@item.Platform</td>
+                                <td class="tdBorder sumT3C3">@Html.Raw(item.Issue)</td>
+                                <td class="tdBorder sumT3C4">@item.Tracker</td>
+                                <td class="tdBorder sumT3C5">@item.Status</td>
+                                <td class="tdBorder sumT3C6">@Html.Raw(item.TrackInfo)</td>
+                            </tr>
+                        }
+                    }
+
+                </table>
+            </div>
+            <h5 style="margin-left:62px;  margin-bottom:5px; color:#3397e1;">B、用户建议</h5>
+            <div style="width:95.2%; margin-left:62px; margin-bottom:15px;">
+                <table style="border-collapse:collapse; border:0; width:100%;">
+                    <tr>
+                        <th class="thTitle sumT4C1">序号</th>
+                        <th class="thTitle sumT4C2">平台</th>
+                        <th class="thTitle sumT4C3">建议内容</th>
+                        <th class="thTitle sumT4C4">反馈用户数</th>
+                        <th class="thTitle sumT4C5">影响用户体验描述</th>
+                        <th class="thTitle sumT4C6">跟进情况</th>
+                    </tr>
+                    <!--
+            <tr>
+                <td class="tdBorder sumT4C1">&nbsp;</td>
+                <td class="tdBorder sumT4C2">&nbsp;</td>
+                <td class="tdBorder sumT4C3">&nbsp;</td>
+                <td class="tdBorder sumT4C4">&nbsp;</td>
+                <td class="tdBorder sumT4C5">&nbsp;</td>
+                <td class="tdBorder sumT4C6">&nbsp;</td>
+            </tr>-->
+                    @foreach (var item in Model.SummarySuggestList)
+                    {
+                        if (item.IsForeign == 1)
+                        {
+                            <tr>
+                                <td class="tdBorder sumT4C1">@item.Seq</td>
+                                <td class="tdBorder sumT4C2">@item.Platform</td>
+                                <td class="tdBorder sumT4C3">@Html.Raw(item.SuggestContent)</td>
+                                <td class="tdBorder sumT4C4">@item.UserCount</td>
+                                <td class="tdBorder sumT4C5">@Html.Raw(item.Issue)</td>
+                                <td class="tdBorder sumT4C6">@Html.Raw(item.TrackInfo)</td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+
+            <h4 style="margin-left:35px; margin-bottom:5px">4、各项目概况&nbsp;&nbsp;</h4>
+            @for (int i = 0, num = 1; i < Model.ProjectInfoList.Count; i++)
+            {
+                if (Model.ProjectInfoList[i].IsForeign == 1)
+                {
+
+                    <p style="margin-left:62px;margin-bottom:5px; font-size:14px;"><span style="font-weight:bold;">4.@(num++) 项目名称：@Model.ProjectInfoList[i].ProjectName</span><span style=" color:#305891"></span></p>
+                    <h5 style=" margin-left:62px;margin-bottom:5px; ">（1）目标与近期重点</h5>
+                    <div class="MsoNormal" style=" margin-left:96px; font-size:12px; margin-bottom:5px;"> @Html.Raw(Model.ProjectInfoList[i].Target) </div>
+
+                    <h5 style=" margin-left:62px;margin-bottom:5px; ">（2）项目进展</h5>
+                    <div class="MsoNormal" style=" margin-left:96px; font-size:12px; margin-bottom:5px;"> @Html.Raw(Model.ProjectInfoList[i].Progress) </div>
+
+                    <h5 style=" margin-left:62px; margin-bottom:5px;margin-bottom:5px;">（3）团队工作方式优化</h5>
+                    <div class="MsoNormal" style=" margin-left:96px; font-size:12px; margin-bottom:5px;"> @Html.Raw(Model.ProjectInfoList[i].Teamwork) </div>
+
+                    <h5 style=" margin-left:62px;margin-bottom:5px; ">（4）版本详情</h5>
+                    <div class="MsoNormal" style=" margin-left:96px; font-size:12px; margin-bottom:5px;"> @Html.Raw(Model.ProjectInfoList[i].VersionDetail) </div>
+
+                    <h5 style=" margin-left:62px; margin-bottom:5px;">（5）版本质量分析</h5>
+                    <div class="MsoNormal" style=" margin-left:96px; font-size:12px; margin-bottom:5px;"> @Html.Raw(Model.ProjectInfoList[i].VersionQuality) </div>
+
+                }
+            }
+            <div style=" margin-top:25px;"></div>
+
+            <h3 style="border-top:1px solid #ddd; padding-top:15px; margin-bottom:5px;">三、重点事务&nbsp;</h3>
+            <h4 style=" margin-left:35px; margin-bottom:5px; ">1、产品事务&nbsp;&nbsp;</h4>
+
+            <div style="width:95.2%; margin-left:62px; margin-bottom:15px;">
+                <table style="border-collapse:collapse; border:0; width:100%;">
+                    <tr>
+                        <th class="thTitle productT1C1">分类</th>
+                        <th class="thTitle productT1C2">优先级</th>
+                        <th class="thTitle productT1C3">负责人</th>
+                        <th class="thTitle productT1C4">工作计划</th>
+                        <th class="thTitle productT1C5">进展情况</th>
+                    </tr>
+                    <!-- 
+                    <tr>
+                        <td class="tdBorder sumT3C1">&nbsp;</td>
+                        <td class="tdBorder sumT3C2">&nbsp;</td>
+                        <td class="tdBorder sumT3C3">&nbsp;</td>
+                        <td class="tdBorder sumT3C1">&nbsp;</td>
+                        <td class="tdBorder sumT3C2">&nbsp;</td>
+
+                    </tr>-->
+                    @foreach (var item in Model.AffairProductList)
+                    {
+                        <tr>
+                            <td class="tdBorder productT1C1">@item.Classify</td>
+                            <td class="tdBorder productT1C2">@item.Priority</td>
+                            <td class="tdBorder productT1C3">@item.Tracker</td>
+                            <td class="tdBorder productT1C4">@Html.Raw(item.Workplan)</td>
+                            <td class="tdBorder productT1C5">@Html.Raw(item.Progress)</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            <div style=" margin-top:25px;"></div>
+            <h3 style="border-top:1px solid #ddd; padding-top:15px; margin-bottom:5px;">四、团队工作方式优化&nbsp;</h3>
+
+            @foreach (var item in Model.TeamworkInfoList)
+            {
+                <div class="teamworkDiv">
+                    @Html.Raw(item.Content)
+                </div>
+                <p style="height:5px; margin:0;">&nbsp;</p>
+            }
+
+            <div style=" margin-top:25px;"></div>
+            <h3 style="border-top:1px solid #ddd; padding-top:15px; margin-bottom:5px;">五、需要的协助和支持&nbsp;</h3>
+
+            @foreach (var item in Model.TeamworkInfoList)
+            {
+                <div class="assistDiv">
+                    @Html.Raw(item.Content)
+                </div>
+                <p style="height:5px; margin:0;">&nbsp;</p>
+            }
+
+ </div>
+       
+
 </body>
 </html>
