@@ -613,7 +613,7 @@ namespace FoxReport.Helper
                     p.Classify = reader["Classify"].ToString();
                     p.Priority = reader["Priority"].ToString();
                     p.Progress = reader["Progress"].ToString();
-                    p.Tracker = reader["Tracker"].ToString();
+                    p.Tracker = Helper.SqlDbHelper.GetUserName(reader["Tracker"].ToString());
                     p.Workplan = reader["Workplan"].ToString();
                     p.UserId = reader["UserId"].ToString();
                     p.Week = int.Parse(reader["Week"].ToString());
@@ -1047,6 +1047,29 @@ namespace FoxReport.Helper
             return result > 0;
         }
 
+
+        public static string GetUserName(string sID)
+        {
+            string sql = "select UserName from UserInfo where UserID='" + sID + "'";
+            MySqlConnection con = new MySqlConnection(ConnectionString);
+            MySqlCommand cmd = new MySqlCommand(sql, con);
+            string UserName = "";
+            try
+            {
+                con.Open();
+                object name = cmd.ExecuteScalar();
+                UserName = name == null ? "" : name.ToString();
+            }
+            catch (MySqlException e)
+            {
+                Logger.Error("执行sql出错，sql=" + sql, e);
+            }
+            finally
+            {
+                con.Close();
+            }
+            return UserName;
+        }
         public static bool DeleteUser(string userId)
         {
             string sql = "delete from UserInfo where UserId=@UserId";
